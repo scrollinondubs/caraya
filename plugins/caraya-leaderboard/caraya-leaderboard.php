@@ -10,7 +10,7 @@
 const LEADERBOARD_TEAMS_TABLE = 'leaderboard_teams';
 const LEADERBOARD_MEMBERS_TABLE = 'leaderboard_members';
 const LEADERBOARD_ORDERS_TABLE = 'leaderboard_orders';
-const LEADERBOARD_REFERRAL_TREE = 'leaderboard_referral_tree';
+const LEADERBOARD_REFERRAL_TREE_TABLE = 'leaderboard_referral_tree';
 const LEADERBOARD_COOKIE = 'caraya-ry-leaderboard';
 
 function leaderboardActivation()
