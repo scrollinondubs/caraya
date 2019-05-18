@@ -33,11 +33,6 @@ function checkForLeaderboardLink()
     }
 }
 
-function setLeaderboardReferralCookie($referralHash)
-{
-    setcookie(LEADERBOARD_COOKIE, $referralHash, null, '/');
-}
-
 function getLeaderboardMemberData($referralHash)
 {
     global $wpdb;
@@ -65,6 +60,19 @@ function setLeaderboardMemberEmail($referralUsedEmail, $memberData)
         array('email' => $referralUsedEmail),
         array('id' => $memberData->id)
     );
+}
+
+function setLeaderboardReferralCookie($referralHash)
+{
+    setcookie(LEADERBOARD_COOKIE, $referralHash, null, '/');
+}
+
+function getLeaderboardReferralCookie() {
+    if(isset($_COOKIE[LEADERBOARD_COOKIE])) {
+        return $_COOKIE[LEADERBOARD_COOKIE];
+    }
+
+    return false;
 }
 
 add_action('init', 'checkForLeaderboardLink');

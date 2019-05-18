@@ -24,9 +24,10 @@ function leaderboardActivation()
 function leaderboardDeactivation()
 {
     // This is a quick way to toggle deleting of data and starting fresh. Uncomment to drop the tables.
+//    deleteLeaderboardOrders();
+//    deleteLeaderboardReferralTree();
 //    deleteLeaderboardMembers();
 //    deleteLeaderboardTeams();
-//    deleteLeaderboardOrders();
 }
 
 function createLeaderboardTeams()
@@ -207,3 +208,4 @@ register_activation_hook(__FILE__, 'leaderboardActivation');
 register_deactivation_hook(__FILE__, 'leaderboardDeactivation');
 
 require_once(plugin_dir_path( __FILE__ ) . 'includes/manage-cookies.php');
+require_once(plugin_dir_path( __FILE__ ) . 'includes/manage-order.php');
