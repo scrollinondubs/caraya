@@ -22,9 +22,9 @@ function leaderboardActivation()
 function leaderboardDeactivation()
 {
     // This is a quick way to toggle deleting of data and starting fresh. Uncomment to drop the tables.
-    deleteLeaderboardMembers();
-    deleteLeaderboardTeams();
-    deleteLeaderboardOrders();
+//    deleteLeaderboardMembers();
+//    deleteLeaderboardTeams();
+//    deleteLeaderboardOrders();
 }
 
 function createLeaderboardTeams()
