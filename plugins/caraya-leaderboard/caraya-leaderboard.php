@@ -51,6 +51,8 @@ function createLeaderboardTeams()
     ));
 
     $wpdb->query($create);
+
+    importLeaderboardTeams($table_name);
 }
 
 function createLeaderboardMembers()
@@ -79,6 +81,8 @@ function createLeaderboardMembers()
     ));
 
     $wpdb->query($create);
+
+    importLeaderboardMembers($table_name);
 }
 
 function createLeaderboardOrders()
@@ -133,6 +137,44 @@ function createLeaderboardReferralTree()
     $wpdb->query($create);
 }
 
+function importLeaderboardTeams($table_name) {
+    global $wpdb;
+
+    $teamsJson = file_get_contents(plugin_dir_path( __FILE__ ) . 'data/teams.json');
+    $teamsArray = json_decode($teamsJson, true);
+
+    foreach ($teamsArray as $key => $value) {
+        $wpdb->insert(
+            $table_name,
+            array(
+                'id' => $key,
+                'name' => $value,
+            )
+        );
+    }
+}
+
+function importLeaderboardMembers($table_name) {
+    global $wpdb;
+
+    $teamsJson = file_get_contents(plugin_dir_path( __FILE__ ) . 'data/teams.json');
+    $teamsArray = json_decode($teamsJson, true);
+    $teamsArray = array_flip($teamsArray);
+
+    $membersJson = file_get_contents(plugin_dir_path( __FILE__ ) . 'data/members.json');
+    $membersArray = json_decode($membersJson, true);
+
+    foreach ($membersArray as $key => $value) {
+        $wpdb->insert(
+            $table_name,
+            array(
+                'hash' => $key,
+                'team_id' => $teamsArray[$value],
+            )
+        );
+    }
+}
+
 function deleteLeaderboardMembers() {
     global $wpdb;
 
@@ -162,51 +204,6 @@ function deleteLeaderboardReferralTree() {
 }
 
 register_activation_hook(__FILE__, 'leaderboardActivation');
-
 register_deactivation_hook(__FILE__, 'leaderboardDeactivation');
 
-function checkForLeaderboardLink()
-{
-    if (isset($_GET['ryreferral'])) {
-        $ryReferral = $_GET['ryreferral'];
-
-        // filter ryReferral and check if its an email, if so hash it.
-        // Otherwise attempt to match the string to a hash.
-        if(filter_var($ryReferral, FILTER_VALIDATE_EMAIL)) {
-            $referralHash =  hash('sha256', $ryReferral);
-        } else {
-            $referralHash = $ryReferral;
-        }
-
-        $memberData = setLeaderboardReferralCookie($referralHash);
-    }
-}
-
-function setLeaderboardReferralCookie($referralHash)
-{
-    if($memberData = getLeaderboardMemberData($referralHash)) {
-        setcookie(LEADERBOARD_COOKIE, $memberData->team_id, null, '/');
-        return $memberData;
-    }
-
-    return false;
-}
-
-function getLeaderboardMemberData($referralHash)
-{
-    global $wpdb;
-
-    $table_name = $wpdb->prefix . LEADERBOARD_MEMBERS_TABLE;
-
-    $leaderboardMember = $wpdb->get_row(
-        $wpdb->prepare(
-            "SELECT * FROM $table_name WHERE hash = %s",
-            $referralHash
-        )
-    );
-
-    return $leaderboardMember;
-}
-
-add_action('init', 'checkForLeaderboardLink');
-
+require_once(plugin_dir_path( __FILE__ ) . 'includes/manage-cookies.php');
