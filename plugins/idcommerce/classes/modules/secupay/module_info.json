@@ -1,0 +1,8 @@
+{
+  "title":"Secupay",
+  "short_desc":"Integrates with Secupay for prepay, debit, and credit card processing",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "idc"
+}

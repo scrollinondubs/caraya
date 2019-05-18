@@ -1,0 +1,8 @@
+{
+  "title":"Advanced Text Filters",
+  "short_desc":"Dynamically translate or modify plugin text.",
+  "doclink":"",
+  "status":"test",
+  "type":"module",
+  "requires": "idc"
+}

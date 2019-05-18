@@ -1,0 +1,590 @@
+<?php
+class ID_Member_Order {
+	var $id;
+	var $user_id;
+	var $level_id; 
+
+	var $order_date;
+	var $transaction_id;
+	var $subscription_id;
+	var $status;
+	var $e_date;
+	var $price;
+
+	function __construct( 
+		$id = null,
+		$user_id = null,
+		$level_id = null,
+		$order_date = null,
+		$transaction_id = 'admin',
+		$subscription_id = null,
+		$status = 'active',
+		$e_date = null,
+		$price = '0'
+		)
+	{
+		$this->id = $id;
+		$this->user_id = $user_id;
+		$this->level_id = $level_id;
+		$this->order_date = date('Y-m-d H:i:s');
+		$this->transaction_id = $transaction_id;
+		$this->subscription_id = $subscription_id;
+		$this->status = $status;
+		$this->e_date = $e_date;	
+		$this->price = $price;
+
+		add_action('idc_before_order_delete', array($this, 'idc_before_order_delete_actions'), 10);
+	}
+
+	function add_order() {
+		if (empty($this->e_date)) {
+			$this->e_date = $this->get_e_date();
+		}
+		global $wpdb;
+		$sql = $wpdb->prepare('INSERT INTO '.$wpdb->prefix.'memberdeck_orders (user_id, 
+			level_id, 
+			order_date, 
+			transaction_id,
+			subscription_id,
+			status,
+			e_date,
+			price) VALUES (%d, %d, %s, %s, %s, %s, %s, %s)', 
+		$this->user_id, 
+		$this->level_id, 
+		$this->order_date, 
+		$this->transaction_id,
+		$this->subscription_id,
+		$this->status,
+		$this->e_date,
+		$this->price);
+		$res = $wpdb->query($sql);
+		$insert_id = $wpdb->insert_id;
+		// $wpdb->print_error();
+		if (!empty($insert_id)) {
+			do_action('idc_modify_order', $insert_id, 'add');
+			do_action('idc_order_add', $insert_id); // #devnote need to add order object
+			$order = array('level_id' => $this->level_id,
+				'user_id' => $this->user_id);
+			if (!is_idc_free()) {
+				ID_Member_Credit::new_order_credit($order);
+			}
+			return $insert_id;
+		}
+		else {
+			return null;
+		}
+	}
+
+	function update_order() {
+		if (empty($this->e_date)) {
+			$this->e_date = &$this->get_e_date();
+		}
+		global $wpdb;
+		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_orders SET user_id = %d, 
+			level_id = %d, 
+			order_date = %s, 
+			transaction_id = %s, 
+			subscription_id = %s,
+			status = %s,
+			e_date = %s,
+			price = %s WHERE id = %d', 
+			$this->user_id, 
+			$this->level_id, 
+			$this->order_date, 
+			$this->transaction_id,
+			$this->subscription_id,
+			$this->status,
+			$this->e_date,
+			$this->price, 
+			$this->id);
+		$res = $wpdb->query($sql);
+		do_action('idc_modify_order', $this->id, 'update');
+		do_action('idc_order_update', $this->id); // #devnote need to add order object
+	}
+
+	function delete_order() {
+		do_action('idc_before_order_delete', $this->id);
+		global $wpdb;
+		$sql = 'DELETE FROM '.$wpdb->prefix.'memberdeck_orders WHERE id = '.$this->id;
+		$res = $wpdb->query($sql);
+		if ($res !== false) {
+			do_action('idc_modify_order', $this->id, 'delete');
+			do_action('idc_order_delete', $this->id); // #devnote need to add order object
+		}
+	}
+
+	function get_order() {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE id = %d', $this->id);
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	function get_last_order() {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE user_id = %d AND level_id = %d ORDER BY id DESC', $this->user_id, $this->level_id);
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	function get_transaction() {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE transaction_id = %s', $this->transaction_id);
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	function get_e_date() {
+		$exp_level = ID_Member_Level::get_level($this->level_id);
+		$level_type = $exp_level->level_type;
+		if ($level_type == 'standard') {
+			$e_date = self::set_standard_e_date($exp_level);
+		}
+		else if ($level_type == 'recurring') {
+			$recurring_type = $exp_level->recurring_type;
+			if ($recurring_type == 'weekly') {
+				// weekly
+				$exp = strtotime('+1 week');
+			}
+			else if ($recurring_type == 'monthly') {
+				// monthly
+				$exp = strtotime('+1 month');
+			}
+			else {
+				// annually
+				$exp = strtotime('+1 years');		
+			}
+			$e_date = date('Y-m-d H:i:s', $exp);
+		}
+		else {
+			$e_date = null;
+		}
+		return $e_date;
+	}
+
+	function get_subscription() {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE subscription_id = %s', $this->subscription_id);
+		$res = $wpdb->get_row($sql);
+		return ($res);
+	}
+
+	function set_subscription($subscription_number) {
+		global $wpdb;
+		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_orders SET subscription_number = %d WHERE id = %d', $subscription_number, $this->id);
+		$res = $wpdb->query($sql);
+	}
+
+	function cancel_status($e_date = null) {
+		global $wpdb;
+		if (empty($e_date)) {
+			$e_date = date('Y-m-d H:i:s');
+		}
+		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_orders SET status = "cancelled", e_date = %s WHERE id = %d', $e_date, $this->id);
+		$res = $wpdb->query($sql);
+	}
+
+	/**
+	 * get_order_currency_sym(): Function to get the currency symbol of a payment gateway of an order
+	 * No param is required
+	 * Should be called from an order object
+	 */
+	public static function get_order_currency($source) {
+		global $global_currency;
+		$currency_code = 'USD';
+		// Getting the memberdeck options to get the gateway settings
+		$gateway_options = get_option( "memberdeck_gateways" );
+		if ($source == "stripe") {
+			$currency_code = $gateway_options['stripe_currency'];
+		} 
+		else if ($source == "paypal" || $source == 'pp-adaptive') {
+			$currency_code = $gateway_options['pp_currency'];
+		}
+		else if ($source == 'coinbase') {
+			$currency_code = $global_currency;
+		}
+		else if ($source == 'mc') {
+			$currency_code = $global_currency;
+		}
+		else if ($source == 'credit') {
+			$currency_code = $global_currency;
+		}
+		return apply_filters('idc_order_currency', $currency_code, $global_currency, $source);
+	}
+
+	public static function get_order_currency_sym($order_id, $order_meta = "") {
+		global $global_currency;
+		// If the 2nd argument don't have anything, then get order-meta from db
+		if (empty($order_meta)) {
+			$order_meta = ID_Member_Order::get_order_meta($order_id, 'gateway_info', true);
+		}
+		if (!empty($order_meta['currency_code'])) {
+			$currency_code = $order_meta['currency_code'];
+		}
+		else {
+			// might not have been added to db yet
+			$currency_code = $global_currency;
+		}
+		return idc_currency_to_symbol($currency_code);
+	}
+
+	public static function set_e_date($level_data) {
+		if (empty($level_data)) {
+			return null;
+		}
+
+		if ($level_data->level_type == 'recurring') {
+			switch ($level_data->recurring_type) {
+				case 'weekly':
+					// weekly
+					$exp = strtotime('+1 week');
+					break;
+
+				case 'monthly':
+					// monthly
+					$exp = strtotime('+1 month');
+					break;
+				
+				default:
+					// annually
+					$exp = strtotime('+1 years');
+					break;
+			}
+			$e_date = date('Y-m-d h:i:s', $exp);
+		}
+		else if ($level_data->level_type == 'lifetime') {
+			$e_date = null;
+		}
+		else {
+			$e_date = idc_set_order_edate($level_data);
+		}
+		return $e_date;
+	}
+
+	public static function set_standard_e_date($level_data, $now = null) {
+		if (empty($now)) {
+			$now = strtotime('now');
+		}
+		$exp = strtotime('+1 years');
+		$exp_data = idc_get_level_meta($level_data->id, 'exp_data', true);
+		if (!empty($exp_data)) {
+			$exp = strtotime('+'.$exp_data['count'].' '.$exp_data['term'], $now);
+		}
+		$e_date = date('Y-m-d h:i:s', $exp);
+		return $e_date;
+	}
+
+	/**
+	 * Filter whether to retrieve metadata of a specific type.
+	 *
+	 * @param integer           $order_id  Order id for which meta data is needed
+	 * @param null|array|string $value     The value get_order_meta() should
+	 *                                     return - a single metadata value,
+	 *                                     or an array of values.
+	 * @param string            $meta_key  Meta key.
+	 * @param string|array      $single    Meta value, or an array of values.
+	 */
+	public static function get_order_meta($order_id, $meta_key, $single = true) {
+		if (empty($meta_key)) {
+			return;
+		}
+		$meta = idf_get_object('id_member_order-get_order_meta-'.$order_id.'-'.$meta_key.($single ? '-true' : '-false'));
+		if (empty($meta)) {
+			global $wpdb;
+			$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_order_meta WHERE order_id = %s AND meta_key = %s', $order_id, $meta_key);
+			$res = $wpdb->get_row($sql);
+			$meta = (!empty($res->meta_value) ? $res->meta_value : '');
+			$meta = apply_filters('idc_order_meta_'.$meta_key, $meta, $order_id);
+			if (empty($meta)) {
+				return;
+			}
+			$meta = ($single ? maybe_unserialize($meta) : array_map('maybe_unserialize', $meta));
+			idf_cache_object('id_member_order-get_order_meta-'.$order_id.'-'.$meta_key.($single ? '-true' : '-false'), $meta, 86400);
+		}
+		return $meta;
+	}
+
+	/**
+	 * Function to store metadata values for the order
+	 * @param integer           $object_id  Order id against which meta data to be stored
+	 * @param string 	 		$meta_key 	Meta key against which value to be stored
+	 * @param string|integer 	$meta_value	Stores the value against the key
+	 * @param datatype 			$prev_value If need to update it if different from previous value
+	 * @param booleon           $unique     If need to store value against a key only once
+	 */
+	public static function update_order_meta($order_id, $meta_key, $meta_value, $prev_value = '', $unique = false) {
+		if (empty($meta_key) )
+			return;
+
+		global $wpdb;
+
+		// expected_slashed ($meta_key)
+		$meta_key = wp_unslash($meta_key);
+		$passed_value = $meta_value;
+		$meta_value = wp_unslash($meta_value);
+
+		if ( empty($prev_value) ) {
+			$old_value = self::get_order_meta($order_id, $meta_key);
+			if ( $old_value !== "" ) {
+				if ( $old_value === $meta_value )
+					return false;
+			}
+		}
+
+		if ( ! $meta_id = $wpdb->get_var( $wpdb->prepare( 'SELECT id FROM '.$wpdb->prefix.'memberdeck_order_meta WHERE meta_key = %s AND order_id = %d', $meta_key, $order_id ) ) ) {
+			return self::add_metadata($order_id, $meta_key, $passed_value);
+		}
+
+		$meta_value = maybe_serialize( $meta_value );
+		$data  = compact( 'meta_value' );
+		$where = array( 'order_id' => $order_id, 'meta_key' => $meta_key );
+		if ( !empty( $prev_value ) ) {
+			$prev_value = maybe_serialize($prev_value);
+			$where['meta_value'] = $prev_value;
+		}
+
+		$result = $wpdb->update( $wpdb->prefix.'memberdeck_order_meta', $data, $where );
+		if (! $result )
+			return false;
+
+		// #devnote return true or value?
+	}
+
+	public static function add_metadata($order_id, $meta_key, $meta_value, $unique = false) {
+		if ( empty($meta_key ))
+			return;
+
+		global $wpdb;
+		// expected_slashed ($meta_key)
+		$meta_key = wp_unslash($meta_key);
+		$meta_value = wp_unslash($meta_value);
+
+		if ( $unique && $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM ".$wpdb->prefix."memberdeck_order_meta WHERE meta_key = %s AND order_id = %d", $meta_key, $order_id ) ) ) {
+			return false;
+		}
+
+		$meta_value = maybe_serialize( $meta_value );
+		$result = $wpdb->insert( $wpdb->prefix."memberdeck_order_meta", array(
+			'order_id' => $order_id,
+			'meta_key' => $meta_key,
+			'meta_value' => $meta_value
+		) );
+
+		if ( ! $result )
+			return false;
+	}
+
+	public static function delete_order_meta($order_id, $meta_key, $meta_value = '', $delete_all = false) {
+		global $wpdb;
+		$query = $wpdb->prepare( "SELECT id FROM ".$wpdb->prefix."memberdeck_order_meta WHERE meta_key = %s", $meta_key );
+
+		if ( $meta_value ) {
+			$query .= $wpdb->prepare(" AND meta_value = %s", $meta_value );
+		}
+		if ( !$delete_all ) {
+			$query .= $wpdb->prepare(" AND order_id = %d", $order_id );
+		}
+		
+		$meta_ids = $wpdb->get_col( $query );
+
+		if (!empty($meta_ids)) {
+			$query = "DELETE FROM ".$wpdb->prefix."memberdeck_order_meta WHERE id IN( " . implode( ',', $meta_ids ) . " )";
+			$count = $wpdb->query($query);
+		}
+	}
+
+	public static function delete_order_meta_all($order_id) {
+		global $wpdb;
+		$sql = "DELETE FROM ".$wpdb->prefix."memberdeck_order_meta WHERE order_id= '".$order_id."'";
+		$wpdb->query($sql);
+	}
+
+	public static function get_order_id_by_paykey($paykey) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT order_id FROM '.$wpdb->prefix.'memberdeck_order_meta WHERE meta_key = %s AND meta_value = %s', 'paykey', $paykey);
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	public static function delete_preorder_tokens($order_id) {
+		global $wpdb;
+		$sql = "DELETE FROM ".$wpdb->prefix."memberdeck_preorder_tokens WHERE order_id= '".$order_id."'";
+		$wpdb->query($sql);	
+	}
+
+	public static function get_order_count() {
+		global $wpdb;
+		$sql = 'SELECT COUNT(*) as count FROM '.$wpdb->prefix.'memberdeck_orders';
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	public static function get_orders($search = null, $limit = null, $misc = null, $sort = 'ASC') {
+		global $wpdb;
+		$sql = 'SELECT * FROM '.$wpdb->prefix.'memberdeck_orders'.$misc.(!empty($search) ? ' WHERE transaction_id LIKE "%'.$search.'%"' : '').' ORDER BY id '.$sort.(!empty($limit) ? ' LIMIT '.$limit : '');
+		$res = $wpdb->get_results($sql);
+		return $res;
+	}
+
+	public static function get_orders_by_user($user_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE user_id = %s', $user_id);
+		$res = $wpdb->get_results($sql);
+		return $res;
+	}
+
+	public static function get_orders_by_level($level_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE level_id = %d', $level_id);
+		$res = $wpdb->get_results($sql);
+		return $res;
+	}
+
+	public static function add_preorder($order_id, $charge_token, $source) {
+		global $wpdb;
+		$sql = $wpdb->prepare('INSERT INTO '.$wpdb->prefix.'memberdeck_preorder_tokens (order_id, charge_token, gateway) VALUES (%d, %s, %s)', $order_id, $charge_token, $source);
+		$res = $wpdb->query($sql);
+		if (isset($res)) {
+			return $wpdb->insert_id;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public static function get_preorders_by_userid($user_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE user_id = %d AND transaction_id = %s', $user_id, 'pre');
+		$res = $wpdb->get_results($sql);
+		return $res;
+	}
+
+	public static function get_preorder_by_orderid($order_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_preorder_tokens WHERE order_id = %d', $order_id);
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	public static function get_preorder_by_token($token) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_preorder_tokens WHERE charge_token = %s', $token);
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	public static function get_subscription_by_sub($sub_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE subscription_id = %s', $sub_id);
+		$res = $wpdb->get_row($sql);
+		return $res;
+	}
+
+	public static function cancel_subscription($id) {
+		global $wpdb;
+		$tz = get_option('timezone_string');
+	    if (empty($tz)) {
+	        $tz = 'UTC';
+	    }
+	    date_default_timezone_set($tz);
+		$date = date('Y-m-d H:i:s');
+		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_orders SET e_date = %s, status = "cancelled" WHERE id = %d', $date, $id);
+		$res = $wpdb->query($sql);
+		return $sql;
+	}
+
+	public static function check_order_exists($txn_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE transaction_id = %s', $txn_id);
+		$res = $wpdb->get_results($sql);
+		return $res;
+	}
+
+	public static function update_order_date($id, $date) {
+		global $wpdb;
+		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_orders SET e_date = %s WHERE id = %d', $date, $id);
+		$res = $wpdb->query($sql);
+	}
+
+	public static function get_md_preorders($level_id, $status = 'active') {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'memberdeck_orders WHERE transaction_id = "pre" and level_id = %d and status = %s', $level_id, $status);
+		$res = $wpdb->get_results($sql);
+		return $res;
+	}
+
+	public static function update_txn_id($id, $txn_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_orders SET transaction_id = %s WHERE id = %d', $txn_id, $id);
+		$res = $wpdb->query($sql);
+	}
+
+	public static function get_expiration_data($user_id, $level_id) {
+		global $wpdb;
+		$sql = $wpdb->prepare('SELECT e_date FROM '.$wpdb->prefix.'memberdeck_orders WHERE user_id = %d AND level_id = %d ORDER BY id DESC', $user_id, $level_id);
+		$res = $wpdb->get_row($sql);
+		return (!empty($res->e_date) ? $res->e_date : null);
+	}
+
+	// Hook Actions that are related to this class
+	public function idc_before_order_delete_actions($order_id) {
+		$order = $this->get_order();
+		if (!empty($order)) {
+			// Delete order meta
+			self::delete_order_meta_all($this->id);
+			// If PreOrder, remove tokens as well
+			self::delete_preorder_tokens($this->id);
+
+			// Removing subscription if it's a subscription order
+			if (!empty($order->subscription_id)) {
+				$subscription = new ID_Member_Subscription(null, $order->user_id, $order->level_id);
+				$sub_data = $subscription->find_subscription();
+				if (!empty($sub_data)) {
+					ID_Member_Subscription::remove_subscription($sub_data->id);
+				}
+			}
+			
+			// Removing from user_levels the level purchased from this order
+			$member = new ID_Member();
+			// Getting user access levels
+			$member_data = $member->match_user($order->user_id);
+			if (!empty($member_data)) {
+				$access_level = maybe_unserialize($member_data->access_level);
+				$index = -1;
+				if (!empty($access_level)) {
+					foreach ($access_level as $key => $level_id) {
+						// If we have found the level id of the order being deleted, get its index
+						if ($order->level_id == $level_id) {
+							$index = $key;
+							break;
+						}
+					}
+				}
+				// If we have found an index with level id, remove that index from access_level array
+				if ($index >= 0) {
+					unset($access_level[$index]);
+					// Save into db
+					$member->save_user($order->user_id, $access_level);
+				}
+			}
+		}
+
+		echo '<div id="message" class="updated idc-message order-deleted">'.__('Order was successfully deleted', 'memberdeck').'</div>';
+	}
+}
+
+function idc_get_order_meta($order_id, $meta_key, $single = true) {
+	return ID_Member_Order::get_order_meta($order_id, $meta_key, $single);
+}
+
+function idc_update_order_meta($order_id, $meta_key, $meta_value) {
+	return ID_Member_Order::update_order_meta($order_id, $meta_key, $meta_value);
+}
+
+function idc_set_order_edate($level_data, $now = null) {
+	if ($level_data->level_type == 'standard') {
+		return ID_Member_Order::set_standard_e_date($level_data, $now);
+	}
+	return;
+}
+?>

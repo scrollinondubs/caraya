@@ -1,0 +1,8 @@
+{
+  "title":"Simple Front-End Submission",
+  "short_desc":"Simplifies front-end submission for fundraising and charities by restricting to one pay what you want level.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "ide"
+}

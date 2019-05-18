@@ -1,0 +1,8 @@
+{
+  "title":"Fee Mods",
+  "short_desc":"Custom application fee mods that enable admins to modify fees on a per-project basis.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "ide"
+}

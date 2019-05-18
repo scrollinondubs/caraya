@@ -1,0 +1,8 @@
+{
+  "title":"Advanced User Accounts",
+  "short_desc":"Separate accounts, accessible via specific registration URL's, for backers and creators.",
+  "doclink":"",
+  "status":"test",
+  "type":"module",
+  "requires": "idc"
+}

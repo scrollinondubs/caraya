@@ -1,0 +1,8 @@
+{
+  "title":"Shipping on Checkout",
+  "short_desc":"Adds shipping fields to checkout, stores the information in user profile, and exports with order export.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "idc"
+}

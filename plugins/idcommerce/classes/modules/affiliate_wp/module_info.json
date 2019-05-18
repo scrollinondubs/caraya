@@ -1,0 +1,8 @@
+{
+  "title":"AffiliateWP for IgnitionDeck",
+  "short_desc":"Enables referral tracking for IgnitionDeck Commerce products via AffiliateWP.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "idc"
+}

@@ -1,0 +1,8 @@
+{
+  "title":"Custom Dashboard",
+  "short_desc":"Enables simple customizations of the default IgnitionDeck Dashboard",
+  "doclink":"",
+  "status":"test",
+  "type":"module",
+  "requires": "idc"
+}

@@ -1,0 +1,2258 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: IgnitionDeck 1.5.15\n"
+"POT-Creation-Date: 2018-01-18 13:59-0500\n"
+"PO-Revision-Date: 2018-01-18 13:59-0500\n"
+"Last-Translator: Nathan Hangen <nhangen@gmail.com>\n"
+"Language-Team: Virtuous Giant <hello@virtuousgiant.com>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: classes/class-id_fes.php:34 ignitiondeck-postmeta.php:26
+msgid "Campaign End Options"
+msgstr ""
+
+#: classes/class-id_fes.php:58 ignitiondeck-postmeta.php:179
+msgid "Project Updates"
+msgstr "Mises à jour de la campagne"
+
+#: classes/class-id_fes.php:76 ign_metabox/init.php:338
+msgid "Project Reward Levels"
+msgstr "Contreparties de la campagne"
+
+#: classes/class-id_fes.php:77
+msgid "Number of Levels"
+msgstr "Nombre de contreparties"
+
+#: classes/class-id_fes.php:90 classes/class-id_fes.php:121
+#: classes/class-id_fes.php:171 classes/class-id_fes.php:215
+#: classes/class-id_fes.php:262 ign_metabox/init.php:312
+#: ign_metabox/init.php:617 ignitiondeck-postmeta.php:102
+msgid "Level Title"
+msgstr "Titre de la contrepartie"
+
+#: classes/class-id_fes.php:99 classes/class-id_fes.php:130
+#: classes/class-id_fes.php:180 classes/class-id_fes.php:224
+#: classes/class-id_fes.php:270 ign_metabox/init.php:313
+#: ign_metabox/init.php:618 ignitiondeck-postmeta.php:109
+msgid "Level Price"
+msgstr "Prix de la contrepartie"
+
+#: classes/class-id_fes.php:109 classes/class-id_fes.php:139
+#: classes/class-id_fes.php:190 classes/class-id_fes.php:233
+#: classes/class-id_fes.php:278 ign_metabox/init.php:314
+#: ign_metabox/init.php:619 ignitiondeck-postmeta.php:131
+msgid "Level Limit"
+msgstr "Quantité de la contrepartie"
+
+#: classes/class-id_fes.php:149 classes/class-id_fes.php:242
+#: classes/class-id_fes.php:330
+msgid "Level Description"
+msgstr "Description de la contrepartie"
+
+#: classes/class-id_fes.php:157 classes/class-id_fes.php:250
+#: classes/class-id_fes.php:337 ign_metabox/init.php:622
+#: ignitiondeck-postmeta.php:123
+msgid "Level Long Description"
+msgstr "Description longue de la contrepartie"
+
+#: classes/class-id_fes.php:200 classes/class-id_fes.php:288
+#: classes/class-id_fes.php:390
+#, fuzzy
+msgid "Level Fund Type"
+msgstr "Type de sociofinancement"
+
+#: classes/class-id_fes.php:348 ignitiondeck-admin.php:368
+#: ignitiondeck-admin.php:670 templates/admin/_deckBuilder.php:152
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: classes/class-id_fes.php:348
+#, fuzzy
+msgid "Update Submission"
+msgstr "Options de mise à jour"
+
+#: classes/class-id_fes.php:356
+msgid "Save Draft"
+msgstr ""
+
+#: classes/class-id_fes.php:356
+#, fuzzy
+msgid "Update Draft"
+msgstr "Mettre à jour"
+
+#: classes/class-id_fes.php:362
+msgid "Submit for Review"
+msgstr ""
+
+#: classes/class-id_fes.php:435
+#, fuzzy
+msgid "Project Information"
+msgstr "Information de paiement"
+
+#: classes/class-id_fes.php:436 templates/admin/_deckBuilder.php:26
+msgid "Project Title"
+msgstr "Titre de la campagne"
+
+#: classes/class-id_fes.php:449
+msgid "Goal Amount"
+msgstr "Objectif financier"
+
+#: classes/class-id_fes.php:469 ignitiondeck-admin.php:46
+msgid "Project Category"
+msgstr "Catégorie de la campagne"
+
+#: classes/class-id_fes.php:487 ignitiondeck-postmeta.php:38
+#, fuzzy
+#| msgid "Fundraising End Date"
+msgid "Expires on End Date"
+msgstr "Date finale de la campagne de sociofinancement"
+
+#: classes/class-id_fes.php:499 ignitiondeck-postmeta.php:33
+msgid "Never Expires"
+msgstr ""
+
+#: classes/class-id_fes.php:513
+msgid "Start Date"
+msgstr "Date de début"
+
+#: classes/class-id_fes.php:527 ignitiondeck-admin.php:132
+#: templates/admin/_deckBuilder.php:54
+msgid "End Date"
+msgstr "Date de fin"
+
+#: classes/class-id_fes.php:540
+msgid "Project Details"
+msgstr "Détails de la campagne"
+
+#: classes/class-id_fes.php:541 ignitiondeck-postmeta.php:70
+msgid "Project Short Description"
+msgstr "Courte description de la campagne"
+
+#: classes/class-id_fes.php:554
+msgid "Project Video"
+msgstr "Vidéo de la campagne"
+
+#: classes/class-id_fes.php:566 ignitiondeck-postmeta.php:78
+msgid "Project Long Description"
+msgstr "Description longue de la campagne"
+
+#: classes/class-id_fes.php:579 ignitiondeck-shortcodes.php:202
+msgid "Project FAQ"
+msgstr "FAQ de la campagne"
+
+#: classes/class-id_fes.php:592
+#, fuzzy
+msgid "Project Images"
+msgstr "Image de la campagne"
+
+#: classes/class-id_fes.php:593
+msgid "Featured Image"
+msgstr "Image à la Une"
+
+#: idf/ignitiondeck-idf.php:43
+msgid "WooCommerce Shortcode"
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:52
+msgid ""
+"If matching IgnitionDeck project to WooCommerce products, please enter the "
+"product ID here."
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:52 idf/ignitiondeck-idf.php:263
+msgid "Otherwise, leave this field blank."
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:53
+#, fuzzy
+msgid "Product ID"
+msgstr "ID de campagne"
+
+#: idf/ignitiondeck-idf.php:254
+msgid "EDD Download ID"
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:263
+msgid ""
+"If matching IgnitionDeck project to Easy Digital Downloads, please enter the "
+"download ID here."
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:264
+msgid "Download ID"
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:344
+msgid "Checkout"
+msgstr "Payer"
+
+#: ign_metabox/init.php:133 ign_metabox/init.php:311 ign_metabox/init.php:617
+#: ign_metabox/init.php:621 ignitiondeck-admin.php:205
+#: ignitiondeck-functions.php:1926 ignitiondeck-functions.php:1931
+#: templates/_igWidget.php:95 templates/admin/_orderEdit.php:69
+#: templates/admin/_orderView.php:45
+msgid "Level"
+msgstr "Contrepartie"
+
+#: ign_metabox/init.php:315 ign_metabox/init.php:620
+#: ignitiondeck-postmeta.php:139
+#, fuzzy
+msgid "Level Order"
+msgstr "Prix de la contrepartie"
+
+#: ign_metabox/init.php:316 ign_metabox/init.php:621
+#: ignitiondeck-postmeta.php:115
+#, fuzzy
+msgid "Level Short Description"
+msgstr "Description courte de la contrepartie 1"
+
+#: ign_metabox/init.php:317
+#, fuzzy
+msgid "Level Long Descriptions"
+msgstr "Description longue de la contrepartie"
+
+#: ign_metabox/init.php:329
+msgid "Add Level"
+msgstr "Ajouter une contrepartie"
+
+#: ign_metabox/init.php:329
+msgid "Delete Last Level"
+msgstr "Effacer la dernière contrepartie"
+
+#: ign_metabox/init.php:341 ign_metabox/init.php:344
+msgid "Additional Project Information"
+msgstr "Informations additionelles à la campagne"
+
+#: ignitiondeck-admin.php:7 ignitiondeck-enterprise.php:927
+#: ignitiondeck-functions.php:483 ignitiondeck-functions.php:510
+#: ignitiondeck-functions.php:605 ignitiondeck-functions.php:700
+#, fuzzy
+msgid "projects"
+msgstr "Campagnes"
+
+#: ignitiondeck-admin.php:10
+msgid "Projects"
+msgstr "Campagnes"
+
+#: ignitiondeck-admin.php:11 ignitiondeck-admin.php:128
+#: ignitiondeck-postmeta.php:19 templates/admin/_orderAdd.php:56
+#: templates/admin/_orderEdit.php:55 templates/admin/_orderView.php:38
+msgid "Project"
+msgstr "Campagne"
+
+#: ignitiondeck-admin.php:12 ignitiondeck-admin.php:13
+msgid "Add New Project"
+msgstr "Ajouter nouvelle campagne"
+
+#: ignitiondeck-admin.php:14 ignitiondeck-admin.php:15
+msgid "Edit Project"
+msgstr "Modifier la campagne"
+
+#: ignitiondeck-admin.php:16
+msgid "New Project"
+msgstr "Nouvelle campagne"
+
+#: ignitiondeck-admin.php:17 ignitiondeck-admin.php:18
+msgid "View Project"
+msgstr "Voir la campagne"
+
+#: ignitiondeck-admin.php:19
+#, fuzzy
+#| msgid "Search Project"
+msgid "Search Projects"
+msgstr "Chercher une campagne"
+
+#: ignitiondeck-admin.php:20
+msgid "No Projects Found"
+msgstr "Aucune campagne trouvée"
+
+#: ignitiondeck-admin.php:21
+msgid "No Projects Found in Trash"
+msgstr "Aucune campagne trouvé dans la Corbeille"
+
+#: ignitiondeck-admin.php:45
+msgid "Project Categories"
+msgstr "Catégories de la campagne"
+
+#: ignitiondeck-admin.php:60
+#, fuzzy
+msgid "Project Types"
+msgstr "Type de campagne"
+
+#: ignitiondeck-admin.php:61
+msgid "Project Type"
+msgstr "Type de campagne"
+
+#: ignitiondeck-admin.php:129
+msgid "Author"
+msgstr "Auteur"
+
+#: ignitiondeck-admin.php:130 ignitiondeck-postmeta.php:46
+msgid "Funding Goal"
+msgstr "Objectif de financement"
+
+#: ignitiondeck-admin.php:131 ignitiondeck-admin.php:206
+msgid "Pledged"
+msgstr "Ammasés"
+
+#: ignitiondeck-admin.php:133
+msgid "Days Remaining"
+msgstr "Jours restants"
+
+#: ignitiondeck-admin.php:149
+msgid "None"
+msgstr "Aucun"
+
+#: ignitiondeck-admin.php:203 templates/admin/_orderDetails.php:355
+msgid "Name"
+msgstr "Nom"
+
+#: ignitiondeck-admin.php:204 templates/admin/_customSettings.php:149
+#: templates/admin/_orderAdd.php:61 templates/admin/_orderDetails.php:356
+#: templates/admin/_orderView.php:41
+msgid "Project Name"
+msgstr "Nom de la campagne"
+
+#: ignitiondeck-admin.php:207 templates/admin/_orderDetails.php:359
+msgid "Date"
+msgstr "Date"
+
+#: ignitiondeck-admin.php:231
+msgid "Enter Project Name Here"
+msgstr "Entrer le nom de la campagne ici"
+
+#: ignitiondeck-admin.php:244 ignitiondeck-admin.php:936
+msgid "Project Settings"
+msgstr "Paramètres de la campagne"
+
+#: ignitiondeck-admin.php:246 ignitiondeck-admin.php:938
+msgid "Custom Project Settings"
+msgstr "Paramètres de campagne sur mesure"
+
+#: ignitiondeck-admin.php:246
+#, fuzzy
+msgid "Custom Settings"
+msgstr "Paramètres de campagne sur mesure"
+
+#: ignitiondeck-admin.php:247
+#, fuzzy
+#| msgid "Payment Settings"
+msgid "IDCF Payment Settings"
+msgstr "Paramètres de paiement"
+
+#: ignitiondeck-admin.php:247 ignitiondeck-admin.php:939
+msgid "Payment Settings"
+msgstr "Paramètres de paiement"
+
+#: ignitiondeck-admin.php:248 ignitiondeck-admin.php:940
+#: templates/admin/_deckBuilder.php:6
+msgid "Deck Builder"
+msgstr "Constructeur de Deck"
+
+#: ignitiondeck-admin.php:250
+#, fuzzy
+#| msgid "Orders"
+msgid "IDCF Orders"
+msgstr "Commandes"
+
+#: ignitiondeck-admin.php:252
+msgid "Email Settings"
+msgstr "Paramètres courriel"
+
+#: ignitiondeck-admin.php:257
+#, fuzzy
+msgid "Edit Order"
+msgstr "Ajouter une commande"
+
+#: ignitiondeck-admin.php:258
+#, fuzzy
+msgid "View order"
+msgstr "Voir la campagne"
+
+#: ignitiondeck-admin.php:259
+#, fuzzy
+msgid "Delete Order"
+msgstr "Effacer"
+
+#: ignitiondeck-admin.php:260 templates/admin/_orderAdd.php:90
+#: templates/admin/_orderDetails.php:317
+msgid "Add Order"
+msgstr "Ajouter une commande"
+
+#: ignitiondeck-admin.php:355 ignitiondeck-admin.php:642
+#: templates/admin/_deckBuilder.php:154
+msgid "Add"
+msgstr "Ajouter"
+
+#: ignitiondeck-admin.php:729 ignitiondeck-admin.php:795
+#: ignitiondeck-admin.php:888
+msgid "Save Settings"
+msgstr "Sauvegarder les paramètres"
+
+#: ignitiondeck-admin.php:743
+#, fuzzy
+#| msgid "Settings saved."
+msgid "Settings Saved"
+msgstr "Paramètres sauvegardés."
+
+#: ignitiondeck-admin.php:745 ignitiondeck-admin.php:792
+msgid "Update Settings"
+msgstr "Mettre à jour les paramètres"
+
+#: ignitiondeck-admin.php:754 ignitiondeck-admin.php:902
+#, fuzzy
+#| msgid "Settings saved."
+msgid "Settings Updated"
+msgstr "Paramètres sauvegardés."
+
+#: ignitiondeck-admin.php:929
+#, fuzzy
+msgid "IgnitionDeck Crowdfunding"
+msgstr "Logo IgnitionDeck"
+
+#: ignitiondeck-admin.php:931
+msgid "Support"
+msgstr "Soutien"
+
+#: ignitiondeck-admin.php:932
+msgid "Documentation"
+msgstr "Documentation"
+
+#: ignitiondeck-admin.php:942
+msgid "Orders"
+msgstr "Commandes"
+
+#: ignitiondeck-admin.php:944
+msgid "Email List Settings"
+msgstr "Paramètres de la liste courriel"
+
+#: ignitiondeck-enterprise.php:600
+#, php-format
+msgid ""
+"Your project is currently saved as a draft. You can see a preview %s%s%s here"
+"%s"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:601 ignitiondeck-enterprise.php:605
+msgid ""
+"You can visit this page at any time in order to continue editing your "
+"project."
+msgstr ""
+"Vous pouvez visiter cette page à tout moment pour continuer à modifier votre "
+"campagne."
+
+#: ignitiondeck-enterprise.php:604
+#, fuzzy, php-format
+msgid ""
+"Your project has been submitted and is awaiting review. You can see a "
+"preview %s%s%s here%s"
+msgstr "Votre compagne a été soumise et est en attente de révision."
+
+#: ignitiondeck-enterprise.php:608
+#, php-format
+msgid "Your project is live. You can view it %s%s%s here%s"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:609
+msgid ""
+"You may continue to add levels or edit content available to you on this "
+"screen."
+msgstr ""
+"Vous pouvez continuer d'ajouter des niveaux ou modifier le contenu "
+"disponible sur cette écran."
+
+#: ignitiondeck-enterprise.php:810 ignitiondeck-enterprise.php:960
+msgid "Backer Profile"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:902 ignitiondeck-enterprise.php:1094
+msgid "days to go"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:902 ignitiondeck-enterprise.php:1094
+msgid "Successful"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:902 ignitiondeck-enterprise.php:1094
+#, fuzzy
+msgid "Ended"
+msgstr "se terminant le"
+
+#: ignitiondeck-enterprise.php:905 ignitiondeck-enterprise.php:1097
+#, fuzzy
+msgid "Raised"
+msgstr "Total ammassé"
+
+#: ignitiondeck-enterprise.php:927
+#, fuzzy
+msgid "Backed"
+msgstr "Précédent"
+
+#: ignitiondeck-enterprise.php:928 ignitiondeck-enterprise.php:1128
+msgid "Joined"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1130
+#: templates/_projectCreatorProfile.php:16
+msgid "Website"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1131
+#: templates/_projectCreatorProfile.php:9
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1132
+#: templates/_projectCreatorProfile.php:12
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1133
+#, fuzzy
+msgid "Google Plus"
+msgstr "Google+"
+
+#: ignitiondeck-enterprise.php:1004 ignitiondeck-enterprise.php:1187
+msgid "Creator Profile"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:1124
+#, fuzzy
+msgid "Projects Created"
+msgstr "Catégorie de la campagne"
+
+#: ignitiondeck-enterprise.php:1168
+#, fuzzy
+msgid "' Projects"
+msgstr "Campagnes"
+
+#: ignitiondeck-enterprise.php:1171 ignitiondeck-enterprise.php:1210
+#, fuzzy
+msgid "'s Projects"
+msgstr "Campagnes"
+
+#: ignitiondeck-enterprise.php:1372
+#, fuzzy
+msgid "Publish Project"
+msgstr "Campagnes"
+
+#: ignitiondeck-filters.php:64
+msgid "Hours"
+msgstr ""
+
+#: ignitiondeck-filters.php:68
+msgid "Hour"
+msgstr ""
+
+#: ignitiondeck-functions.php:992
+#, fuzzy
+msgid "Project Content Template"
+msgstr "Catégorie de la campagne"
+
+#: ignitiondeck-functions.php:994
+#, fuzzy
+#| msgid "Project Type"
+msgid "Full Project Template"
+msgstr "Type de campagne"
+
+#: ignitiondeck-functions.php:996
+msgid "Display Templates Separately"
+msgstr ""
+
+#: ignitiondeck-functions.php:1000
+#, fuzzy
+#| msgid "Project Video"
+msgid "Project Grid"
+msgstr "Vidéo de la campagne"
+
+#: ignitiondeck-functions.php:1002
+#, fuzzy
+#| msgid "Project Name"
+msgid "Display Project Name"
+msgstr "Nom de la campagne"
+
+#: ignitiondeck-functions.php:1004
+msgid "Display Project Thumbnail"
+msgstr ""
+
+#: ignitiondeck-functions.php:1006
+#, fuzzy
+#| msgid "Project Long Description"
+msgid "Display Project Long Description"
+msgstr "Description longue de la campagne"
+
+#: ignitiondeck-functions.php:1008
+#, fuzzy
+#| msgid "Project Video"
+msgid "Display Project Video"
+msgstr "Vidéo de la campagne"
+
+#: ignitiondeck-functions.php:1010
+#, fuzzy
+#| msgid "Percentage Bar"
+msgid "Display Percentage Bar"
+msgstr "Barre de pourcentage"
+
+#: ignitiondeck-functions.php:1012
+#, fuzzy
+#| msgid "Short Description"
+msgid "Display Short Description"
+msgstr "Courte description"
+
+#: ignitiondeck-functions.php:1014
+#, fuzzy
+#| msgid "Goal Amount"
+msgid "Display Goal Amount"
+msgstr "Objectif financier"
+
+#: ignitiondeck-functions.php:1016
+#, fuzzy
+#| msgid "Max Number of Payments"
+msgid "Display Number of Pledges"
+msgstr "Nombre maximal de paiements"
+
+#: ignitiondeck-functions.php:1018
+msgid "Display Fundraising Total"
+msgstr ""
+
+#: ignitiondeck-functions.php:1020
+#, fuzzy
+#| msgid "Days left"
+msgid "Display Days Left"
+msgstr "Jours restants"
+
+#: ignitiondeck-functions.php:1022
+#, fuzzy
+#| msgid "End Date"
+msgid "Display End Date"
+msgstr "Date de fin"
+
+#: ignitiondeck-functions.php:1024
+#, fuzzy
+#| msgid "Project FAQ"
+msgid "Display Project FAQ"
+msgstr "FAQ de la campagne"
+
+#: ignitiondeck-functions.php:1026
+#, fuzzy
+#| msgid "Project Updates"
+msgid "Display Project Updates"
+msgstr "Mises à jour de la campagne"
+
+#: ignitiondeck-functions.php:1931
+msgid "No Price Set"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:27
+msgid ""
+"Choose how to handle campaign end. Leave open to keep collecting payments, "
+"closed to remove pledge button."
+msgstr ""
+
+#: ignitiondeck-postmeta.php:47
+#, fuzzy
+msgid "Amount you are seeking to raise (required)"
+msgstr "Montant que vous souhaitez atteindre (obligatoire)"
+
+#: ignitiondeck-postmeta.php:54
+#, fuzzy
+msgid "Proposed Start Date"
+msgstr "Date de livraison proposée"
+
+#: ignitiondeck-postmeta.php:55
+msgid "The date the project creator wishes to start funding"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:62
+msgid "Fundraising End Date"
+msgstr "Date finale de la campagne de sociofinancement"
+
+#: ignitiondeck-postmeta.php:63
+#, fuzzy
+msgid "Date funding will end (recommended)"
+msgstr "Date finale de la campagne de sociofinancement (recommandé)"
+
+#: ignitiondeck-postmeta.php:71
+msgid "Used in the grid, widget areas, and on the purchase form"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:79
+#, fuzzy
+msgid "Supports HTML. Used on project pages"
+msgstr "App.net sur la page de campagne"
+
+#: ignitiondeck-postmeta.php:86
+#, fuzzy
+msgid "Video Embed Code"
+msgstr "Code Embed"
+
+#: ignitiondeck-postmeta.php:87
+msgid "Video embed code using iframe or embed format (YouTube, Vimeo, etc)"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:116
+msgid "Used in widgets sidebars, and in some cases, on the purchase form"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:124
+msgid "For use on the project page and in level shortcodes/widgets"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:132
+msgid "Restrict the number of buyers that can back this level"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:140
+msgid ""
+"Enter a number of 0 (first) or higher if you wish to customize the placement "
+"of this level"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:153
+#, fuzzy
+msgid "Additional Levels"
+msgstr "Prix de contrepartie additionnelle"
+
+#: ignitiondeck-postmeta.php:161
+msgid "Level Management"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:171
+#, fuzzy
+msgid "Project FAQs"
+msgstr "FAQ de la campagne"
+
+#: ignitiondeck-postmeta.php:172
+#, fuzzy
+msgid "List Project FAQs here"
+msgstr "La Foire aux questions de la campagne"
+
+#: ignitiondeck-postmeta.php:180
+#, fuzzy
+msgid "List Project Updates here"
+msgstr "Mises à jour de la campagne"
+
+#: ignitiondeck-shortcodes.php:209
+#, fuzzy
+#| msgid "Project FAQ"
+msgid "Project Faq"
+msgstr "FAQ de la campagne"
+
+#: ignitiondeck-shortcodes.php:228 ignitiondeck-shortcodes.php:235
+#: templates/_projectContent.php:39 templates/_projectContent.php:46
+msgid "Updates"
+msgstr "Mises à jour"
+
+#: ignitiondeck-update.php:90
+msgid ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+msgstr ""
+"Une erreur HTTP inattendu s'est produite pendant la requête d'API.</p> <p><a "
+"href=\"?\" onclick=\"document.location.reload(); return false;\">Veuillez "
+"réessayer</a>"
+
+#: ignitiondeck-update.php:95
+msgid "An unknown error occurred"
+msgstr "Une erreur inconnue s'est produite"
+
+#: ignitiondeck.php:36
+msgid ""
+"IgnitionDeck Crowdfunding requires installation of the IgnitionDeck "
+"Framework prior to activation."
+msgstr ""
+
+#: ignitiondeck.php:36
+msgid "Click here to install"
+msgstr ""
+
+#: ignitiondeck.php:1401
+msgid "Shortcodes"
+msgstr "Shortcodes"
+
+#: ignitiondeck.php:1405 ignitiondeck.php:1408
+#, fuzzy
+msgid "IgnitionDeck Shortcodes"
+msgstr "Logo IgnitionDeck"
+
+#: ignitiondeck.php:1411
+#, fuzzy
+msgid "Project URL"
+msgstr "Campagne"
+
+#: ignitiondeck.php:1414
+msgid "Purchase URL"
+msgstr ""
+
+#: ignitiondeck.php:1417
+msgid "Thank You Project URL"
+msgstr ""
+
+#: ignitiondeck.php:1420
+#, fuzzy
+msgid "Project Parent"
+msgstr "Montant de la campagne"
+
+#: ignitiondeck.php:1450
+msgid "Project Page URL"
+msgstr ""
+
+#: ignitiondeck.php:1453
+msgid "Current Project Page"
+msgstr ""
+
+#: ignitiondeck.php:1454 templates/admin/_productSettings.php:113
+#: templates/admin/_productSettings.php:145
+#, fuzzy
+#| msgid "Page/Post"
+msgid "Page or Post"
+msgstr "Page/Article"
+
+#: ignitiondeck.php:1455 templates/admin/_productSettings.php:114
+#: templates/admin/_productSettings.php:146
+msgid "External URL"
+msgstr "URL externe"
+
+#: ignitiondeck.php:1482 templates/admin/_productSettings.php:126
+#: templates/admin/_productSettings.php:159
+msgid "Select"
+msgstr "Sélection"
+
+#: ignitiondeck.php:1513 ignitiondeck.php:1576
+msgid "Default"
+msgstr "Par défaut"
+
+#: ignitiondeck.php:1648
+msgid "No Parent"
+msgstr ""
+
+#: templates/_embedWidget.php:14
+msgid "RAISED"
+msgstr ""
+
+#: templates/_embedWidget.php:19 templates/_igWidget.php:40
+#: templates/_miniWidget.php:46 templates/admin/_deckBuilder.php:50
+#, fuzzy
+#| msgid "Days left"
+msgid "Days Left"
+msgstr "Jours restants"
+
+#: templates/_embedWidget.php:20 templates/_igWidget.php:61
+#: templates/_igWidget.php:64 templates/_miniWidget.php:64
+msgid "Learn More"
+msgstr "En savoir plus"
+
+#: templates/_embedWidget.php:24
+#, fuzzy
+#| msgid "Powered By IgnitionDeck"
+msgid "powered by IgnitionDeck"
+msgstr "Fourni par IgnitionDeck"
+
+#: templates/_igWidget.php:31 templates/_miniWidget.php:37
+msgid "Pledged of"
+msgstr "Ammassés sur"
+
+#: templates/_igWidget.php:31 templates/_miniWidget.php:37
+msgid "Goal"
+msgstr "Objectif"
+
+#: templates/_igWidget.php:35 templates/_miniWidget.php:41
+msgid "Pledgers"
+msgstr "Soutiens"
+
+#: templates/_igWidget.php:48 templates/_miniWidget.php:53
+msgid "Crowdfunding ends on"
+msgstr "Sociofinancement se terminant le"
+
+#: templates/_igWidget.php:48
+#, fuzzy
+#| msgid "Ended on"
+msgid "Ended On"
+msgstr "se terminant le"
+
+#: templates/_igWidget.php:61 templates/_igWidget.php:64
+msgid "Support Now"
+msgstr "Supportez"
+
+#: templates/_igWidget.php:97
+msgid "Limit"
+msgstr "Limite"
+
+#: templates/_igWidget.php:97
+msgid "of"
+msgstr "de"
+
+#: templates/_igWidget.php:97
+msgid "Taken"
+msgstr "Achetés"
+
+#: templates/_igWidget.php:109
+msgid "Crowdfunding by IgnitionDeck"
+msgstr "Sociofinancement par IgnitionDeck"
+
+#: templates/_igWidget.php:109 templates/_miniWidget.php:69
+msgid "Powered By IgnitionDeck"
+msgstr "Fourni par IgnitionDeck"
+
+#: templates/_lbLevelSelect.php:15
+msgid "Step 1:"
+msgstr ""
+
+#: templates/_lbLevelSelect.php:15
+msgid "Specify your contribution amount for"
+msgstr ""
+
+#: templates/_lbLevelSelect.php:20
+#, fuzzy
+msgid "Contribution Level"
+msgstr "Contribution totale"
+
+#: templates/_lbLevelSelect.php:37
+#, fuzzy
+msgid "Total"
+msgstr "Ventes totales"
+
+#: templates/_lbLevelSelect.php:54
+msgid "Next Step"
+msgstr ""
+
+#: templates/_miniWidget.php:69
+#, fuzzy
+#| msgid "Crowdfunding ends on"
+msgid "Crowdfunding"
+msgstr "Sociofinancement se terminant le"
+
+#: templates/_projectContent.php:24 templates/_projectContent.php:31
+#, fuzzy
+#| msgid "FAQs"
+msgid "FAQ"
+msgstr "Foire aux questions"
+
+#: templates/admin/_customSettings.php:150
+msgid "Project ID"
+msgstr "ID de campagne"
+
+#: templates/admin/_deckBuilder.php:8
+#, fuzzy
+#| msgid "Save Settings"
+msgid "Deck Settings"
+msgstr "Sauvegarder les paramètres"
+
+#: templates/admin/_deckBuilder.php:12
+msgid "Select deck to edit, or create new"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:14
+#, fuzzy
+#| msgid "Created Date"
+msgid "Create New"
+msgstr "Date de création"
+
+#: templates/admin/_deckBuilder.php:20
+msgid "Deck Title"
+msgstr "Titre de deck"
+
+#: templates/admin/_deckBuilder.php:30
+#, fuzzy
+#| msgid "Project Title"
+msgid "Project Thumbnail"
+msgstr "Titre de la campagne"
+
+#: templates/admin/_deckBuilder.php:34
+msgid "Percentage Bar"
+msgstr "Barre de pourcentage"
+
+#: templates/admin/_deckBuilder.php:38
+#, fuzzy
+msgid "Funds Raised"
+msgstr "Total ammassé"
+
+#: templates/admin/_deckBuilder.php:42
+msgid "Project Goal"
+msgstr "Objectif de campagne"
+
+#: templates/admin/_deckBuilder.php:46
+#, fuzzy
+#| msgid "Number of Levels"
+msgid "Number of Pledges"
+msgstr "Nombre de contreparties"
+
+#: templates/admin/_deckBuilder.php:58
+#, fuzzy
+#| msgid "Buy Button"
+msgid "Donate Button"
+msgstr "Bouton d'achat"
+
+#: templates/admin/_deckBuilder.php:62
+#, fuzzy
+#| msgid "Project Long Description"
+msgid "Project Description"
+msgstr "Description longue de la campagne"
+
+#: templates/admin/_deckBuilder.php:66
+msgid "Levels"
+msgstr "Contreparties"
+
+#: templates/admin/_deckBuilder.php:76
+msgid "General Settings"
+msgstr "Paramètres généraux"
+
+#: templates/admin/_deckBuilder.php:81
+#, fuzzy
+#| msgid "Delete Skin"
+msgid "Deck Skins"
+msgstr "Effacer Style"
+
+#: templates/admin/_deckBuilder.php:84 templates/admin/_deckBuilder.php:94
+#, fuzzy
+#| msgid "IgnitionDeck (Light)"
+msgid "IgnitionDeck Light"
+msgstr "IgnitionDeck (Pâle)"
+
+#: templates/admin/_deckBuilder.php:85 templates/admin/_deckBuilder.php:95
+#, fuzzy
+#| msgid "IgnitionDeck (Dark)"
+msgid "IgnitionDeck Dark"
+msgstr "IgnitionDeck (Foncé)"
+
+#: templates/admin/_deckBuilder.php:86 templates/admin/_deckBuilder.php:100
+msgid "Corporate"
+msgstr "Corporate"
+
+#: templates/admin/_deckBuilder.php:87 templates/admin/_deckBuilder.php:96
+#, fuzzy
+#| msgid "Clear"
+msgid "Clean"
+msgstr "Effacer"
+
+#: templates/admin/_deckBuilder.php:88 templates/admin/_deckBuilder.php:97
+#, fuzzy
+#| msgid "Clean (Dark)"
+msgid "Clean Dark"
+msgstr "Clean (Foncé)"
+
+#: templates/admin/_deckBuilder.php:89 templates/admin/_deckBuilder.php:98
+#, fuzzy
+#| msgid "Skyscraper (Dark)"
+msgid "Skyscraper"
+msgstr "Skyscraper (Foncé)"
+
+#: templates/admin/_deckBuilder.php:90 templates/admin/_deckBuilder.php:99
+#, fuzzy
+#| msgid "Skyscraper (Dark)"
+msgid "Skyscraper Dark"
+msgstr "Skyscraper (Foncé)"
+
+#: templates/admin/_deckBuilder.php:104
+msgid "Skins Instructions"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:107
+msgid "How to add Deck skins"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:109
+msgid "Upload skin assets to the /skins directory via FTP"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:110
+msgid ""
+"CSS file will be named ignitiondeck-skinname.css. Enter the &lsquo;"
+"skinname&rsquo; in the box and click &lsquo;Add Skin&rsquo;"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:111
+msgid "To delete, select skin and click &lsquo;Delete Skin&rsquo;"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:116
+#, fuzzy
+#| msgid "Add Skin"
+msgid "Add skin"
+msgstr "Ajouter style"
+
+#: templates/admin/_deckBuilder.php:121 templates/admin/_deckBuilder.php:123
+#, fuzzy
+#| msgid "Delete Skin"
+msgid "Delete skin"
+msgstr "Effacer Style"
+
+#: templates/admin/_deckBuilder.php:131
+#, fuzzy
+#| msgid "Ignition Deck Logo"
+msgid "IgnitionDeck Logo"
+msgstr "Logo IgnitionDeck"
+
+#: templates/admin/_deckBuilder.php:134
+#, fuzzy
+#| msgid ""
+#| "This allows you to activate and share via the 'Powered By IgnitionDeck' "
+#| "logo that would appear at the bottom of the widget."
+msgid ""
+"This allows you to activate and share via the Powered By IgnitionDeck logo "
+"that would appear at the bottom of the widget"
+msgstr ""
+"Ceci vous permet d'activer et de partager le logo «Fournis par IgnitionDeck» "
+"qui apparaîtra au bas du widget"
+
+#: templates/admin/_deckBuilder.php:138
+msgid "Affiliate Settings"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:140
+msgid "Affiliate Link"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:143
+#, fuzzy
+#| msgid "Click Here"
+msgid "Click here"
+msgstr "Cliquez ici"
+
+#: templates/admin/_deckBuilder.php:143
+msgid ""
+"to sign up for our referral program, and paste your unique URL here. Set "
+"this to http://ignitiondeck.com for default setting."
+msgstr ""
+
+#: templates/admin/_orderAdd.php:6 templates/admin/_orderEdit.php:3
+#: templates/admin/_orderView.php:3
+msgid "Order Details"
+msgstr "Détails des commandes"
+
+#: templates/admin/_orderAdd.php:11 templates/admin/_orderEdit.php:7
+#: templates/admin/_orderView.php:6 templates/admin/_productSettings.php:62
+msgid "First Name"
+msgstr "Prénom"
+
+#: templates/admin/_orderAdd.php:15 templates/admin/_orderEdit.php:13
+#: templates/admin/_orderView.php:10 templates/admin/_productSettings.php:67
+msgid "Last Name"
+msgstr "Nom de famille"
+
+#: templates/admin/_orderAdd.php:19 templates/admin/_orderEdit.php:19
+#: templates/admin/_orderView.php:14
+msgid "Email Address"
+msgstr "Adresse courriel"
+
+#: templates/admin/_orderAdd.php:23 templates/admin/_productSettings.php:77
+msgid "Address"
+msgstr "Adresse"
+
+#: templates/admin/_orderAdd.php:27 templates/admin/_orderEdit.php:49
+#: templates/admin/_orderView.php:34 templates/admin/_productSettings.php:82
+msgid "Country"
+msgstr "Pays"
+
+#: templates/admin/_orderAdd.php:31 templates/admin/_productSettings.php:87
+msgid "State"
+msgstr "Province/État"
+
+#: templates/admin/_orderAdd.php:35 templates/admin/_orderEdit.php:31
+#: templates/admin/_orderView.php:22 templates/admin/_productSettings.php:93
+msgid "City"
+msgstr "Ville"
+
+#: templates/admin/_orderAdd.php:39 templates/admin/_orderEdit.php:43
+#: templates/admin/_orderView.php:30
+#, fuzzy
+#| msgid "Total Orders"
+msgid "Postal Code"
+msgstr "Achats totaux"
+
+#: templates/admin/_orderAdd.php:43 templates/admin/_orderEdit.php:80
+#: templates/admin/_orderView.php:63
+#, fuzzy
+#| msgid "Order Details"
+msgid "Order Status"
+msgstr "Détails des commandes"
+
+#: templates/admin/_orderAdd.php:45 templates/admin/_orderEdit.php:83
+msgid "Pending"
+msgstr "En attente"
+
+#: templates/admin/_orderAdd.php:46 templates/admin/_orderEdit.php:84
+msgid "Complete"
+msgstr "Complété"
+
+#: templates/admin/_orderAdd.php:75
+msgid "Project Level"
+msgstr "Contrepartie de campagne"
+
+#: templates/admin/_orderAdd.php:77
+#, fuzzy
+#| msgid "Project Level"
+msgid "Select Level"
+msgstr "Contrepartie de campagne"
+
+#: templates/admin/_orderAdd.php:81
+msgid "Enter Custom Value"
+msgstr ""
+
+#: templates/admin/_orderDetails.php:320
+#, fuzzy
+msgid "Search Orders"
+msgstr "Chercher une campagne"
+
+#: templates/admin/_orderDetails.php:335
+#, fuzzy
+msgid "Show all projects"
+msgstr "Widget pour afficher les campagne"
+
+#: templates/admin/_orderDetails.php:354
+msgid "ID"
+msgstr ""
+
+#: templates/admin/_orderDetails.php:357 templates/admin/_orderView.php:59
+#, fuzzy
+#| msgid "Level based"
+msgid "Level Name"
+msgstr "Avec contrepartie"
+
+#: templates/admin/_orderDetails.php:358
+msgid "Price"
+msgstr "Prix"
+
+#: templates/admin/_orderDetails.php:398
+msgid "View"
+msgstr "Voir"
+
+#: templates/admin/_orderDetails.php:398
+msgid "Edit"
+msgstr "Modifier"
+
+#: templates/admin/_orderDetails.php:398
+msgid "Confirm Order Deletion"
+msgstr ""
+
+#: templates/admin/_orderDetails.php:398
+msgid "Delete"
+msgstr "Effacer"
+
+#: templates/admin/_orderEdit.php:2 templates/admin/_orderView.php:2
+msgid "Return to Orders List"
+msgstr ""
+
+#: templates/admin/_orderEdit.php:25
+#, fuzzy
+#| msgid "Address"
+msgid "Streeth Address"
+msgstr "Adresse"
+
+#: templates/admin/_orderEdit.php:37 templates/admin/_orderView.php:26
+msgid "State or Territory"
+msgstr ""
+
+#: templates/admin/_orderEdit.php:71
+msgid "Select Project"
+msgstr "Choisissez la campagne"
+
+#: templates/admin/_orderEdit.php:76 templates/admin/_orderView.php:54
+#, fuzzy
+#| msgid "Goal Amount"
+msgid "Custom Amount"
+msgstr "Objectif financier"
+
+#: templates/admin/_orderEdit.php:85
+msgid "Waiting"
+msgstr "En attente"
+
+#: templates/admin/_orderEdit.php:91
+#, fuzzy
+msgid "Update Order"
+msgstr "Ajouter une commande"
+
+#: templates/admin/_orderView.php:18
+#, fuzzy
+#| msgid "Address"
+msgid "Street Address"
+msgstr "Adresse"
+
+#: templates/admin/_orderView.php:49
+#, fuzzy
+#| msgid "Payment Form"
+msgid "Payment Total"
+msgstr "Formulaire de paiement"
+
+#: templates/admin/_productSettings.php:7
+msgid "Default Project Settings"
+msgstr "Paramètres de campagne par défaut"
+
+#: templates/admin/_productSettings.php:10
+msgid ""
+"This is where you set the defaults for whenever you create a new project on "
+"your website.  Whatever you set here, is what each project will default to, "
+"unless you set its custom settings below."
+msgstr ""
+
+#: templates/admin/_productSettings.php:12
+msgid ""
+"Currency Code: this is the currency PayPal will collect funds in, as well as "
+"the currency that will be displayed publicly."
+msgstr ""
+
+#: templates/admin/_productSettings.php:14
+msgid ""
+"Address information: Ask for this if some of your reward levels involve "
+"shipping an item.  We highly suggest however, that you email all of your "
+"supporters once it’s actually time to ship, to get up to date shipping "
+"information from them at that time."
+msgstr ""
+
+#: templates/admin/_productSettings.php:23
+msgid "Currency Code"
+msgstr "Type de monnaie"
+
+#: templates/admin/_productSettings.php:25
+msgid "U.S. Dollar"
+msgstr ""
+
+#: templates/admin/_productSettings.php:26
+msgid "Australian Dollar"
+msgstr ""
+
+#: templates/admin/_productSettings.php:27
+msgid "Canadian Dollar"
+msgstr ""
+
+#: templates/admin/_productSettings.php:28
+msgid "Czech Koruna"
+msgstr ""
+
+#: templates/admin/_productSettings.php:29
+msgid "Danish Krone"
+msgstr ""
+
+#: templates/admin/_productSettings.php:30
+msgid "Euro"
+msgstr ""
+
+#: templates/admin/_productSettings.php:31
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#: templates/admin/_productSettings.php:32
+msgid "Hungarian Forint"
+msgstr ""
+
+#: templates/admin/_productSettings.php:33
+msgid "Israeli New Sheqel"
+msgstr ""
+
+#: templates/admin/_productSettings.php:34
+msgid "Japanese Yen"
+msgstr ""
+
+#: templates/admin/_productSettings.php:35
+msgid "Mexican Peso"
+msgstr ""
+
+#: templates/admin/_productSettings.php:36
+msgid "Malaysian Ringgit"
+msgstr ""
+
+#: templates/admin/_productSettings.php:37
+msgid "Norwegian Krone"
+msgstr ""
+
+#: templates/admin/_productSettings.php:38
+msgid "New Zealand Dollar"
+msgstr ""
+
+#: templates/admin/_productSettings.php:39
+msgid "Philippine Peso"
+msgstr ""
+
+#: templates/admin/_productSettings.php:40
+msgid "Polish Zloty"
+msgstr ""
+
+#: templates/admin/_productSettings.php:41
+msgid "Pound Sterling"
+msgstr ""
+
+#: templates/admin/_productSettings.php:42
+msgid "Singapore Dollar"
+msgstr ""
+
+#: templates/admin/_productSettings.php:43
+msgid "Swedish Krona"
+msgstr ""
+
+#: templates/admin/_productSettings.php:44
+msgid "Swiss Franc"
+msgstr ""
+
+#: templates/admin/_productSettings.php:45
+msgid "New Taiwan Dollar"
+msgstr ""
+
+#: templates/admin/_productSettings.php:46
+msgid "Thai Baht"
+msgstr ""
+
+#: templates/admin/_productSettings.php:47
+msgid "Turkish Lira"
+msgstr ""
+
+#: templates/admin/_productSettings.php:48
+msgid "Brazilian Real"
+msgstr ""
+
+#: templates/admin/_productSettings.php:53
+#, fuzzy
+msgid "Check All"
+msgstr "Effacer tout"
+
+#: templates/admin/_productSettings.php:54
+msgid "Clear All"
+msgstr "Effacer tout"
+
+#: templates/admin/_productSettings.php:57
+#, fuzzy
+#| msgid "Field name"
+msgid "Field Name"
+msgstr "Nom du champ"
+
+#: templates/admin/_productSettings.php:58
+msgid "Enabled"
+msgstr "Activé"
+
+#: templates/admin/_productSettings.php:59
+msgid "Mandatory"
+msgstr "Obligatoire"
+
+#: templates/admin/_productSettings.php:72
+msgid "Email"
+msgstr "Courriel"
+
+#: templates/admin/_productSettings.php:98
+msgid "Zip"
+msgstr "Code postal"
+
+#: templates/admin/_productSettings.php:108
+msgid "Default Purchase Page"
+msgstr ""
+
+#: templates/admin/_productSettings.php:140
+msgid "Default Thank You Page"
+msgstr ""
+
+#: templates/admin/_productSettings.php:174
+msgid "Automatically insert project template"
+msgstr ""
+
+#: templates/admin/_projectApprovalSettings.php:2
+#, fuzzy
+#| msgid "Project Goal"
+msgid "Project Approval"
+msgstr "Objectif de campagne"
+
+#: templates/admin/_projectApprovalSettings.php:3
+msgid "Automatically Approve Projects"
+msgstr ""
+
+#: templates/admin/_projectPreauthSelect.php:3
+msgid "Process Project Pre-Authorizations"
+msgstr ""
+
+#: templates/admin/_projectPreauthSelect.php:5
+msgid ""
+"Warning:</span> This will process all pending authorizations related to the "
+"selected campaign"
+msgstr ""
+
+#: templates/admin/_projectPreauthSelect.php:6
+msgid "Customers will only be charged once"
+msgstr ""
+
+#: templates/admin/_projectPreauthSelect.php:12
+msgid "Process Project Authorizations"
+msgstr ""
+
+#~ msgid "Project Image 2"
+#~ msgstr "2e image de la campagne"
+
+#~ msgid "Project Image 3"
+#~ msgstr "3e image de la campagne"
+
+#~ msgid "Project Image 4"
+#~ msgstr "4e image de la campagne"
+
+#~ msgid "Close on End"
+#~ msgstr "Se terminant le"
+
+#~ msgid "Leave Open"
+#~ msgstr "Campagne ouverte"
+
+#, fuzzy
+#~ msgid "Pledge What You Want"
+#~ msgstr "Ce que vous voulez"
+
+#, fuzzy
+#~ msgid "Level-Based"
+#~ msgstr "Avec contrepartie"
+
+#~ msgid "Company Name"
+#~ msgstr "Nom de la compagnie"
+
+#, fuzzy
+#~ msgid "Project's Company Name"
+#~ msgstr "Nom de la compagnie"
+
+#~ msgid "Company Location"
+#~ msgstr "Adresse de la compagnie"
+
+#~ msgid "Company URL"
+#~ msgstr "URL de la compagnie"
+
+#~ msgid "Company Facebook"
+#~ msgstr "Profil Facebook de la compagnie"
+
+#, fuzzy
+#~ msgid "Company Facebook page"
+#~ msgstr "Profil Facebook de la compagnie"
+
+#~ msgid "Company Twitter"
+#~ msgstr "Profil Twitter de la compagnie"
+
+#, fuzzy
+#~ msgid "Company Twitter page"
+#~ msgstr "Profil Twitter de la compagnie"
+
+#~ msgid "Company Logo"
+#~ msgstr "Logo de la compagnie"
+
+#~ msgid ""
+#~ "Pledge what you want or level based campaign. If you choose pledge what "
+#~ "you want, only the first level will be used. If you choose level based, "
+#~ "you can create as many levels as you need."
+#~ msgstr ""
+#~ "«Donnez ce que vous voulez» ou campagne avec contreparties. Si vous "
+#~ "choisissez «donnez ce que vous voulez», seulement la première "
+#~ "contrepartie sera utilisée. Si vous choisissez avec contreparties, vous "
+#~ "pouvez créer autant de contreparties que souhaité."
+
+#~ msgid "Pledge what you want"
+#~ msgstr "Ce que vous voulez"
+
+#~ msgid "Open"
+#~ msgstr "Ouvert"
+
+#~ msgid "Closed"
+#~ msgstr "Fermé"
+
+#~ msgid "Image 2"
+#~ msgstr "Image 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Image 2 - Shortcode: [project_image product=\"{product_number}\" image="
+#~ "\"2\"]"
+#~ msgstr "Image 2 - Shortcode: [product_image product=\"1\" image=\"2\"]"
+
+#~ msgid "Image 3"
+#~ msgstr "Image 3"
+
+#, fuzzy
+#~ msgid ""
+#~ "Image 3 - Shortcode: [project_image product=\"{product_number}\" image="
+#~ "\"3\"]"
+#~ msgstr "Image 3 - Shortcode: [product_image product=\"1\" image=\"3\"]"
+
+#~ msgid "Image 4"
+#~ msgstr "Image 4"
+
+#, fuzzy
+#~ msgid ""
+#~ "Image 4 - Shortcode: [project_image product=\"{product_number}\" image="
+#~ "\"4\"]"
+#~ msgstr "Image 4 - Shortcode: [product_image product=\"1\" image=\"4\"]"
+
+#~ msgid "No funding goal set"
+#~ msgstr "Aucun objectif de financement de choisie"
+
+#~ msgid "No date set"
+#~ msgstr "Aucune date de choisie"
+
+#~ msgid "IgnitionDeck Control Panel"
+#~ msgstr "Panneau de contrôles IgnitionDeck"
+
+#~ msgid "Facebook Application Settings"
+#~ msgstr "Paramèetres de l'application Facebook"
+
+#~ msgid "Save"
+#~ msgstr "Sauvegarder"
+
+#~ msgid "Facebook settings have been successfully updated."
+#~ msgstr "Les paramètres Facebook ont été mis à jour."
+
+#~ msgid "Twitter Application Settings"
+#~ msgstr "Paramètre de l'application Twitter"
+
+#~ msgid "Twitter settings have been successfully updated."
+#~ msgstr "Les paramètres Twitter ont été mis à jour."
+
+#~ msgid "Form settings have been successfully updated."
+#~ msgstr "Paramètres de formulaire mis à jour."
+
+#~ msgid "Twitter settings have been successfully saved."
+#~ msgstr "Paramètres Twitter mis à jour."
+
+#~ msgid "Aweber settings have been successfully saved."
+#~ msgstr "Paramètres Aweber mis à jour."
+
+#~ msgid "Aweber settings have been successfully updated."
+#~ msgstr "Paramètres Awebeer mis à jour."
+
+#~ msgid "Mailchimp settings have been successfully saved."
+#~ msgstr "Paramètres Mailchimp mis à jour."
+
+#~ msgid "Mailchimp settings have been successfully updated."
+#~ msgstr "Paramètres Mailchimp mis à jour."
+
+#~ msgid "Payment settings have been successfully saved."
+#~ msgstr "Paramètres de paiement mis à jour."
+
+#~ msgid "Please fill all fields."
+#~ msgstr "Veuillez remplir tous les champs."
+
+#~ msgid "Projects successfully added."
+#~ msgstr "Campagnes ajoutées."
+
+#~ msgid "previous"
+#~ msgstr "précédent"
+
+#~ msgid "next"
+#~ msgstr "suivant"
+
+#~ msgid "Project has been successfully updated."
+#~ msgstr "Campagne mise à jour."
+
+#~ msgid "Settings have been successfully updated."
+#~ msgstr "Paramètres mis à jour"
+
+#~ msgid "Asked Questions"
+#~ msgstr "Questions demandées"
+
+#~ msgid "Settings"
+#~ msgstr "Paramètres"
+
+#~ msgid "Social Settings"
+#~ msgstr "Paramètres Médias sociaux"
+
+#~ msgid "Payment Form Settings"
+#~ msgstr "Paramètres du formulaire de paiement"
+
+#~ msgid "Widget to show projects"
+#~ msgstr "Widget pour afficher les campagne"
+
+#~ msgid "IgnitionDeck Project Widget"
+#~ msgstr "Widget IgnitionDeck pour campagne"
+
+#~ msgid "About the Project"
+#~ msgstr "À propos de la campagne"
+
+#, fuzzy
+#~ msgid "The Project FAQs"
+#~ msgstr "La Foire aux questions de la campagne"
+
+#~ msgid "Buyers"
+#~ msgstr "Acheteurs"
+
+#~ msgid "Redirecting to Paypal..."
+#~ msgstr "Redirection vers Paypal"
+
+#~ msgid "Twitter.connection.failed"
+#~ msgstr "Connection.Twitter.échouée"
+
+#~ msgid "Error occured let's try again"
+#~ msgstr "Une erreur s'est produite, essayez encore"
+
+#~ msgid "Twitter.share.success"
+#~ msgstr "succès.parager.Twitter"
+
+#~ msgid "Twitter.share.failed"
+#~ msgstr "échec.partager.Twitter"
+
+#~ msgid "Facebook.share.success"
+#~ msgstr "succès.partager.Facebook"
+
+#~ msgid "Facebook.share.failed"
+#~ msgstr "échec.partage.Facebook"
+
+#~ msgid "IgnitionDeck: %s sent a question"
+#~ msgstr "IgnitionDeck: %s a envoyé une question"
+
+#~ msgid "Subject"
+#~ msgstr "Sujet"
+
+#~ msgid "Message"
+#~ msgstr "Message"
+
+#~ msgid "Update Options"
+#~ msgstr "Options de mise à jour"
+
+#~ msgid "Contact Form"
+#~ msgstr "Formulaire de contact"
+
+#~ msgid "Send email"
+#~ msgstr "Envoyer le courriel"
+
+#~ msgid "Our Earliest Buyers"
+#~ msgstr "Nos premiers acheteurs"
+
+#~ msgid "Ask A Question"
+#~ msgstr "Demandez une question"
+
+#~ msgid "Payment Information"
+#~ msgstr "Information de paiement"
+
+#~ msgid "Pay with Paypal"
+#~ msgstr "Payer avec Paypal"
+
+#~ msgid "Funding"
+#~ msgstr "Financement"
+
+#~ msgid "Total Sale"
+#~ msgstr "Ventes totales"
+
+#~ msgid "LinkedIn"
+#~ msgstr "LinkedIn"
+
+#~ msgid "Google+"
+#~ msgstr "Google+"
+
+#~ msgid "Pinterest"
+#~ msgstr "Pinterest"
+
+#~ msgid "Yes"
+#~ msgstr "Oui"
+
+#~ msgid "No"
+#~ msgstr "Non"
+
+#~ msgid "Please share your experience with your friends!"
+#~ msgstr "Partagez votre expérience avec vos amis!"
+
+#~ msgid "API key"
+#~ msgstr "Clé API"
+
+#~ msgid "Subscription Email"
+#~ msgstr "Courriel de souscription"
+
+#~ msgid "Aweber Settings"
+#~ msgstr "Paramètres Aweber"
+
+#~ msgid "Make Active"
+#~ msgstr "Mettre Actif"
+
+#~ msgid "Consumer Secret"
+#~ msgstr "Secret de l'acheteur"
+
+#~ msgid "List Email Id"
+#~ msgstr "ID de la liste courriel"
+
+#~ msgid "Mailchimp Settings"
+#~ msgstr "Paramètres Mailchimp"
+
+#~ msgid "List id"
+#~ msgstr "Liste de ID"
+
+#~ msgid "Embed Widget Code"
+#~ msgstr "Code du Widget Embed"
+
+#~ msgid "Select Project to Create Embed Code for"
+#~ msgstr "Choisissez la campagne pour créer le code Embed de :"
+
+#~ msgid "Embed Code"
+#~ msgstr "Code Embed"
+
+#~ msgid "Application Id"
+#~ msgstr "Id d'application"
+
+#~ msgid "Application secret key"
+#~ msgstr "Clé secrète de l'application"
+
+#~ msgid "Text to share"
+#~ msgstr "Texte à partager"
+
+#~ msgid "Zip Code"
+#~ msgstr "Code postal"
+
+#~ msgid "Status"
+#~ msgstr "État"
+
+#~ msgid "Completed"
+#~ msgstr "Complétées"
+
+#~ msgid "Are you sure you want to delete this order by"
+#~ msgstr "Êtes vous sur que vous souhaitez détruire cet ordre par"
+
+#~ msgid "Last Email"
+#~ msgstr "Dernier courriel"
+
+#~ msgid "Paypal Refund"
+#~ msgstr "Remboursement Paypal"
+
+#~ msgid "Pay Key"
+#~ msgstr "Clé Pay"
+
+#~ msgid "Transaction ID"
+#~ msgstr "ID de transaction"
+
+#~ msgid "Refund"
+#~ msgstr "Remboursement"
+
+#~ msgid "PayPal Identity Token"
+#~ msgstr "Jeton d'identité Paypal"
+
+#~ msgid "PayPal Email"
+#~ msgstr "Courriel Paypal"
+
+#~ msgid "PayPal Override"
+#~ msgstr "Paypal Manuel"
+
+#~ msgid "Cancel"
+#~ msgstr "Annulation"
+
+#~ msgid "Project Image"
+#~ msgstr "Image de la campagne"
+
+#~ msgid "Change"
+#~ msgstr "Changer"
+
+#~ msgid "Close"
+#~ msgstr "Fermer"
+
+#~ msgid "Project Price"
+#~ msgstr "Montant de la campagne"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "Image"
+#~ msgstr "Image"
+
+#~ msgid "Mailchimp API Key"
+#~ msgstr "Clé API Mailchimp"
+
+#~ msgid "Mailchimp List ID"
+#~ msgstr "Liste ID Mailchimp"
+
+#~ msgid "Aweber Email"
+#~ msgstr "Courriel Aweber"
+
+#~ msgid "Active Settings"
+#~ msgstr "Paramètres actifs"
+
+#~ msgid "First name"
+#~ msgstr "Prénom"
+
+#~ msgid "Last name"
+#~ msgstr "Nom de famille"
+
+#~ msgid "Question Details"
+#~ msgstr "Détails de la question"
+
+#~ msgid "Question Subject"
+#~ msgstr "Sujet de la question"
+
+#~ msgid "Facebook on Project Page"
+#~ msgstr "Facebook sur la page de campagne"
+
+#~ msgid "Want people to share via Facebook from your project page?  Use this."
+#~ msgstr ""
+#~ "Vous souhaiter que les gens partagent via Facebook de votre page de "
+#~ "campagne? Utilisez ceci."
+
+#~ msgid "Want people to share via Twitter from your project page?  Use this."
+#~ msgstr ""
+#~ "Vous souhaiter que les gens partagent via Twitter de votre page de "
+#~ "campagne? Utilisez ceci."
+
+#~ msgid "Twitter on Project Page"
+#~ msgstr "Twitter sur la page de campagne"
+
+#~ msgid "Want people to share via App.net from your project page?  Use this."
+#~ msgstr ""
+#~ "Vous souhaiter que les gens partagent via App.net de votre page de "
+#~ "campagne? Utilisez ceci."
+
+#~ msgid "App.net on Project Page"
+#~ msgstr "App.net sur la page de campagne"
+
+#~ msgid "LinkedIn on Project Page"
+#~ msgstr "LinkedIn sur la pagne de campagne"
+
+#~ msgid "Want people to share via LinkedIn from your project page?  Use this."
+#~ msgstr ""
+#~ "Vous souhaiter que les gens partagent via LinkedIn de votre page de "
+#~ "campagne? Utilisez ceci."
+
+#~ msgid "Want people to share via Google+ from your project page?  Use this."
+#~ msgstr ""
+#~ "Vous souhaiter que les gens partagent via Google+ de votre page de "
+#~ "campagne? Utilisez ceci."
+
+#~ msgid "Google+ on Project Page"
+#~ msgstr "Google+ sur la page de campagne"
+
+#~ msgid ""
+#~ "Want people to share via Pinterest from your project page?  Use this."
+#~ msgstr ""
+#~ "Vous souhaiter que les gens partagent via Pinterest de votre page de "
+#~ "campagne? Utilisez ceci."
+
+#~ msgid "Pinterest on Project Page"
+#~ msgstr "Pinterest sur la page de campagne"
+
+#~ msgid "Ask a Question Button"
+#~ msgstr "Bouton Demandez une question"
+
+#~ msgid "Enable or disable ask a question button on the widget"
+#~ msgstr "Activer ou désactiver le bouton Demandez une question sur le widget"
+
+#~ msgid "Ask a Question Email"
+#~ msgstr "Courriel pour Demandez une question"
+
+#~ msgid "Email address to which the question should be sent"
+#~ msgstr "Adresse courriel à qui la question devrait être envoyée"
+
+#~ msgid "Deck Themes"
+#~ msgstr "Thèmes de Deck"
+
+#~ msgid "IgnitionDeck"
+#~ msgstr "IgnitionDeck"
+
+#~ msgid "Clean (Light)"
+#~ msgstr "Clean (Pâle)"
+
+#~ msgid "Skyscraper (Light)"
+#~ msgstr "Skyscraper (Pâle)"
+
+#~ msgid "Supporter Exclusive"
+#~ msgstr "Exclusif au donateur"
+
+#~ msgid "Consumer Key"
+#~ msgstr "Clé de client"
+
+#~ msgid "Callback URL"
+#~ msgstr "URL de rappel"
+
+#~ msgid "Projects successfully updated."
+#~ msgstr "Campagnes mises à jour"
+
+#~ msgid "Projects successfully deleted."
+#~ msgstr "Campagnes effacées."
+
+#~ msgid "Add Project"
+#~ msgstr "Ajouter une campagne"
+
+#~ msgid "Name of the Project (Required)"
+#~ msgstr "Nom de la campagne (Obligatoire)"
+
+#~ msgid "Price for Level 1"
+#~ msgstr "Prix pour la contrepartie 1"
+
+#~ msgid "Price of the first reward level for your project (required)."
+#~ msgstr "Prix de la 1ère contrepartie de votre campagne (obligatoire)"
+
+#~ msgid "Level 1 Long Description"
+#~ msgstr "Description longue de la contrepartie 1"
+
+#~ msgid "Level 1 Short Description"
+#~ msgstr "Description courte de la contrepartie 1"
+
+#~ msgid "Title for level 1."
+#~ msgstr "Titre pour la contrepartie 1"
+
+#~ msgid "Purchase limit for level 1."
+#~ msgstr "Quantité maximale pour la contrepartie 1"
+
+#~ msgid "Amount you are looking to raise (required)."
+#~ msgstr "Montant que vous souhaitez atteindre (obligatoire)"
+
+#~ msgid "Ending date for fundraising (recommended)."
+#~ msgstr "Date finale de la campagne de sociofinancement (recommandé)"
+
+#~ msgid "Proposed Ship Date"
+#~ msgstr "Date de livraison proposée"
+
+#~ msgid "When do you hope to ship? Leave blank if unknown."
+#~ msgstr ""
+#~ "Quand est-ce que vous croyez pouvoir livrer vos contreparties? Laisser la "
+#~ "case vide si inconnu."
+
+#~ msgid "Video"
+#~ msgstr "Vidéo"
+
+#~ msgid "Embed Video Code (YouTube, Vimeo, Viddler)."
+#~ msgstr "Code Embed du vidéo (Youtube, Vimeo, Viddler)."
+
+#~ msgid "Main Project Image"
+#~ msgstr "Image à la Une de la campagne"
+
+#, fuzzy
+#~ msgid "Image 1 - Shortcode: [project_image product=\"1\" image=\"1\"]"
+#~ msgstr "Image 1 - Shortcode: [product_image product=\"1\" image=\"1\"]"
+
+#, fuzzy
+#~ msgid "Image 2 - Shortcode: [project_image product=\"1\" image=\"2\"]"
+#~ msgstr "Image 2 - Shortcode: [product_image product=\"1\" image=\"2\"]"
+
+#, fuzzy
+#~ msgid "Image 3 - Shortcode: [project_image product=\"1\" image=\"3\"]"
+#~ msgstr "Image 3 - Shortcode: [product_image product=\"1\" image=\"3\"]"
+
+#, fuzzy
+#~ msgid "Image 4 - Shortcode: [project_image product=\"1\" image=\"4\"]"
+#~ msgstr "Image 4 - Shortcode: [product_image product=\"1\" image=\"4\"]"
+
+#~ msgid ""
+#~ "For those often asked questions that you would like to give a direct "
+#~ "answer to. You can edit and add as much as needed."
+#~ msgstr ""
+#~ "Pour les question fréquamment demandées auxquelles vous souhaiteriez "
+#~ "donner une réponse directement. Vous pouvez modifier et ajouter autant de "
+#~ "contenu que souhaité."
+
+#~ msgid "Add product updates here."
+#~ msgstr "Ajouter la mise à jour de la campagne ici."
+
+#~ msgid "Terms and Conditions"
+#~ msgstr "Engagements et conditions"
+
+#~ msgid ""
+#~ "This is not displayed on the project page. This is displayed during "
+#~ "checkout and will show below the checkout box.  Use this space to specify "
+#~ "your terms, answer questions regarding shipping, and cover all your bases."
+#~ msgstr ""
+#~ "Ce texte n'est pas affiché sur la page principale de la campagne. Elle "
+#~ "est présenté pendant le paiement, juste au dessous de la boîte de "
+#~ "paiement. Utilisez cette espace pour ajouter vos engagements, les détails "
+#~ "concernant l'envoi et toute autre information nécessaire."
+
+#~ msgid ""
+#~ "We recommend you fill this in with clear instructions about how your "
+#~ "project is going to go after you've reached your goal.  It would also be "
+#~ "very smart to mention what you'll do if you don't reach your goal."
+#~ msgstr ""
+#~ "Nous recommandons d'ajouter ici des instructions claires à propos de "
+#~ "comment s'organisera votre campagne dès que vous aurez atteinds votre "
+#~ "objectif. Ce sera aussi intelligent de mentionner qu'est-ce qui se "
+#~ "passera si l'objectif n'est pas atteind."
+
+#~ msgid "Additional Price Levels"
+#~ msgstr "Prix de contrepartie additionnelle"
+
+#~ msgid "Add additional price levels here."
+#~ msgstr "Ajouter le prix de contrepartie additionnelle ici."
+
+#~ msgid ""
+#~ "This is the project short description, used for the regular, mini, and "
+#~ "embed widgets."
+#~ msgstr ""
+#~ "C'est la description court de votre campagne, utilisée pour les widgets "
+#~ "réguliers, mini et embed."
+
+#~ msgid "IgnitionDeck Mini Widget"
+#~ msgstr "Mini Widget IgnitionDeck"
+
+#~ msgid "Sandbox Mode"
+#~ msgstr "Mode Bac à sable"
+
+#~ msgid "Check to enable Paypal Sandbox mode."
+#~ msgstr ""
+#~ "Cochez pour activer le mode de BaCochez pour activer le mode Bac à sable "
+#~ "de Paypal"
+
+#~ msgid "Long Description"
+#~ msgstr "Description longue"
+
+#~ msgid ""
+#~ "This is the project long description, used for displaying content below "
+#~ "the video field."
+#~ msgstr ""
+#~ "Ceci est la description longue de la campagne, utilisée pour afficher le "
+#~ "contenu sous le champ de vidéo."
+
+#~ msgid "API Username"
+#~ msgstr "Nom d'utilisateur de API"
+
+#~ msgid "API Password"
+#~ msgstr "Mot de passe de l'API"
+
+#~ msgid "API Signature"
+#~ msgstr "Signature de l'API"
+
+#~ msgid "Pre Approval Key"
+#~ msgstr "Clé de pré-approbation"
+
+#~ msgid ""
+#~ "Please write pre approval key to let the user purchase directly without "
+#~ "going to PayPal website. Use this only for secure connections"
+#~ msgstr ""
+#~ "Merci d'inscrire la clé de pré-approbation pour laisser les utilisateurs "
+#~ "acheter directement sans passer par le site web de Paypal. Utiliser ceci "
+#~ "seulement avec des connexions sécurisées."
+
+#~ msgid "Payment Error"
+#~ msgstr "Erreur de paiement"
+
+#~ msgid "Preapproval Key"
+#~ msgstr "Clé de pré-approbation"
+
+#~ msgid "Generate Preapproval Key"
+#~ msgstr "Générer une clé de pré-approbation"
+
+#~ msgid "Paypal_Email"
+#~ msgstr "Courriel Paypal"
+
+#~ msgid "Starting Date"
+#~ msgstr "Date de début"
+
+#~ msgid "Ending Date"
+#~ msgstr "Date de fin"
+
+#~ msgid "Max Total Amount"
+#~ msgstr "Maximum total du montant"
+
+#~ msgid "Show Mini Widget on"
+#~ msgstr "Montrer le mini widget sur"
+
+#~ msgid "Project Page Only"
+#~ msgstr "Page de campagne seulement"
+
+#~ msgid "Small Widget on all Pages"
+#~ msgstr "Petit widget sur toutes les pages"
+
+#~ msgid "Only"
+#~ msgstr "Seulement"
+
+#~ msgid "Reload Captcha"
+#~ msgstr "Rafraîchir Captcha"
+
+#~ msgid "Type Captcha"
+#~ msgstr "Sorte de Captcha"
+
+#~ msgid "Title"
+#~ msgstr "Titre"
+
+#~ msgid "Total Contribution"
+#~ msgstr "Contribution totale"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "Awesome! You are about to support"
+#~ msgstr "Merveilleux! Vous êtes en train de soutenir"
+
+#~ msgid "Required"
+#~ msgstr "Obligatoire"
+
+#~ msgid "Publishable Key"
+#~ msgstr "Clé publiable"
+
+#~ msgid "Payment Method"
+#~ msgstr "Méthode de paiement"
+
+#~ msgid "Payment Method Selection"
+#~ msgstr "Sélection de méthode de paiement"
+
+#~ msgid ""
+#~ "The current Payment Gateway is PayPal.  Below you fill in all those blank "
+#~ "fields, to make IgnitionDeck interface with PayPal so you can collect the "
+#~ "funds to your PayPal account, and then make sure IgnitionDeck knows that "
+#~ "each order is completed, and post the results to your Project Widget. "
+#~ "This may be the most complicated part of setting up your project, so pay "
+#~ "close attention and you’ll have it done in no time!"
+#~ msgstr ""
+#~ "Le système de paiement présent est Paypal. Ci-dessous, vous remplissez "
+#~ "les champs vides afin de permettre à l'interface de IgnitionDeck de "
+#~ "d'ammasser vos dons par le biais de votre compte Paypal, et d'assurer que "
+#~ "IgnitionDeck sait que chaque commande est complète, et qu'elle publie les "
+#~ "résultats sur le widget de la campagne. Ce peut être la partie la plus "
+#~ "difficile de votre installation alors veuillez porter une attention "
+#~ "particulière et ce sera terminé rapidement!"
+
+#~ msgid "for instructions on getting your Paypal Identity Token."
+#~ msgstr "pour des instructions sur le jeton d'identité Paypal."
+
+#~ msgid ""
+#~ "Rarely required. Sometimes helps when international orders are rejected "
+#~ "because of address issues."
+#~ msgstr ""
+#~ "Rarement obligatoire. Parfois c'est utile lorsque les achats "
+#~ "internationaux sont rejetés à cause de problèmes d'adresse."
+
+#~ msgid "Enter Price"
+#~ msgstr "Entrez le prix"
+
+#~ msgid "Sold out"
+#~ msgstr "Complet"
+
+#~ msgid "Enter Manual Amount"
+#~ msgstr "Entrer un montant manuellement"
+
+#~ msgid "Switch Project Type"
+#~ msgstr "Changer le type de campagne"
+
+#~ msgid "Back"
+#~ msgstr "Précédent"
+
+#~ msgid ""
+#~ "Copy this HTML code and send it to the person who’d like to post this to "
+#~ "their website, or use it yourself.  Make sure, wherever you use it, it’s "
+#~ "pasted as HTML.  We don’t recommend you edit this code in any way, as "
+#~ "it’s been designed to very specifically work at the exact width and "
+#~ "height it is set at."
+#~ msgstr ""
+#~ "Copiez ce code HTML and envoyez le à la personne qui souhaite l'ajouter "
+#~ "sur son site web, ou utilisez-le vous-même. Soyez sûr, peu importe "
+#~ "l'utilisation, qu'il est ajouté comme HTML. Nous ne recommandons par de "
+#~ "modifier ce code d'aucune manière, puisqu'il fut programmé pour "
+#~ "fonctionner dans la largeur et la hauteur préféfinie."
+
+#~ msgid "Warning"
+#~ msgstr "Attention"
+
+#~ msgid "Email Settings Saved"
+#~ msgstr "Paramètres courriel sauvegardés"
+
+#~ msgid "New Deck"
+#~ msgstr "Nouveau Deck"
+
+#~ msgid "Total Raised"
+#~ msgstr "Total ammassé"
+
+#~ msgid "Order"
+#~ msgstr "Achat"
+
+#, fuzzy
+#~ msgid "Manual Amount"
+#~ msgstr "Entrer un montant manuellement"
+
+#~ msgid " IgnitionDeck Enterprise"
+#~ msgstr "IgnitionDeck Entreprise"
+
+#~ msgid " IgnitionDeck"
+#~ msgstr "IgnitionDeck"
+
+#~ msgid "Your project is live."
+#~ msgstr "Votre campagne est en ligne."
+
+#~ msgid "Anticipated Ship Date"
+#~ msgstr "Date anticipée de livraison"
+
+#~ msgid "Submit"
+#~ msgstr "Envoyer"

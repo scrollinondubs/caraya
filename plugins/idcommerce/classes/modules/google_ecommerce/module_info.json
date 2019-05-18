@@ -1,0 +1,8 @@
+{
+  "title":"Google Ecommerce",
+  "short_desc":"Enables Google Ecommerce conversion tracking with IgnitionDeck Commerce products.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "idc"
+}

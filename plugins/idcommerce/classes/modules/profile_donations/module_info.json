@@ -1,0 +1,8 @@
+{
+  "title":"Profile Donations",
+  "short_desc":"Visitors can donate directly to a project creator via a link on their profile. Supports standard and recurring payments.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "ide"
+}

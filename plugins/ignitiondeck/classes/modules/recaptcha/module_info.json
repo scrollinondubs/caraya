@@ -1,0 +1,8 @@
+{
+  "title":"reCAPTCHA V2",
+  "short_desc":"Prevents spam by adding Google's reCAPTCHA V2 to login and registration forms.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": ""
+}

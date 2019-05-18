@@ -1,0 +1,8 @@
+{
+	"title":"Lemonway Checkout",
+	"short_desc":"short description",
+	"doclink":"#",
+  	"status":"hidden",
+  	"type":"module",
+  	"requires": "idc"
+}

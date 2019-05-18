@@ -1,0 +1,484 @@
+# Copyright (C) 2014 Astoundify
+# This file is distributed under the GNU General Public License.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Fundify 1.8.10\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tags/fundify\n"
+"POT-Creation-Date: 2017-03-02 22:00-0500\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_n;_nx;_n:1,2;_nx:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:13
+msgid "404!"
+msgstr ""
+
+#: 404.php:14
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: archive-ignition_product.php:14
+msgid "Discover Projects"
+msgstr ""
+
+#: archive.php:37
+msgid "Archives"
+msgstr ""
+
+#: archive.php:43
+msgid "Category Archives"
+msgstr ""
+
+#: archive.php:45
+msgid "Tag Archives"
+msgstr ""
+
+#: archive.php:47
+msgid "Author Archives"
+msgstr ""
+
+#: archive.php:49
+msgid "Daily Archives"
+msgstr ""
+
+#: archive.php:51
+msgid "Monthly Archives"
+msgstr ""
+
+#: archive.php:53
+msgid "Yearly Archives"
+msgstr ""
+
+#: author.php:19
+#, php-format
+msgid "Created %1$d Campaign"
+msgid_plural "Created %1$d Campaigns"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:30 content.php:18
+#, php-format
+msgid "1 Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:36 comments.php:48
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:37 comments.php:49
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: comments.php:38 comments.php:50
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: comments.php:60
+msgid "Comments are closed."
+msgstr ""
+
+#: content-post.php:11 content-post.php:16 content.php:24
+#, php-format
+msgid "Permalink to %s"
+msgstr ""
+
+#: content-project-sort.php:3
+msgid "Show"
+msgstr ""
+
+#: content-project-sort.php:9 content-project-sort.php:14
+msgid "All"
+msgstr ""
+
+#: content-project-sort.php:27
+msgid "Recently Added"
+msgstr ""
+
+#: content-project-sort.php:31
+msgid "Staff Picks"
+msgstr ""
+
+#: content-project.php:25
+msgid "Successful"
+msgstr ""
+
+#: content-project.php:29
+msgid "Unsuccessful"
+msgstr ""
+
+#: content-project.php:33
+msgid "Ending Soon"
+msgstr ""
+
+#: content-project.php:37
+msgid "Staff Pick"
+msgstr ""
+
+#: content-project.php:69
+msgid "Funded"
+msgstr ""
+
+#: content-project.php:74
+msgid "Days to Go"
+msgstr ""
+
+#: content-project.php:76
+msgid "Ended On"
+msgstr ""
+
+#: content.php:17
+#, php-format
+msgid "Date Posted: %s"
+msgstr ""
+
+#: content.php:18
+msgid " 0 Comments"
+msgstr ""
+
+#: content.php:18
+msgid "% Comments"
+msgstr ""
+
+#: content.php:27
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: content.php:30
+msgid "Pages:"
+msgstr ""
+
+#: content.php:31
+msgid "Tags:"
+msgstr ""
+
+#: footer.php:38
+msgid "Get the Stats"
+msgstr ""
+
+#: footer.php:48
+#, php-format
+msgid "&copy; Copyright %s %s"
+msgstr ""
+
+#: functions.php:80
+msgid "Primary Left Menu"
+msgstr ""
+
+#: functions.php:81
+msgid "Primary Right Menu"
+msgstr ""
+
+#: functions.php:94
+msgid "Sidebar"
+msgstr ""
+
+#: functions.php:104
+#, php-format
+msgid "Footer Column %d"
+msgstr ""
+
+#: inc/crowdfunding.php:44
+msgid "Notice"
+msgstr ""
+
+#: inc/crowdfunding.php:44
+msgid "To take advantage of all of the great features Fundify offers, please install the"
+msgstr ""
+
+#: inc/crowdfunding.php:44
+msgid "IgnitionDeck Crowdfunding Plugin"
+msgstr ""
+
+#: inc/crowdfunding.php:44
+msgid "Hide this message"
+msgstr ""
+
+#: inc/crowdfunding.php:145
+#, php-format
+msgid "This %s has ended. No more pledges can be made."
+msgstr ""
+
+#: inc/customizer.php:70
+msgid "General"
+msgstr ""
+
+#: inc/customizer.php:81
+msgid "Enable Responsive Design"
+msgstr ""
+
+#: inc/customizer.php:95
+msgid "Enable Fixed Header"
+msgstr ""
+
+#: inc/customizer.php:109
+msgid "Header Size"
+msgstr ""
+
+#: inc/customizer.php:142
+msgid "Hero Unit"
+msgstr ""
+
+#: inc/customizer.php:153
+msgid "Slider Shortcode"
+msgstr ""
+
+#: inc/customizer.php:166
+msgid "Style"
+msgstr ""
+
+#: inc/customizer.php:171
+msgid "Grid"
+msgstr ""
+
+#: inc/customizer.php:172
+msgid "Single"
+msgstr ""
+
+#: inc/customizer.php:184 inc/customizer.php:329
+msgid "Hero Text"
+msgstr ""
+
+#: inc/customizer.php:205
+msgid "Accent Color"
+msgstr ""
+
+#: inc/customizer.php:215
+msgid "Footer"
+msgstr ""
+
+#: inc/customizer.php:226
+msgid "Text Color"
+msgstr ""
+
+#: inc/customizer.php:239
+msgid "Logo Image"
+msgstr ""
+
+#: inc/customizer.php:252
+msgid "Background Color"
+msgstr ""
+
+#: inc/customizer.php:265
+msgid "Background Image"
+msgstr ""
+
+#: inc/customizer.php:277
+msgid "Background Repeat"
+msgstr ""
+
+#: inc/customizer.php:281
+msgid "No Repeat"
+msgstr ""
+
+#: inc/customizer.php:282
+msgid "Tile"
+msgstr ""
+
+#: inc/customizer.php:283
+msgid "Tile Horizontally"
+msgstr ""
+
+#: inc/customizer.php:284
+msgid "Tile Vertically"
+msgstr ""
+
+#: inc/customizer.php:295
+msgid "Background Position"
+msgstr ""
+
+#: inc/customizer.php:299
+msgid "Left"
+msgstr ""
+
+#: inc/customizer.php:300
+msgid "Center"
+msgstr ""
+
+#: inc/customizer.php:301
+msgid "Right"
+msgstr ""
+
+#: inc/customizer.php:318
+msgid "Contact Page"
+msgstr ""
+
+#: inc/customizer.php:343
+msgid "Page Subtitle"
+msgstr ""
+
+#: inc/customizer.php:357
+msgid "Contact Address"
+msgstr ""
+
+#: inc/customizer.php:371
+msgid "Map Image"
+msgstr ""
+
+#: inc/extras.php:41
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: inc/template-tags.php:46
+msgid "Pingback:"
+msgstr ""
+
+#: inc/template-tags.php:46
+msgid "(Edit)"
+msgstr ""
+
+#: inc/template-tags.php:56
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: inc/template-tags.php:63
+msgid "Edit"
+msgstr ""
+
+#: index.php:19
+msgid "The Blog"
+msgstr ""
+
+#: modal-campaign-widget.php:2 modal-project-widget.php:13
+msgid "Embed a widget on your site"
+msgstr ""
+
+#: modal-campaign-widget.php:9 modal-project-widget.php:20
+msgid "Help raise awareness for this campaign by sharing this widget. Simply paste the following HTML code most places on the web."
+msgstr ""
+
+#: modal-campaign-widget.php:11 modal-project-widget.php:22
+msgid "Embed Code"
+msgstr ""
+
+#: no-results.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#: no-results.php:19
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr ""
+
+#: no-results.php:21
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: project/author-info.php:16
+msgid "About the Author"
+msgstr ""
+
+#: project/author-info.php:38
+#, php-format
+msgid "Created %1$d Project"
+msgid_plural "Created %1$d Projects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: project/author-info.php:42
+msgid "View Profile"
+msgstr ""
+
+#: project/author-info.php:65
+msgid "Ask Question"
+msgstr ""
+
+#: project/faqs.php:15 project/project-sort-tabs.php:24
+msgid "FAQ"
+msgstr ""
+
+#: project/meta.php:25
+#, php-format
+msgid "Launched: %s"
+msgstr ""
+
+#: project/meta.php:31
+#, php-format
+msgid "Funding Ends: %s"
+msgstr ""
+
+#: project/project-details.php:42
+#, php-format
+msgid "Pledged of %s Goal"
+msgstr ""
+
+#: project/project-details.php:49
+msgid "Backer"
+msgid_plural "Backers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: project/project-details.php:55
+msgid "Day to Go"
+msgid_plural "Days to Go"
+msgstr[0] ""
+msgstr[1] ""
+
+#: project/project-details.php:58
+msgid "Ends at midnight"
+msgstr ""
+
+#: project/project-details.php:66
+msgid "Contribute Now"
+msgstr ""
+
+#: project/project-details.php:68
+msgid "Project Closed"
+msgstr ""
+
+#: project/project-sort-tabs.php:22
+msgid "Overview"
+msgstr ""
+
+#: project/project-sort-tabs.php:26 project/updates.php:15
+msgid "Updates"
+msgstr ""
+
+#: project/project-sort-tabs.php:29
+msgid "Comments"
+msgstr ""
+
+#: project/project-sort-tabs.php:31 single-ignition_product.php:80
+msgid "Backers"
+msgstr ""
+
+#: project/project-sort-tabs.php:33
+msgid "Edit Campaign"
+msgstr ""
+
+#: project/share.php:25
+#, php-format
+msgid "Check out %s on %s! %s"
+msgstr ""
+
+#: project/share.php:29
+msgid "Share this campaign"
+msgstr ""
+
+#: search.php:16
+msgid "Search Results"
+msgstr ""
+
+#: searchform-project.php:11
+msgid "Search"
+msgstr ""
+
+#: single-ignition_product.php:76
+msgid "Pledge"
+msgstr ""
+
+#: single.php:15
+#, php-format
+msgid "By %s"
+msgstr ""

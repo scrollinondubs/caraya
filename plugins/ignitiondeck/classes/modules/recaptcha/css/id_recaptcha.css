@@ -1,0 +1,21 @@
+.id_recaptcha_placeholder {
+	transform:scale(0.9);
+	-webkit-transform:scale(0.9);
+	transform-origin:0 0;
+	-webkit-transform-origin:0 0;
+}
+
+.md-requiredlogin .id_recaptcha_placeholder {
+	transform:scale(0.77);
+	-webkit-transform:scale(0.77);
+	transform-origin:0 0;
+	-webkit-transform-origin:0 0;
+}
+
+#helix-loginform .id_recaptcha_placeholder {
+	margin-top: 8px;
+	transform:scale(0.88);
+	-webkit-transform:scale(0.88);
+	transform-origin:0 0;
+	-webkit-transform-origin:0 0;
+}

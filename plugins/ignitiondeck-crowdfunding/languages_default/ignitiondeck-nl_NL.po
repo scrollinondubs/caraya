@@ -1,0 +1,2408 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: IgnitionDeck 1.5.16\n"
+"POT-Creation-Date: 2018-01-18 13:58-0500\n"
+"PO-Revision-Date: 2018-01-18 13:58-0500\n"
+"Last-Translator: Nathan Hangen <nhangen@gmail.com>\n"
+"Language-Team: Virtuous Giant <hello@virtuousgiant.com>\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: classes/class-id_fes.php:34 ignitiondeck-postmeta.php:26
+msgid "Campaign End Options"
+msgstr "Campagne einde instellingen"
+
+#: classes/class-id_fes.php:58 ignitiondeck-postmeta.php:179
+msgid "Project Updates"
+msgstr "Project updates"
+
+#: classes/class-id_fes.php:76 ign_metabox/init.php:338
+msgid "Project Reward Levels"
+msgstr "Project beloningsniveau's"
+
+#: classes/class-id_fes.php:77
+msgid "Number of Levels"
+msgstr "Aantal niveau's"
+
+#: classes/class-id_fes.php:90 classes/class-id_fes.php:121
+#: classes/class-id_fes.php:171 classes/class-id_fes.php:215
+#: classes/class-id_fes.php:262 ign_metabox/init.php:312
+#: ign_metabox/init.php:617 ignitiondeck-postmeta.php:102
+msgid "Level Title"
+msgstr "Niveau titel"
+
+#: classes/class-id_fes.php:99 classes/class-id_fes.php:130
+#: classes/class-id_fes.php:180 classes/class-id_fes.php:224
+#: classes/class-id_fes.php:270 ign_metabox/init.php:313
+#: ign_metabox/init.php:618 ignitiondeck-postmeta.php:109
+msgid "Level Price"
+msgstr "Niveau prijs"
+
+#: classes/class-id_fes.php:109 classes/class-id_fes.php:139
+#: classes/class-id_fes.php:190 classes/class-id_fes.php:233
+#: classes/class-id_fes.php:278 ign_metabox/init.php:314
+#: ign_metabox/init.php:619 ignitiondeck-postmeta.php:131
+msgid "Level Limit"
+msgstr "Niveau limiet"
+
+#: classes/class-id_fes.php:149 classes/class-id_fes.php:242
+#: classes/class-id_fes.php:330
+msgid "Level Description"
+msgstr "Niveau korte omschrijving"
+
+#: classes/class-id_fes.php:157 classes/class-id_fes.php:250
+#: classes/class-id_fes.php:337 ign_metabox/init.php:622
+#: ignitiondeck-postmeta.php:123
+msgid "Level Long Description"
+msgstr "Niveau uitgebreide omschrijving"
+
+#: classes/class-id_fes.php:200 classes/class-id_fes.php:288
+#: classes/class-id_fes.php:390
+#, fuzzy
+msgid "Level Fund Type"
+msgstr "Type project financiering"
+
+#: classes/class-id_fes.php:348 ignitiondeck-admin.php:368
+#: ignitiondeck-admin.php:670 templates/admin/_deckBuilder.php:152
+msgid "Update"
+msgstr "Update"
+
+#: classes/class-id_fes.php:348
+#, fuzzy
+msgid "Update Submission"
+msgstr "Update instellingen"
+
+#: classes/class-id_fes.php:356
+msgid "Save Draft"
+msgstr ""
+
+#: classes/class-id_fes.php:356
+#, fuzzy
+msgid "Update Draft"
+msgstr "Update"
+
+#: classes/class-id_fes.php:362
+msgid "Submit for Review"
+msgstr ""
+
+#: classes/class-id_fes.php:435
+#, fuzzy
+msgid "Project Information"
+msgstr "Betalingsinformatie"
+
+#: classes/class-id_fes.php:436 templates/admin/_deckBuilder.php:26
+msgid "Project Title"
+msgstr "Project titel"
+
+#: classes/class-id_fes.php:449
+msgid "Goal Amount"
+msgstr "Doelbedrag"
+
+#: classes/class-id_fes.php:469 ignitiondeck-admin.php:46
+msgid "Project Category"
+msgstr "Projectcategorie"
+
+#: classes/class-id_fes.php:487 ignitiondeck-postmeta.php:38
+#, fuzzy
+#| msgid "Fundraising End Date"
+msgid "Expires on End Date"
+msgstr "Einddatum fondsenwerving"
+
+#: classes/class-id_fes.php:499 ignitiondeck-postmeta.php:33
+msgid "Never Expires"
+msgstr ""
+
+#: classes/class-id_fes.php:513
+msgid "Start Date"
+msgstr "Begindatum"
+
+#: classes/class-id_fes.php:527 ignitiondeck-admin.php:132
+#: templates/admin/_deckBuilder.php:54
+msgid "End Date"
+msgstr "Einddatum"
+
+#: classes/class-id_fes.php:540
+msgid "Project Details"
+msgstr "Projectdetails"
+
+#: classes/class-id_fes.php:541 ignitiondeck-postmeta.php:70
+msgid "Project Short Description"
+msgstr "Korte beschrijving project"
+
+#: classes/class-id_fes.php:554
+msgid "Project Video"
+msgstr "Projectvideo"
+
+#: classes/class-id_fes.php:566 ignitiondeck-postmeta.php:78
+msgid "Project Long Description"
+msgstr "Uitgebreide beschrijving project"
+
+#: classes/class-id_fes.php:579 ignitiondeck-shortcodes.php:202
+msgid "Project FAQ"
+msgstr "Veel gestelde vragen"
+
+#: classes/class-id_fes.php:592
+#, fuzzy
+msgid "Project Images"
+msgstr "Projectafbeelding"
+
+#: classes/class-id_fes.php:593
+msgid "Featured Image"
+msgstr "Projectafbeelding 1"
+
+#: idf/ignitiondeck-idf.php:43
+msgid "WooCommerce Shortcode"
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:52
+msgid ""
+"If matching IgnitionDeck project to WooCommerce products, please enter the "
+"product ID here."
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:52 idf/ignitiondeck-idf.php:263
+msgid "Otherwise, leave this field blank."
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:53
+#, fuzzy
+msgid "Product ID"
+msgstr "ID"
+
+#: idf/ignitiondeck-idf.php:254
+#, fuzzy
+msgid "EDD Download ID"
+msgstr "ID"
+
+#: idf/ignitiondeck-idf.php:263
+msgid ""
+"If matching IgnitionDeck project to Easy Digital Downloads, please enter the "
+"download ID here."
+msgstr ""
+
+#: idf/ignitiondeck-idf.php:264
+#, fuzzy
+msgid "Download ID"
+msgstr "ID"
+
+#: idf/ignitiondeck-idf.php:344
+msgid "Checkout"
+msgstr "Bevestigen"
+
+#: ign_metabox/init.php:133 ign_metabox/init.php:311 ign_metabox/init.php:617
+#: ign_metabox/init.php:621 ignitiondeck-admin.php:205
+#: ignitiondeck-functions.php:1926 ignitiondeck-functions.php:1931
+#: templates/_igWidget.php:95 templates/admin/_orderEdit.php:69
+#: templates/admin/_orderView.php:45
+msgid "Level"
+msgstr "Niveau"
+
+#: ign_metabox/init.php:315 ign_metabox/init.php:620
+#: ignitiondeck-postmeta.php:139
+#, fuzzy
+msgid "Level Order"
+msgstr "Niveau prijs"
+
+#: ign_metabox/init.php:316 ign_metabox/init.php:621
+#: ignitiondeck-postmeta.php:115
+#, fuzzy
+msgid "Level Short Description"
+msgstr "Niveau 1 korte omschrijving"
+
+#: ign_metabox/init.php:317
+#, fuzzy
+msgid "Level Long Descriptions"
+msgstr "Niveau uitgebreide omschrijving"
+
+#: ign_metabox/init.php:329
+msgid "Add Level"
+msgstr "Voeg niveau toe"
+
+#: ign_metabox/init.php:329
+msgid "Delete Last Level"
+msgstr "Verwijder laatste niveau"
+
+#: ign_metabox/init.php:341 ign_metabox/init.php:344
+msgid "Additional Project Information"
+msgstr "Extra projectinformatie"
+
+#: ignitiondeck-admin.php:7 ignitiondeck-enterprise.php:927
+#: ignitiondeck-functions.php:483 ignitiondeck-functions.php:510
+#: ignitiondeck-functions.php:605 ignitiondeck-functions.php:700
+#, fuzzy
+msgid "projects"
+msgstr "Projecten"
+
+#: ignitiondeck-admin.php:10
+msgid "Projects"
+msgstr "Projecten"
+
+#: ignitiondeck-admin.php:11 ignitiondeck-admin.php:128
+#: ignitiondeck-postmeta.php:19 templates/admin/_orderAdd.php:56
+#: templates/admin/_orderEdit.php:55 templates/admin/_orderView.php:38
+msgid "Project"
+msgstr "Project"
+
+#: ignitiondeck-admin.php:12 ignitiondeck-admin.php:13
+msgid "Add New Project"
+msgstr "Voeg een nieuw project toe"
+
+#: ignitiondeck-admin.php:14 ignitiondeck-admin.php:15
+msgid "Edit Project"
+msgstr "Project aanpassen"
+
+#: ignitiondeck-admin.php:16
+msgid "New Project"
+msgstr "Nieuw project"
+
+#: ignitiondeck-admin.php:17 ignitiondeck-admin.php:18
+msgid "View Project"
+msgstr "Bekijk project"
+
+#: ignitiondeck-admin.php:19
+#, fuzzy
+#| msgid "Search Project"
+msgid "Search Projects"
+msgstr "Zoek project"
+
+#: ignitiondeck-admin.php:20
+msgid "No Projects Found"
+msgstr "Geen projecten gevonden"
+
+#: ignitiondeck-admin.php:21
+msgid "No Projects Found in Trash"
+msgstr "Geen projecten gevonden in de prullenbak"
+
+#: ignitiondeck-admin.php:45
+msgid "Project Categories"
+msgstr "Projectcategorieën"
+
+#: ignitiondeck-admin.php:60
+#, fuzzy
+msgid "Project Types"
+msgstr "Project type"
+
+#: ignitiondeck-admin.php:61
+msgid "Project Type"
+msgstr "Project type"
+
+#: ignitiondeck-admin.php:129
+msgid "Author"
+msgstr "Auteur"
+
+#: ignitiondeck-admin.php:130 ignitiondeck-postmeta.php:46
+msgid "Funding Goal"
+msgstr "Financieringsdoel"
+
+#: ignitiondeck-admin.php:131 ignitiondeck-admin.php:206
+msgid "Pledged"
+msgstr "Gedoneerd"
+
+#: ignitiondeck-admin.php:133
+msgid "Days Remaining"
+msgstr "Dagen resterend"
+
+#: ignitiondeck-admin.php:149
+msgid "None"
+msgstr "Geen"
+
+#: ignitiondeck-admin.php:203 templates/admin/_orderDetails.php:355
+msgid "Name"
+msgstr "Naam"
+
+#: ignitiondeck-admin.php:204 templates/admin/_customSettings.php:149
+#: templates/admin/_orderAdd.php:61 templates/admin/_orderDetails.php:356
+#: templates/admin/_orderView.php:41
+msgid "Project Name"
+msgstr "Projectnaam"
+
+#: ignitiondeck-admin.php:207 templates/admin/_orderDetails.php:359
+msgid "Date"
+msgstr "Datum"
+
+#: ignitiondeck-admin.php:231
+msgid "Enter Project Name Here"
+msgstr "Voer hier de projectnaam in"
+
+#: ignitiondeck-admin.php:244 ignitiondeck-admin.php:936
+msgid "Project Settings"
+msgstr "Projectinstellingen"
+
+#: ignitiondeck-admin.php:246 ignitiondeck-admin.php:938
+msgid "Custom Project Settings"
+msgstr "Aangepaste projectinstellingen"
+
+#: ignitiondeck-admin.php:246
+#, fuzzy
+msgid "Custom Settings"
+msgstr ""
+"Hier zet je de standaard voor elk nieuw project op je website. Wat je hier "
+"instelt is wat elk project standaard zal hanteren, tenzij je de instellingen "
+"van een project handmatig hieronder aanpast."
+
+#: ignitiondeck-admin.php:247
+#, fuzzy
+#| msgid "Payment Settings"
+msgid "IDCF Payment Settings"
+msgstr "Betalingsinstellingen"
+
+#: ignitiondeck-admin.php:247 ignitiondeck-admin.php:939
+msgid "Payment Settings"
+msgstr "Betalingsinstellingen"
+
+#: ignitiondeck-admin.php:248 ignitiondeck-admin.php:940
+#: templates/admin/_deckBuilder.php:6
+msgid "Deck Builder"
+msgstr "Deck bouwer"
+
+#: ignitiondeck-admin.php:250
+#, fuzzy
+#| msgid "Orders"
+msgid "IDCF Orders"
+msgstr "Bestellingen"
+
+#: ignitiondeck-admin.php:252
+msgid "Email Settings"
+msgstr "E-mail instellingen"
+
+#: ignitiondeck-admin.php:257
+#, fuzzy
+msgid "Edit Order"
+msgstr "Aanpassen"
+
+#: ignitiondeck-admin.php:258
+#, fuzzy
+msgid "View order"
+msgstr "Bekijk"
+
+#: ignitiondeck-admin.php:259
+#, fuzzy
+msgid "Delete Order"
+msgstr "Weet u zeker dat u deze bestelling wilt verwijderen op"
+
+#: ignitiondeck-admin.php:260 templates/admin/_orderAdd.php:90
+#: templates/admin/_orderDetails.php:317
+msgid "Add Order"
+msgstr "Voeg bestelling toe"
+
+#: ignitiondeck-admin.php:355 ignitiondeck-admin.php:642
+#: templates/admin/_deckBuilder.php:154
+msgid "Add"
+msgstr "Voeg toe"
+
+#: ignitiondeck-admin.php:729 ignitiondeck-admin.php:795
+#: ignitiondeck-admin.php:888
+msgid "Save Settings"
+msgstr "Opslaan instellingen"
+
+#: ignitiondeck-admin.php:743
+#, fuzzy
+#| msgid "Settings saved."
+msgid "Settings Saved"
+msgstr "Instellingen opgeslagen."
+
+#: ignitiondeck-admin.php:745 ignitiondeck-admin.php:792
+msgid "Update Settings"
+msgstr "Wijzig instellingen"
+
+#: ignitiondeck-admin.php:754 ignitiondeck-admin.php:902
+#, fuzzy
+#| msgid "Settings saved."
+msgid "Settings Updated"
+msgstr "Instellingen opgeslagen."
+
+#: ignitiondeck-admin.php:929
+#, fuzzy
+msgid "IgnitionDeck Crowdfunding"
+msgstr "Crowdfunding door IgnitionDeck"
+
+#: ignitiondeck-admin.php:931
+msgid "Support"
+msgstr "Hulp"
+
+#: ignitiondeck-admin.php:932
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: ignitiondeck-admin.php:942
+msgid "Orders"
+msgstr "Bestellingen"
+
+#: ignitiondeck-admin.php:944
+msgid "Email List Settings"
+msgstr "E-maillijst instellingen"
+
+#: ignitiondeck-enterprise.php:600
+#, php-format
+msgid ""
+"Your project is currently saved as a draft. You can see a preview %s%s%s here"
+"%s"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:601 ignitiondeck-enterprise.php:605
+msgid ""
+"You can visit this page at any time in order to continue editing your "
+"project."
+msgstr ""
+"Je kunt deze pagina op elk gewenst moment bezoeken om je project te bewerken."
+
+#: ignitiondeck-enterprise.php:604
+#, fuzzy, php-format
+msgid ""
+"Your project has been submitted and is awaiting review. You can see a "
+"preview %s%s%s here%s"
+msgstr "Je project is toegevoegd en wordt beoordeeld."
+
+#: ignitiondeck-enterprise.php:608
+#, php-format
+msgid "Your project is live. You can view it %s%s%s here%s"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:609
+msgid ""
+"You may continue to add levels or edit content available to you on this "
+"screen."
+msgstr ""
+"Op deze pagina kun je doorgaan met het bewerken van niveau's of inhoud."
+
+#: ignitiondeck-enterprise.php:810 ignitiondeck-enterprise.php:960
+#, fuzzy
+msgid "Backer Profile"
+msgstr "Mijn profiel"
+
+#: ignitiondeck-enterprise.php:902 ignitiondeck-enterprise.php:1094
+msgid "days to go"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:902 ignitiondeck-enterprise.php:1094
+msgid "Successful"
+msgstr ""
+
+#: ignitiondeck-enterprise.php:902 ignitiondeck-enterprise.php:1094
+#, fuzzy
+msgid "Ended"
+msgstr "Geëindigd op"
+
+#: ignitiondeck-enterprise.php:905 ignitiondeck-enterprise.php:1097
+#, fuzzy
+msgid "Raised"
+msgstr "Totaal opgehaald"
+
+#: ignitiondeck-enterprise.php:927
+#, fuzzy
+msgid "Backed"
+msgstr "Terug"
+
+#: ignitiondeck-enterprise.php:928 ignitiondeck-enterprise.php:1128
+msgid "Joined"
+msgstr "Aangesloten"
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1130
+#: templates/_projectCreatorProfile.php:16
+#, fuzzy
+msgid "Website"
+msgstr ""
+"Schrijf de pre approval key om de gebruiker direct te laten bestellen zonder "
+"naar de PayPal website te hoeven gaan. Gebruik dit alleen voor beveiligde "
+"verbindingen"
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1131
+#: templates/_projectCreatorProfile.php:9
+msgid "Twitter"
+msgstr "Twitter"
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1132
+#: templates/_projectCreatorProfile.php:12
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ignitiondeck-enterprise.php:929 ignitiondeck-enterprise.php:1133
+#, fuzzy
+msgid "Google Plus"
+msgstr "Google+"
+
+#: ignitiondeck-enterprise.php:1004 ignitiondeck-enterprise.php:1187
+#, fuzzy
+msgid "Creator Profile"
+msgstr "Mijn profiel"
+
+#: ignitiondeck-enterprise.php:1124
+#, fuzzy
+msgid "Projects Created"
+msgstr "Ondersteunde projecten"
+
+#: ignitiondeck-enterprise.php:1168
+#, fuzzy
+msgid "' Projects"
+msgstr "Projecten"
+
+#: ignitiondeck-enterprise.php:1171 ignitiondeck-enterprise.php:1210
+#, fuzzy
+msgid "'s Projects"
+msgstr "Projecten"
+
+#: ignitiondeck-enterprise.php:1372
+#, fuzzy
+msgid "Publish Project"
+msgstr "Projecten"
+
+#: ignitiondeck-filters.php:64
+msgid "Hours"
+msgstr ""
+
+#: ignitiondeck-filters.php:68
+msgid "Hour"
+msgstr ""
+
+#: ignitiondeck-functions.php:992
+#, fuzzy
+msgid "Project Content Template"
+msgstr "Ondersteunde projecten"
+
+#: ignitiondeck-functions.php:994
+#, fuzzy
+#| msgid "Project Type"
+msgid "Full Project Template"
+msgstr "Project type"
+
+#: ignitiondeck-functions.php:996
+msgid "Display Templates Separately"
+msgstr ""
+
+#: ignitiondeck-functions.php:1000
+#, fuzzy
+#| msgid "Project Video"
+msgid "Project Grid"
+msgstr "Projectvideo"
+
+#: ignitiondeck-functions.php:1002
+#, fuzzy
+#| msgid "Project Name"
+msgid "Display Project Name"
+msgstr "Projectnaam"
+
+#: ignitiondeck-functions.php:1004
+msgid "Display Project Thumbnail"
+msgstr ""
+
+#: ignitiondeck-functions.php:1006
+#, fuzzy
+#| msgid "Project Long Description"
+msgid "Display Project Long Description"
+msgstr "Uitgebreide beschrijving project"
+
+#: ignitiondeck-functions.php:1008
+#, fuzzy
+#| msgid "Project Video"
+msgid "Display Project Video"
+msgstr "Projectvideo"
+
+#: ignitiondeck-functions.php:1010
+#, fuzzy
+#| msgid "Percentage Bar"
+msgid "Display Percentage Bar"
+msgstr "Percentage balk"
+
+#: ignitiondeck-functions.php:1012
+#, fuzzy
+#| msgid "Short Description"
+msgid "Display Short Description"
+msgstr "Korte omschrijving"
+
+#: ignitiondeck-functions.php:1014
+#, fuzzy
+#| msgid "Goal Amount"
+msgid "Display Goal Amount"
+msgstr "Doelbedrag"
+
+#: ignitiondeck-functions.php:1016
+#, fuzzy
+#| msgid "Max Number of Payments"
+msgid "Display Number of Pledges"
+msgstr "Maximum aantal betalingen"
+
+#: ignitiondeck-functions.php:1018
+msgid "Display Fundraising Total"
+msgstr ""
+
+#: ignitiondeck-functions.php:1020
+#, fuzzy
+#| msgid "Days left"
+msgid "Display Days Left"
+msgstr "Dagen resterend"
+
+#: ignitiondeck-functions.php:1022
+#, fuzzy
+#| msgid "End Date"
+msgid "Display End Date"
+msgstr "Einddatum"
+
+#: ignitiondeck-functions.php:1024
+#, fuzzy
+#| msgid "Project FAQ"
+msgid "Display Project FAQ"
+msgstr "Veel gestelde vragen"
+
+#: ignitiondeck-functions.php:1026
+#, fuzzy
+#| msgid "Project Updates"
+msgid "Display Project Updates"
+msgstr "Project updates"
+
+#: ignitiondeck-functions.php:1931
+msgid "No Price Set"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:27
+msgid ""
+"Choose how to handle campaign end. Leave open to keep collecting payments, "
+"closed to remove pledge button."
+msgstr ""
+"Kies hoe je wilt omgaan met de einddatum van de campagne. Laat dit open om "
+"betalingen te blijven ontvangen, gesloten om de doneerknop weg te halen."
+
+#: ignitiondeck-postmeta.php:47
+#, fuzzy
+msgid "Amount you are seeking to raise (required)"
+msgstr "Bedrag dat je bij elkaar wilt krijgen (vereist)."
+
+#: ignitiondeck-postmeta.php:54
+#, fuzzy
+msgid "Proposed Start Date"
+msgstr "Voorgestelde verzenddatum"
+
+#: ignitiondeck-postmeta.php:55
+msgid "The date the project creator wishes to start funding"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:62
+msgid "Fundraising End Date"
+msgstr "Einddatum fondsenwerving"
+
+#: ignitiondeck-postmeta.php:63
+#, fuzzy
+msgid "Date funding will end (recommended)"
+msgstr "Einddatum voor fondsenwerving (aanbevolen)."
+
+#: ignitiondeck-postmeta.php:71
+msgid "Used in the grid, widget areas, and on the purchase form"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:79
+#, fuzzy
+msgid "Supports HTML. Used on project pages"
+msgstr "App.net op projectpagina"
+
+#: ignitiondeck-postmeta.php:86
+#, fuzzy
+msgid "Video Embed Code"
+msgstr "Invoeg code"
+
+#: ignitiondeck-postmeta.php:87
+msgid "Video embed code using iframe or embed format (YouTube, Vimeo, etc)"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:116
+msgid "Used in widgets sidebars, and in some cases, on the purchase form"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:124
+msgid "For use on the project page and in level shortcodes/widgets"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:132
+msgid "Restrict the number of buyers that can back this level"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:140
+msgid ""
+"Enter a number of 0 (first) or higher if you wish to customize the placement "
+"of this level"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:153
+#, fuzzy
+msgid "Additional Levels"
+msgstr "Extra prijsniveau's"
+
+#: ignitiondeck-postmeta.php:161
+msgid "Level Management"
+msgstr ""
+
+#: ignitiondeck-postmeta.php:171
+#, fuzzy
+msgid "Project FAQs"
+msgstr "Veel gestelde vragen"
+
+#: ignitiondeck-postmeta.php:172
+#, fuzzy
+msgid "List Project FAQs here"
+msgstr "Project FAQ's"
+
+#: ignitiondeck-postmeta.php:180
+#, fuzzy
+msgid "List Project Updates here"
+msgstr "Project updates"
+
+#: ignitiondeck-shortcodes.php:209
+#, fuzzy
+#| msgid "Project FAQ"
+msgid "Project Faq"
+msgstr "Veel gestelde vragen"
+
+#: ignitiondeck-shortcodes.php:228 ignitiondeck-shortcodes.php:235
+#: templates/_projectContent.php:39 templates/_projectContent.php:46
+msgid "Updates"
+msgstr "Updates"
+
+#: ignitiondeck-update.php:90
+msgid ""
+"An Unexpected HTTP Error occurred during the API request.</p> <p><a href=\"?"
+"\" onclick=\"document.location.reload(); return false;\">Try again</a>"
+msgstr ""
+"Een onverwachte HTTP fout deed zich voor tijdens het API verzoek.</p> <p><a "
+"href=\"?\" onclick=\"document.location.reload(); return false;\">Probeer het "
+"opnieuw</a>"
+
+#: ignitiondeck-update.php:95
+msgid "An unknown error occurred"
+msgstr "Een onverwachte fout deed zich voor"
+
+#: ignitiondeck.php:36
+msgid ""
+"IgnitionDeck Crowdfunding requires installation of the IgnitionDeck "
+"Framework prior to activation."
+msgstr ""
+
+#: ignitiondeck.php:36
+msgid "Click here to install"
+msgstr ""
+
+#: ignitiondeck.php:1401
+msgid "Shortcodes"
+msgstr "Shortcodes"
+
+#: ignitiondeck.php:1405 ignitiondeck.php:1408
+#, fuzzy
+msgid "IgnitionDeck Shortcodes"
+msgstr "Ignition Deck logo"
+
+#: ignitiondeck.php:1411
+#, fuzzy
+msgid "Project URL"
+msgstr "Projectpagina adres"
+
+#: ignitiondeck.php:1414
+#, fuzzy
+msgid "Purchase URL"
+msgstr "Projectpagina adres"
+
+#: ignitiondeck.php:1417
+msgid "Thank You Project URL"
+msgstr ""
+
+#: ignitiondeck.php:1420
+#, fuzzy
+msgid "Project Parent"
+msgstr "Projectprijs"
+
+#: ignitiondeck.php:1450
+msgid "Project Page URL"
+msgstr "Projectpagina adres"
+
+#: ignitiondeck.php:1453
+msgid "Current Project Page"
+msgstr "Huidige projectpagina"
+
+#: ignitiondeck.php:1454 templates/admin/_productSettings.php:113
+#: templates/admin/_productSettings.php:145
+#, fuzzy
+#| msgid "Page/Post"
+msgid "Page or Post"
+msgstr "Pagina/bericht"
+
+#: ignitiondeck.php:1455 templates/admin/_productSettings.php:114
+#: templates/admin/_productSettings.php:146
+msgid "External URL"
+msgstr "Extern adres"
+
+#: ignitiondeck.php:1482 templates/admin/_productSettings.php:126
+#: templates/admin/_productSettings.php:159
+msgid "Select"
+msgstr "Selecteer"
+
+#: ignitiondeck.php:1513 ignitiondeck.php:1576
+msgid "Default"
+msgstr "Standaard"
+
+#: ignitiondeck.php:1648
+msgid "No Parent"
+msgstr ""
+
+#: templates/_embedWidget.php:14
+#, fuzzy
+msgid "RAISED"
+msgstr "Totaal opgehaald"
+
+#: templates/_embedWidget.php:19 templates/_igWidget.php:40
+#: templates/_miniWidget.php:46 templates/admin/_deckBuilder.php:50
+#, fuzzy
+#| msgid "Days left"
+msgid "Days Left"
+msgstr "Dagen resterend"
+
+#: templates/_embedWidget.php:20 templates/_igWidget.php:61
+#: templates/_igWidget.php:64 templates/_miniWidget.php:64
+msgid "Learn More"
+msgstr "Lees meer"
+
+#: templates/_embedWidget.php:24
+#, fuzzy
+#| msgid "Powered By IgnitionDeck"
+msgid "powered by IgnitionDeck"
+msgstr "Ondersteund door IgnitionDeck"
+
+#: templates/_igWidget.php:31 templates/_miniWidget.php:37
+msgid "Pledged of"
+msgstr "Gedoneerd van"
+
+#: templates/_igWidget.php:31 templates/_miniWidget.php:37
+msgid "Goal"
+msgstr "Doel"
+
+#: templates/_igWidget.php:35 templates/_miniWidget.php:41
+msgid "Pledgers"
+msgstr "Donateurs"
+
+#: templates/_igWidget.php:48 templates/_miniWidget.php:53
+msgid "Crowdfunding ends on"
+msgstr "Crowdfunding eindigt op"
+
+#: templates/_igWidget.php:48
+#, fuzzy
+#| msgid "Ended on"
+msgid "Ended On"
+msgstr "Geëindigd op"
+
+#: templates/_igWidget.php:61 templates/_igWidget.php:64
+msgid "Support Now"
+msgstr "Doneer nu!"
+
+#: templates/_igWidget.php:97
+msgid "Limit"
+msgstr "Limiet"
+
+#: templates/_igWidget.php:97
+msgid "of"
+msgstr "van"
+
+#: templates/_igWidget.php:97
+msgid "Taken"
+msgstr "Ingenomen"
+
+#: templates/_igWidget.php:109
+msgid "Crowdfunding by IgnitionDeck"
+msgstr "Crowdfunding door IgnitionDeck"
+
+#: templates/_igWidget.php:109 templates/_miniWidget.php:69
+msgid "Powered By IgnitionDeck"
+msgstr "Ondersteund door IgnitionDeck"
+
+#: templates/_lbLevelSelect.php:15
+msgid "Step 1:"
+msgstr ""
+
+#: templates/_lbLevelSelect.php:15
+msgid "Specify your contribution amount for"
+msgstr ""
+
+#: templates/_lbLevelSelect.php:20
+#, fuzzy
+msgid "Contribution Level"
+msgstr "Fuck You Level"
+
+#: templates/_lbLevelSelect.php:37
+#, fuzzy
+msgid "Total"
+msgstr "Totaal donatie"
+
+#: templates/_lbLevelSelect.php:54
+#, fuzzy
+msgid "Next Step"
+msgstr "volgende"
+
+#: templates/_miniWidget.php:69
+#, fuzzy
+#| msgid "Crowdfunding ends on"
+msgid "Crowdfunding"
+msgstr "Crowdfunding eindigt op"
+
+#: templates/_projectContent.php:24 templates/_projectContent.php:31
+#, fuzzy
+#| msgid "FAQs"
+msgid "FAQ"
+msgstr "Veel gestelde vragen"
+
+#: templates/admin/_customSettings.php:150
+msgid "Project ID"
+msgstr "Project Id"
+
+#: templates/admin/_deckBuilder.php:8
+#, fuzzy
+#| msgid "Save Settings"
+msgid "Deck Settings"
+msgstr "Opslaan instellingen"
+
+#: templates/admin/_deckBuilder.php:12
+msgid "Select deck to edit, or create new"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:14
+#, fuzzy
+#| msgid "Created Date"
+msgid "Create New"
+msgstr "Aangemaakte datum"
+
+#: templates/admin/_deckBuilder.php:20
+msgid "Deck Title"
+msgstr "Deck titel"
+
+#: templates/admin/_deckBuilder.php:30
+#, fuzzy
+#| msgid "Project Title"
+msgid "Project Thumbnail"
+msgstr "Project titel"
+
+#: templates/admin/_deckBuilder.php:34
+msgid "Percentage Bar"
+msgstr "Percentage balk"
+
+#: templates/admin/_deckBuilder.php:38
+#, fuzzy
+msgid "Funds Raised"
+msgstr "Totaal opgehaald"
+
+#: templates/admin/_deckBuilder.php:42
+msgid "Project Goal"
+msgstr "Projectdoel"
+
+#: templates/admin/_deckBuilder.php:46
+#, fuzzy
+#| msgid "Number of Levels"
+msgid "Number of Pledges"
+msgstr "Aantal niveau's"
+
+#: templates/admin/_deckBuilder.php:58
+#, fuzzy
+#| msgid "Buy Button"
+msgid "Donate Button"
+msgstr "Bestelknop"
+
+#: templates/admin/_deckBuilder.php:62
+#, fuzzy
+#| msgid "Project Long Description"
+msgid "Project Description"
+msgstr "Uitgebreide beschrijving project"
+
+#: templates/admin/_deckBuilder.php:66
+msgid "Levels"
+msgstr "Niveau's"
+
+#: templates/admin/_deckBuilder.php:76
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+#: templates/admin/_deckBuilder.php:81
+#, fuzzy
+#| msgid "Delete Skin"
+msgid "Deck Skins"
+msgstr "Verwijder skin"
+
+#: templates/admin/_deckBuilder.php:84 templates/admin/_deckBuilder.php:94
+#, fuzzy
+#| msgid "IgnitionDeck (Light)"
+msgid "IgnitionDeck Light"
+msgstr "IgnitionDeck (Licht)"
+
+#: templates/admin/_deckBuilder.php:85 templates/admin/_deckBuilder.php:95
+#, fuzzy
+#| msgid "IgnitionDeck (Dark)"
+msgid "IgnitionDeck Dark"
+msgstr "IgnitionDeck (Donker)"
+
+#: templates/admin/_deckBuilder.php:86 templates/admin/_deckBuilder.php:100
+msgid "Corporate"
+msgstr "Corporate"
+
+#: templates/admin/_deckBuilder.php:87 templates/admin/_deckBuilder.php:96
+#, fuzzy
+#| msgid "Clear"
+msgid "Clean"
+msgstr "Wissen"
+
+#: templates/admin/_deckBuilder.php:88 templates/admin/_deckBuilder.php:97
+#, fuzzy
+#| msgid "Clean (Dark)"
+msgid "Clean Dark"
+msgstr "Clean (Donker)"
+
+#: templates/admin/_deckBuilder.php:89 templates/admin/_deckBuilder.php:98
+#, fuzzy
+#| msgid "Skyscraper (Dark)"
+msgid "Skyscraper"
+msgstr "Skyscraper (Donker)"
+
+#: templates/admin/_deckBuilder.php:90 templates/admin/_deckBuilder.php:99
+#, fuzzy
+#| msgid "Skyscraper (Dark)"
+msgid "Skyscraper Dark"
+msgstr "Skyscraper (Donker)"
+
+#: templates/admin/_deckBuilder.php:104
+#, fuzzy
+#| msgid "Skin Instructions"
+msgid "Skins Instructions"
+msgstr "Skin instructies"
+
+#: templates/admin/_deckBuilder.php:107
+msgid "How to add Deck skins"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:109
+msgid "Upload skin assets to the /skins directory via FTP"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:110
+msgid ""
+"CSS file will be named ignitiondeck-skinname.css. Enter the &lsquo;"
+"skinname&rsquo; in the box and click &lsquo;Add Skin&rsquo;"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:111
+msgid "To delete, select skin and click &lsquo;Delete Skin&rsquo;"
+msgstr ""
+
+#: templates/admin/_deckBuilder.php:116
+#, fuzzy
+#| msgid "Add Skin"
+msgid "Add skin"
+msgstr "Voeg skin toe"
+
+#: templates/admin/_deckBuilder.php:121 templates/admin/_deckBuilder.php:123
+#, fuzzy
+#| msgid "Delete Skin"
+msgid "Delete skin"
+msgstr "Verwijder skin"
+
+#: templates/admin/_deckBuilder.php:131
+#, fuzzy
+#| msgid "Ignition Deck Logo"
+msgid "IgnitionDeck Logo"
+msgstr "Ignition Deck logo"
+
+#: templates/admin/_deckBuilder.php:134
+#, fuzzy
+#| msgid ""
+#| "This allows you to activate and share via the 'Powered By IgnitionDeck' "
+#| "logo that would appear at the bottom of the widget."
+msgid ""
+"This allows you to activate and share via the Powered By IgnitionDeck logo "
+"that would appear at the bottom of the widget"
+msgstr ""
+"Dit laat je het 'Mogelijk gemaakt door IgnitionDeck' logo uit- of aanzetten "
+"onderin de widget."
+
+#: templates/admin/_deckBuilder.php:138
+msgid "Affiliate Settings"
+msgstr "Affiliatie instellingen"
+
+#: templates/admin/_deckBuilder.php:140
+msgid "Affiliate Link"
+msgstr "Affiliatie link"
+
+#: templates/admin/_deckBuilder.php:143
+#, fuzzy
+#| msgid "Click Here"
+msgid "Click here"
+msgstr "Klik hier"
+
+#: templates/admin/_deckBuilder.php:143
+msgid ""
+"to sign up for our referral program, and paste your unique URL here. Set "
+"this to http://ignitiondeck.com for default setting."
+msgstr ""
+
+#: templates/admin/_orderAdd.php:6 templates/admin/_orderEdit.php:3
+#: templates/admin/_orderView.php:3
+msgid "Order Details"
+msgstr "Bestellingdetails"
+
+#: templates/admin/_orderAdd.php:11 templates/admin/_orderEdit.php:7
+#: templates/admin/_orderView.php:6 templates/admin/_productSettings.php:62
+msgid "First Name"
+msgstr "Voornaam"
+
+#: templates/admin/_orderAdd.php:15 templates/admin/_orderEdit.php:13
+#: templates/admin/_orderView.php:10 templates/admin/_productSettings.php:67
+msgid "Last Name"
+msgstr "Achternaam"
+
+#: templates/admin/_orderAdd.php:19 templates/admin/_orderEdit.php:19
+#: templates/admin/_orderView.php:14
+msgid "Email Address"
+msgstr "E-mailadres"
+
+#: templates/admin/_orderAdd.php:23 templates/admin/_productSettings.php:77
+msgid "Address"
+msgstr "Adres"
+
+#: templates/admin/_orderAdd.php:27 templates/admin/_orderEdit.php:49
+#: templates/admin/_orderView.php:34 templates/admin/_productSettings.php:82
+msgid "Country"
+msgstr "Land"
+
+#: templates/admin/_orderAdd.php:31 templates/admin/_productSettings.php:87
+msgid "State"
+msgstr "Provincie"
+
+#: templates/admin/_orderAdd.php:35 templates/admin/_orderEdit.php:31
+#: templates/admin/_orderView.php:22 templates/admin/_productSettings.php:93
+msgid "City"
+msgstr "Stad"
+
+#: templates/admin/_orderAdd.php:39 templates/admin/_orderEdit.php:43
+#: templates/admin/_orderView.php:30
+#, fuzzy
+#| msgid "Total Orders"
+msgid "Postal Code"
+msgstr "Totaal bestellingen"
+
+#: templates/admin/_orderAdd.php:43 templates/admin/_orderEdit.php:80
+#: templates/admin/_orderView.php:63
+#, fuzzy
+#| msgid "Order Details"
+msgid "Order Status"
+msgstr "Bestellingdetails"
+
+#: templates/admin/_orderAdd.php:45 templates/admin/_orderEdit.php:83
+msgid "Pending"
+msgstr "In afwachting van"
+
+#: templates/admin/_orderAdd.php:46 templates/admin/_orderEdit.php:84
+msgid "Complete"
+msgstr "Voltooid"
+
+#: templates/admin/_orderAdd.php:75
+msgid "Project Level"
+msgstr "Projectniveau"
+
+#: templates/admin/_orderAdd.php:77
+#, fuzzy
+#| msgid "Project Level"
+msgid "Select Level"
+msgstr "Projectniveau"
+
+#: templates/admin/_orderAdd.php:81
+msgid "Enter Custom Value"
+msgstr ""
+
+#: templates/admin/_orderDetails.php:320
+#, fuzzy
+msgid "Search Orders"
+msgstr "Zoek project"
+
+#: templates/admin/_orderDetails.php:335
+#, fuzzy
+msgid "Show all projects"
+msgstr "Widget om projecten te laten zien"
+
+#: templates/admin/_orderDetails.php:354
+msgid "ID"
+msgstr "ID"
+
+#: templates/admin/_orderDetails.php:357 templates/admin/_orderView.php:59
+#, fuzzy
+#| msgid "Level based"
+msgid "Level Name"
+msgstr "Gebasseerd op niveau's"
+
+#: templates/admin/_orderDetails.php:358
+msgid "Price"
+msgstr "Prijs"
+
+#: templates/admin/_orderDetails.php:398
+msgid "View"
+msgstr "Bekijk"
+
+#: templates/admin/_orderDetails.php:398
+msgid "Edit"
+msgstr "Aanpassen"
+
+#: templates/admin/_orderDetails.php:398
+msgid "Confirm Order Deletion"
+msgstr ""
+
+#: templates/admin/_orderDetails.php:398
+msgid "Delete"
+msgstr "Verwijder"
+
+#: templates/admin/_orderEdit.php:2 templates/admin/_orderView.php:2
+msgid "Return to Orders List"
+msgstr ""
+
+#: templates/admin/_orderEdit.php:25
+#, fuzzy
+#| msgid "Address"
+msgid "Streeth Address"
+msgstr "Adres"
+
+#: templates/admin/_orderEdit.php:37 templates/admin/_orderView.php:26
+msgid "State or Territory"
+msgstr ""
+
+#: templates/admin/_orderEdit.php:71
+msgid "Select Project"
+msgstr "Selecteer project"
+
+#: templates/admin/_orderEdit.php:76 templates/admin/_orderView.php:54
+#, fuzzy
+#| msgid "Goal Amount"
+msgid "Custom Amount"
+msgstr "Doelbedrag"
+
+#: templates/admin/_orderEdit.php:85
+msgid "Waiting"
+msgstr "Wachten"
+
+#: templates/admin/_orderEdit.php:91
+#, fuzzy
+msgid "Update Order"
+msgstr "Aanpassen"
+
+#: templates/admin/_orderView.php:18
+#, fuzzy
+#| msgid "Address"
+msgid "Street Address"
+msgstr "Adres"
+
+#: templates/admin/_orderView.php:49
+#, fuzzy
+#| msgid "Payment Form"
+msgid "Payment Total"
+msgstr "Betalingsformulier"
+
+#: templates/admin/_productSettings.php:7
+msgid "Default Project Settings"
+msgstr "Standaard projectinstellingen"
+
+#: templates/admin/_productSettings.php:10
+#, fuzzy
+msgid ""
+"This is where you set the defaults for whenever you create a new project on "
+"your website.  Whatever you set here, is what each project will default to, "
+"unless you set its custom settings below."
+msgstr ""
+"Hier zet je de standaard voor elk nieuw project op je website. Wat je hier "
+"instelt is wat elk project standaard zal hanteren, tenzij je de instellingen "
+"van een project handmatig hieronder aanpast."
+
+#: templates/admin/_productSettings.php:12
+msgid ""
+"Currency Code: this is the currency PayPal will collect funds in, as well as "
+"the currency that will be displayed publicly."
+msgstr ""
+"Valuta code: dit is de valuta wat PayPal gebruikt om het geld voor te "
+"incasseren, en ook de valuta die op de website zal worden weergegeven."
+
+#: templates/admin/_productSettings.php:14
+msgid ""
+"Address information: Ask for this if some of your reward levels involve "
+"shipping an item.  We highly suggest however, that you email all of your "
+"supporters once it’s actually time to ship, to get up to date shipping "
+"information from them at that time."
+msgstr ""
+"Adresinformatie: vraag hier om als je voor sommige van je beloningslevels "
+"iets moet versturen. Wij raden echter aan om je donateurs via e-mail te "
+"berichten zodra je het product gaat verzenden zodat zij de actuele "
+"verzendinformatie op tijd krijgen."
+
+#: templates/admin/_productSettings.php:23
+msgid "Currency Code"
+msgstr "Valutacode"
+
+#: templates/admin/_productSettings.php:25
+msgid "U.S. Dollar"
+msgstr "U.S. Dollar"
+
+#: templates/admin/_productSettings.php:26
+msgid "Australian Dollar"
+msgstr "Australian Dollar"
+
+#: templates/admin/_productSettings.php:27
+msgid "Canadian Dollar"
+msgstr "Canadian Dollar"
+
+#: templates/admin/_productSettings.php:28
+msgid "Czech Koruna"
+msgstr "Czech Koruna"
+
+#: templates/admin/_productSettings.php:29
+msgid "Danish Krone"
+msgstr "Danish Krone"
+
+#: templates/admin/_productSettings.php:30
+msgid "Euro"
+msgstr "Euro"
+
+#: templates/admin/_productSettings.php:31
+#, fuzzy
+#| msgid "Hong Kong Dollar<"
+msgid "Hong Kong Dollar"
+msgstr "Hong Kong Dollar"
+
+#: templates/admin/_productSettings.php:32
+msgid "Hungarian Forint"
+msgstr "Hungarian Forint"
+
+#: templates/admin/_productSettings.php:33
+msgid "Israeli New Sheqel"
+msgstr "Israeli New Sheqel"
+
+#: templates/admin/_productSettings.php:34
+msgid "Japanese Yen"
+msgstr "Japanese Yen"
+
+#: templates/admin/_productSettings.php:35
+msgid "Mexican Peso"
+msgstr "Mexican Peso"
+
+#: templates/admin/_productSettings.php:36
+msgid "Malaysian Ringgit"
+msgstr "Malaysian Ringgit"
+
+#: templates/admin/_productSettings.php:37
+msgid "Norwegian Krone"
+msgstr "Norwegian Krone"
+
+#: templates/admin/_productSettings.php:38
+msgid "New Zealand Dollar"
+msgstr "New Zealand Dollar"
+
+#: templates/admin/_productSettings.php:39
+msgid "Philippine Peso"
+msgstr "Philippine Peso"
+
+#: templates/admin/_productSettings.php:40
+msgid "Polish Zloty"
+msgstr "Polish Zloty"
+
+#: templates/admin/_productSettings.php:41
+msgid "Pound Sterling"
+msgstr "Pound Sterling"
+
+#: templates/admin/_productSettings.php:42
+msgid "Singapore Dollar"
+msgstr "Singapore Dollar"
+
+#: templates/admin/_productSettings.php:43
+msgid "Swedish Krona"
+msgstr "Swedish Krona"
+
+#: templates/admin/_productSettings.php:44
+msgid "Swiss Franc"
+msgstr "Swiss Franc"
+
+#: templates/admin/_productSettings.php:45
+msgid "New Taiwan Dollar"
+msgstr "New Taiwan Dollar"
+
+#: templates/admin/_productSettings.php:46
+msgid "Thai Baht"
+msgstr "Thai Baht"
+
+#: templates/admin/_productSettings.php:47
+msgid "Turkish Lira"
+msgstr "Turkish Lira"
+
+#: templates/admin/_productSettings.php:48
+msgid "Brazilian Real"
+msgstr "Brazilian Real"
+
+#: templates/admin/_productSettings.php:53
+msgid "Check All"
+msgstr "Vink allemaal aan"
+
+#: templates/admin/_productSettings.php:54
+msgid "Clear All"
+msgstr "Wis alles"
+
+#: templates/admin/_productSettings.php:57
+#, fuzzy
+#| msgid "Field name"
+msgid "Field Name"
+msgstr "Veldnaam"
+
+#: templates/admin/_productSettings.php:58
+msgid "Enabled"
+msgstr "Ingeschakeld"
+
+#: templates/admin/_productSettings.php:59
+msgid "Mandatory"
+msgstr "Vereist"
+
+#: templates/admin/_productSettings.php:72
+msgid "Email"
+msgstr "E-mailadres"
+
+#: templates/admin/_productSettings.php:98
+msgid "Zip"
+msgstr "Postcode"
+
+#: templates/admin/_productSettings.php:108
+msgid "Default Purchase Page"
+msgstr "Standaard bestelpagina"
+
+#: templates/admin/_productSettings.php:140
+msgid "Default Thank You Page"
+msgstr "Standaard bedankpagina"
+
+#: templates/admin/_productSettings.php:174
+msgid "Automatically insert project template"
+msgstr ""
+
+#: templates/admin/_projectApprovalSettings.php:2
+#, fuzzy
+#| msgid "Project Goal"
+msgid "Project Approval"
+msgstr "Projectdoel"
+
+#: templates/admin/_projectApprovalSettings.php:3
+msgid "Automatically Approve Projects"
+msgstr ""
+
+#: templates/admin/_projectPreauthSelect.php:3
+#, fuzzy
+msgid "Process Project Pre-Authorizations"
+msgstr "Verwerkings authorisaties"
+
+#: templates/admin/_projectPreauthSelect.php:5
+#, fuzzy
+msgid ""
+"Warning:</span> This will process all pending authorizations related to the "
+"selected campaign"
+msgstr ""
+"Dit zal alle openstaande authorisaties doorvoeren voor de geselecteerde "
+"campagne."
+
+#: templates/admin/_projectPreauthSelect.php:6
+#, fuzzy
+msgid "Customers will only be charged once"
+msgstr "Bedragen zullen slechts eenmaal in rekening worden gebracht."
+
+#: templates/admin/_projectPreauthSelect.php:12
+#, fuzzy
+msgid "Process Project Authorizations"
+msgstr "Verwerkings authorisaties"
+
+#~ msgid "Project Image 2"
+#~ msgstr "Projectafbeelding 2"
+
+#~ msgid "Project Image 3"
+#~ msgstr "Projectafbeelding 3"
+
+#~ msgid "Project Image 4"
+#~ msgstr "Projectafbeelding 4"
+
+#~ msgid "Close on End"
+#~ msgstr "Sluiten op einddatum"
+
+#~ msgid "Leave Open"
+#~ msgstr "Laat open op einddatum"
+
+#, fuzzy
+#~ msgid "Exchange Product ID"
+#~ msgstr "ID"
+
+#, fuzzy
+#~ msgid "Type"
+#~ msgstr "Typ CAPTCHA"
+
+#, fuzzy
+#~ msgid "Pledge What You Want"
+#~ msgstr "Geef wat je wilt"
+
+#, fuzzy
+#~ msgid "Level-Based"
+#~ msgstr "Gebasseerd op niveau's"
+
+#~ msgid "Company Name"
+#~ msgstr "Bedrijfsnaam"
+
+#, fuzzy
+#~ msgid "Project's Company Name"
+#~ msgstr "Bedrijfsnaam"
+
+#~ msgid "Company Location"
+#~ msgstr "Bedrijfslocatie"
+
+#~ msgid "Company URL"
+#~ msgstr "Bedrijfswebsite"
+
+#~ msgid "Company Facebook"
+#~ msgstr "Bedrijfs Facebook"
+
+#, fuzzy
+#~ msgid "Company Facebook page"
+#~ msgstr "Bedrijfs Facebook"
+
+#~ msgid "Company Twitter"
+#~ msgstr "Bedrijfs Twitter"
+
+#, fuzzy
+#~ msgid "Company Twitter page"
+#~ msgstr "Bedrijfs Twitter"
+
+#~ msgid "Company Logo"
+#~ msgstr "Bedrijfslogo"
+
+#~ msgid ""
+#~ "Pledge what you want or level based campaign. If you choose pledge what "
+#~ "you want, only the first level will be used. If you choose level based, "
+#~ "you can create as many levels as you need."
+#~ msgstr ""
+#~ "Geef wat je wilt of een campagne met niveau's. Als je voor geef wat je "
+#~ "wilt kiest, zal alleen het eerste niveau gebruikt worden. Als je voor een "
+#~ "campagne met niveau's kiest kun je zoveel niveau's maken als benodigd."
+
+#~ msgid "Pledge what you want"
+#~ msgstr "Geef wat je wilt"
+
+#~ msgid "Open"
+#~ msgstr "Open"
+
+#~ msgid "Closed"
+#~ msgstr "Gesloten"
+
+#~ msgid "Image 2"
+#~ msgstr "Projectafbeelding 2"
+
+#, fuzzy
+#~ msgid ""
+#~ "Image 2 - Shortcode: [project_image product=\"{product_number}\" image="
+#~ "\"2\"]"
+#~ msgstr "Afbeelding 2 - Shortcode: [project_image product=\"1\" image=\"2\"]"
+
+#~ msgid "Image 3"
+#~ msgstr "Projectafbeelding 3"
+
+#, fuzzy
+#~ msgid ""
+#~ "Image 3 - Shortcode: [project_image product=\"{product_number}\" image="
+#~ "\"3\"]"
+#~ msgstr "Afbeelding 3 - Shortcode: [project_image product=\"1\" image=\"3\"]"
+
+#~ msgid "Image 4"
+#~ msgstr "Projectafbeelding 4"
+
+#, fuzzy
+#~ msgid ""
+#~ "Image 4 - Shortcode: [project_image product=\"{product_number}\" image="
+#~ "\"4\"]"
+#~ msgstr "Afbeelding 4 - Shortcode: [project_image product=\"1\" image=\"4\"]"
+
+#~ msgid "No funding goal set"
+#~ msgstr "Geen financieringsdoel ingesteld"
+
+#~ msgid "No date set"
+#~ msgstr "Geen datum ingesteld"
+
+#~ msgid "IgnitionDeck Control Panel"
+#~ msgstr "IgnitionDeck controlepaneel"
+
+#~ msgid "Facebook Application Settings"
+#~ msgstr "Facebook applicatie instellingen"
+
+#~ msgid "Save"
+#~ msgstr "Opslaan"
+
+#~ msgid "Facebook settings have been successfully updated."
+#~ msgstr "Facebook instellingen zijn succesvol gewijzigd."
+
+#~ msgid "Twitter Application Settings"
+#~ msgstr "Twitter applicatie instellingen"
+
+#~ msgid "Twitter settings have been successfully updated."
+#~ msgstr "Twitter instellingen zijn succesvol gewijzigd."
+
+#~ msgid "Form settings have been successfully updated."
+#~ msgstr "Formulier instellingen zijn succesvol gewijzigd."
+
+#~ msgid "Twitter settings have been successfully saved."
+#~ msgstr "Twitter instellingen zijn succesvol opgeslagen."
+
+#~ msgid "Aweber settings have been successfully saved."
+#~ msgstr "Aweber instellingen zijn succesvol opgeslagen."
+
+#~ msgid "Aweber settings have been successfully updated."
+#~ msgstr "Aweber instellingen zijn succesvol gewijzigd."
+
+#~ msgid "Mailchimp settings have been successfully saved."
+#~ msgstr "Mailchimp instellingen zijn succesvol opgeslagen."
+
+#~ msgid "Mailchimp settings have been successfully updated."
+#~ msgstr "Mailchimp instellingen zijn succesvol gewijzigd."
+
+#~ msgid "Payment settings have been successfully saved."
+#~ msgstr "Betalingsinstellingen zijn succesvol opgeslagen."
+
+#~ msgid "Please fill all fields."
+#~ msgstr "Vul a.u.b. alle velden in."
+
+#~ msgid "Projects successfully added."
+#~ msgstr "Project is succesvol toegevoegd."
+
+#~ msgid "previous"
+#~ msgstr "vorige"
+
+#~ msgid "next"
+#~ msgstr "volgende"
+
+#~ msgid "Project has been successfully updated."
+#~ msgstr "Project is succesvol gewijzigd."
+
+#~ msgid "Settings have been successfully updated."
+#~ msgstr "Instellingen zijn succesvol gewijzigd."
+
+#~ msgid "Asked Questions"
+#~ msgstr "Gestelde vragen"
+
+#~ msgid "Settings"
+#~ msgstr "Instellingen"
+
+#~ msgid "Social Settings"
+#~ msgstr "Social media instellingen"
+
+#~ msgid "Payment Form Settings"
+#~ msgstr "Betalingsformulier instellingen"
+
+#~ msgid "Widget to show projects"
+#~ msgstr "Widget om projecten te laten zien"
+
+#~ msgid "IgnitionDeck Project Widget"
+#~ msgstr "IgnitionDeck project widget"
+
+#~ msgid "About the Project"
+#~ msgstr "Over het project"
+
+#~ msgid "The Project FAQs"
+#~ msgstr "Project FAQ's"
+
+#~ msgid "Buyers"
+#~ msgstr "Kopers"
+
+#~ msgid "Redirecting to Paypal..."
+#~ msgstr "Doorsturen naar PayPal..."
+
+#~ msgid "Twitter.connection.failed"
+#~ msgstr "Twitter.connectie.nietgelukt"
+
+#~ msgid "Error occured let's try again"
+#~ msgstr "Er is een fout opgetreden, probeer het opnieuw"
+
+#~ msgid "Twitter.share.success"
+#~ msgstr "Twitter.deel.success"
+
+#~ msgid "Twitter.share.failed"
+#~ msgstr "Twitter.deel.nietgelukt"
+
+#~ msgid "Facebook.share.success"
+#~ msgstr "Facebook.deel.succes"
+
+#~ msgid "Facebook.share.failed"
+#~ msgstr "Facebook.deel.nietgelukt"
+
+#~ msgid "IgnitionDeck: %s sent a question"
+#~ msgstr "IgnitionDeck: %s stuurde een vraag"
+
+#~ msgid "Subject"
+#~ msgstr "Onderwerp"
+
+#~ msgid "Message"
+#~ msgstr "Bericht"
+
+#~ msgid "Update Options"
+#~ msgstr "Update instellingen"
+
+#~ msgid "Contact Form"
+#~ msgstr "Contactformulier"
+
+#~ msgid "Send email"
+#~ msgstr "Verstuur e-mail"
+
+#~ msgid "Our Earliest Buyers"
+#~ msgstr "Onze vroegste kopers"
+
+#~ msgid "Ask A Question"
+#~ msgstr "Stel een vraag"
+
+#~ msgid "Payment Information"
+#~ msgstr "Betalingsinformatie"
+
+#~ msgid "Pay with Paypal"
+#~ msgstr "Betaal met PayPal"
+
+#~ msgid "Funding"
+#~ msgstr "Financiering"
+
+#~ msgid "Total Sale"
+#~ msgstr "Totaal donatie"
+
+#~ msgid "LinkedIn"
+#~ msgstr "LinkedIn"
+
+#~ msgid "Google+"
+#~ msgstr "Google+"
+
+#~ msgid "Pinterest"
+#~ msgstr "Pinterest"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nee"
+
+#~ msgid "Please share your experience with your friends!"
+#~ msgstr "Deel alsjeblieft je ervaring met vrienden!"
+
+#~ msgid "API key"
+#~ msgstr "API sleutel"
+
+#~ msgid "Subscription Email"
+#~ msgstr "Aanmeldings e-mail"
+
+#~ msgid "Aweber Settings"
+#~ msgstr "Aweber instellingen"
+
+#~ msgid "Make Active"
+#~ msgstr "Maak actief"
+
+#~ msgid "Consumer Secret"
+#~ msgstr "Publieke sleutel"
+
+#~ msgid "List Email Id"
+#~ msgstr "Lijst e-mail Id"
+
+#~ msgid "Mailchimp Settings"
+#~ msgstr "Mailchimp instellingen"
+
+#~ msgid "List id"
+#~ msgstr "Lijst Id"
+
+#~ msgid "Embed Widget Code"
+#~ msgstr "Invoegen widget code"
+
+#~ msgid "Select Project to Create Embed Code for"
+#~ msgstr "Selecteer een project om invoeg code te maken"
+
+#~ msgid "Embed Code"
+#~ msgstr "Invoeg code"
+
+#~ msgid "Application Id"
+#~ msgstr "Applicatie Id"
+
+#~ msgid "Application secret key"
+#~ msgstr "Applicatie privé sleutel"
+
+#~ msgid "Text to share"
+#~ msgstr "Tekst om te delen"
+
+#~ msgid "Zip Code"
+#~ msgstr "Postcode"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Completed"
+#~ msgstr "Voltooid"
+
+#~ msgid "Are you sure you want to delete this order by"
+#~ msgstr "Weet u zeker dat u deze bestelling wilt verwijderen op"
+
+#~ msgid "Last Email"
+#~ msgstr "Laatste e-mail"
+
+#~ msgid "Paypal Refund"
+#~ msgstr "PayPal terugbetaling"
+
+#~ msgid "Pay Key"
+#~ msgstr "Betalingssleutel"
+
+#~ msgid "Transaction ID"
+#~ msgstr "Transactie Id"
+
+#~ msgid "Refund"
+#~ msgstr "Terugbetaling"
+
+#~ msgid "PayPal Identity Token"
+#~ msgstr "PayPal identiteitssleutel"
+
+#~ msgid "PayPal Email"
+#~ msgstr "PayPal e-mailadres"
+
+#~ msgid "PayPal Override"
+#~ msgstr "PayPal override"
+
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
+
+#~ msgid "Project Image"
+#~ msgstr "Projectafbeelding"
+
+#~ msgid "Change"
+#~ msgstr "Wijzig"
+
+#~ msgid "Close"
+#~ msgstr "Sluiten"
+
+#~ msgid "Project Price"
+#~ msgstr "Projectprijs"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "Image"
+#~ msgstr "Afbeelding"
+
+#~ msgid "Mailchimp API Key"
+#~ msgstr "Mailchimp API sleutel"
+
+#~ msgid "Mailchimp List ID"
+#~ msgstr "Mailchimp lijst Id"
+
+#~ msgid "Aweber Email"
+#~ msgstr "Aweber e-mailadres"
+
+#~ msgid "Active Settings"
+#~ msgstr "Actieve instellingen"
+
+#~ msgid "First name"
+#~ msgstr "Voornaam"
+
+#~ msgid "Last name"
+#~ msgstr "Achternaam"
+
+#~ msgid "Question Details"
+#~ msgstr "Vraag details"
+
+#~ msgid "Question Subject"
+#~ msgstr "Vraag onderwerp"
+
+#~ msgid "Facebook on Project Page"
+#~ msgstr "Facebook op projectpagina"
+
+#~ msgid "Want people to share via Facebook from your project page?  Use this."
+#~ msgstr ""
+#~ "Wil je dat bezoekers deze pagina kunnen delen op Facebook vanaf je "
+#~ "projectpagina? Gebruik dan dit."
+
+#~ msgid "Want people to share via Twitter from your project page?  Use this."
+#~ msgstr ""
+#~ "Wil je dat bezoekers deze pagina kunnen delen op Twitter vanaf je "
+#~ "projectpagina? Gebruik dan dit."
+
+#~ msgid "Twitter on Project Page"
+#~ msgstr "Twitter op projectpagina"
+
+#~ msgid "Want people to share via App.net from your project page?  Use this."
+#~ msgstr ""
+#~ "Wil je dat bezoekers deze pagina kunnen delen op App.net vanaf je "
+#~ "projectpagina? Gebruik dan dit."
+
+#~ msgid "App.net on Project Page"
+#~ msgstr "App.net op projectpagina"
+
+#~ msgid "LinkedIn on Project Page"
+#~ msgstr "LinkedIn op projectpagina"
+
+#~ msgid "Want people to share via LinkedIn from your project page?  Use this."
+#~ msgstr ""
+#~ "Wil je dat bezoekers deze pagina kunnen delen op LinkedIn vanaf je "
+#~ "projectpagina? Gebruik dan dit."
+
+#~ msgid "Want people to share via Google+ from your project page?  Use this."
+#~ msgstr ""
+#~ "Wil je dat bezoekers deze pagina kunnen delen op Google+ vanaf je "
+#~ "projectpagina? Gebruik dan dit."
+
+#~ msgid "Google+ on Project Page"
+#~ msgstr "Google+ op projectpagina"
+
+#~ msgid ""
+#~ "Want people to share via Pinterest from your project page?  Use this."
+#~ msgstr ""
+#~ "Wil je dat bezoekers deze pagina kunnen delen op Pinterest vanaf je "
+#~ "projectpagina? Gebruik dan dit."
+
+#~ msgid "Pinterest on Project Page"
+#~ msgstr "Pinterest op projectpagina"
+
+#~ msgid "Ask a Question Button"
+#~ msgstr "Stel een vraag knop"
+
+#~ msgid "Enable or disable ask a question button on the widget"
+#~ msgstr "Zet de knop 'stel een vraag' aan of uit in de widget"
+
+#~ msgid "Ask a Question Email"
+#~ msgstr "Stel een vraag e-mailadres"
+
+#~ msgid "Email address to which the question should be sent"
+#~ msgstr "E-mailadres waarnaar de vraag moet worden verstuurd"
+
+#~ msgid "Deck Themes"
+#~ msgstr "Deck Thema's"
+
+#~ msgid "IgnitionDeck"
+#~ msgstr "IgnitionDeck"
+
+#~ msgid "Clean (Light)"
+#~ msgstr "Clean (Licht)"
+
+#~ msgid "Skyscraper (Light)"
+#~ msgstr "Skyscraper (Licht)"
+
+#~ msgid "Supporter Exclusive"
+#~ msgstr "Exclusief voor donateurs"
+
+#~ msgid "Consumer Key"
+#~ msgstr "Publieke sleutel"
+
+#~ msgid "Callback URL"
+#~ msgstr "Callback URL"
+
+#~ msgid "Projects successfully updated."
+#~ msgstr "Projecten zijn succesvol gewijzigd."
+
+#~ msgid "Projects successfully deleted."
+#~ msgstr "Projecten zijn succesvol verwijderd."
+
+#~ msgid "Add Project"
+#~ msgstr "Voeg project toe"
+
+#~ msgid "Name of the Project (Required)"
+#~ msgstr "Naam van het project (vereist)"
+
+#~ msgid "Price for Level 1"
+#~ msgstr "Prijs voor niveau 1"
+
+#~ msgid "Price of the first reward level for your project (required)."
+#~ msgstr "Prijs voor het eerste beloningsniveau van je project (vereist)"
+
+#~ msgid "Level 1 Long Description"
+#~ msgstr "Niveau 1 uitgebreide omschrijving"
+
+#~ msgid "Level 1 Short Description"
+#~ msgstr "Niveau 1 korte omschrijving"
+
+#~ msgid "Title for level 1."
+#~ msgstr "Titel voor niveau 1"
+
+#~ msgid "Purchase limit for level 1."
+#~ msgstr "Aankoop limiet voor niveau 1."
+
+#~ msgid "Amount you are looking to raise (required)."
+#~ msgstr "Bedrag dat je bij elkaar wilt krijgen (vereist)."
+
+#~ msgid "Ending date for fundraising (recommended)."
+#~ msgstr "Einddatum voor fondsenwerving (aanbevolen)."
+
+#~ msgid "Proposed Ship Date"
+#~ msgstr "Voorgestelde verzenddatum"
+
+#~ msgid "When do you hope to ship? Leave blank if unknown."
+#~ msgstr "Wanneer verwacht je te verzenden? Laat leeg indien niet bekend."
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "Embed Video Code (YouTube, Vimeo, Viddler)."
+#~ msgstr "Invoegcode video (YouTube, Vimeo, Viddler)."
+
+#~ msgid "Main Project Image"
+#~ msgstr "Projectafbeelding 1"
+
+#~ msgid "Image 1 - Shortcode: [project_image product=\"1\" image=\"1\"]"
+#~ msgstr "Afbeelding 1 - Shortcode: [project_image product=\"1\" image=\"1\"]"
+
+#~ msgid "Image 2 - Shortcode: [project_image product=\"1\" image=\"2\"]"
+#~ msgstr "Afbeelding 2 - Shortcode: [project_image product=\"1\" image=\"2\"]"
+
+#~ msgid "Image 3 - Shortcode: [project_image product=\"1\" image=\"3\"]"
+#~ msgstr "Afbeelding 3 - Shortcode: [project_image product=\"1\" image=\"3\"]"
+
+#~ msgid "Image 4 - Shortcode: [project_image product=\"1\" image=\"4\"]"
+#~ msgstr "Afbeelding 4 - Shortcode: [project_image product=\"1\" image=\"4\"]"
+
+#~ msgid ""
+#~ "For those often asked questions that you would like to give a direct "
+#~ "answer to. You can edit and add as much as needed."
+#~ msgstr ""
+#~ "Voor die veel gestelde vragen waar je gelijk een antwoord op wil geven. "
+#~ "Je kunt zoveel aanpassen en toevoegen als benodigd."
+
+#~ msgid "Add product updates here."
+#~ msgstr "Voeg hier product updates toe."
+
+#~ msgid "Terms and Conditions"
+#~ msgstr "Algemene voorwaarden"
+
+#~ msgid ""
+#~ "This is not displayed on the project page. This is displayed during "
+#~ "checkout and will show below the checkout box.  Use this space to specify "
+#~ "your terms, answer questions regarding shipping, and cover all your bases."
+#~ msgstr ""
+#~ "Dit wordt niet weergegeven op de projectpagina. Dit wordt wel weergegeven "
+#~ "tijdens de bestelling onder de checkout box. Gebruik deze ruimte om je "
+#~ "voorwaarden te omschrijven, vragen te beantwoorden omtrent verzending en "
+#~ "dergelijke onderwerpen."
+
+#~ msgid ""
+#~ "We recommend you fill this in with clear instructions about how your "
+#~ "project is going to go after you've reached your goal.  It would also be "
+#~ "very smart to mention what you'll do if you don't reach your goal."
+#~ msgstr ""
+#~ "Wij raden aan dat je dit invult met duidelijke instructies wat er gebeurt "
+#~ "als je project zijn doel bereikt. Het is ook verstandig aan te geven wat "
+#~ "je doet als het doel niet wordt bereikt."
+
+#~ msgid "Additional Price Levels"
+#~ msgstr "Extra prijsniveau's"
+
+#~ msgid "Add additional price levels here."
+#~ msgstr "Voeg hier extra prijsniveau's toe."
+
+#~ msgid ""
+#~ "This is the project short description, used for the regular, mini, and "
+#~ "embed widgets."
+#~ msgstr ""
+#~ "Dit is de korte projectomschrijving voor de reguliere-, mini- en "
+#~ "invoegwidgets."
+
+#~ msgid "IgnitionDeck Mini Widget"
+#~ msgstr "IgnitionDeck mini-widget"
+
+#~ msgid "Sandbox Mode"
+#~ msgstr "Zandbak modus"
+
+#~ msgid "Check to enable Paypal Sandbox mode."
+#~ msgstr "Vink aan om PayPal zandbak modus aan te zetten."
+
+#~ msgid "Long Description"
+#~ msgstr "Uitgebreide omschrijving"
+
+#~ msgid ""
+#~ "This is the project long description, used for displaying content below "
+#~ "the video field."
+#~ msgstr ""
+#~ "Dit is de uitgebreide projectomschrijving voor de teksten onder het "
+#~ "videoveld."
+
+#~ msgid "API Username"
+#~ msgstr "API gebruikersnaam"
+
+#~ msgid "API Password"
+#~ msgstr "API wachtwoord"
+
+#~ msgid "API Signature"
+#~ msgstr "API handtekening"
+
+#~ msgid "Pre Approval Key"
+#~ msgstr "Pre Approval Key"
+
+#~ msgid ""
+#~ "Please write pre approval key to let the user purchase directly without "
+#~ "going to PayPal website. Use this only for secure connections"
+#~ msgstr ""
+#~ "Schrijf de pre approval key om de gebruiker direct te laten bestellen "
+#~ "zonder naar de PayPal website te hoeven gaan. Gebruik dit alleen voor "
+#~ "beveiligde verbindingen"
+
+#~ msgid "Payment Error"
+#~ msgstr "Fout bij betaling"
+
+#~ msgid "Preapproval Key"
+#~ msgstr "Preapproval sleutel"
+
+#~ msgid "Generate Preapproval Key"
+#~ msgstr "Genereer preapproval sleutel"
+
+#~ msgid "Paypal_Email"
+#~ msgstr "Paypal e-mailadres"
+
+#~ msgid "Starting Date"
+#~ msgstr "Begindatum"
+
+#~ msgid "Ending Date"
+#~ msgstr "Einddatum"
+
+#~ msgid "Max Total Amount"
+#~ msgstr "Maximum totaalbedrag"
+
+#~ msgid "Show Mini Widget on"
+#~ msgstr "Laat mini-widget zien op"
+
+#~ msgid "Project Page Only"
+#~ msgstr "Alleen op projectpagina"
+
+#~ msgid "Small Widget on all Pages"
+#~ msgstr "Kleine widget op alle pagina's"
+
+#~ msgid "Only"
+#~ msgstr "Alleen"
+
+#~ msgid "Reload Captcha"
+#~ msgstr "Herlaad CAPTCHA"
+
+#~ msgid "Type Captcha"
+#~ msgstr "Typ CAPTCHA"
+
+#~ msgid "Title"
+#~ msgstr "Titel"
+
+#~ msgid "Total Contribution"
+#~ msgstr "Totale bijdrage"
+
+#~ msgid "Description"
+#~ msgstr "Omschrijving"
+
+#~ msgid "Awesome! You are about to support"
+#~ msgstr "Gaaf! Je staat op het punten te doneren voor"
+
+#~ msgid "Required"
+#~ msgstr "Vereist"
+
+#~ msgid "Publishable Key"
+#~ msgstr "Publieke sleutel"
+
+#~ msgid "Payment Method"
+#~ msgstr "Betaalmethode"
+
+#~ msgid "Payment Method Selection"
+#~ msgstr "Selecteer betaalmethode"
+
+#~ msgid ""
+#~ "The current Payment Gateway is PayPal.  Below you fill in all those blank "
+#~ "fields, to make IgnitionDeck interface with PayPal so you can collect the "
+#~ "funds to your PayPal account, and then make sure IgnitionDeck knows that "
+#~ "each order is completed, and post the results to your Project Widget. "
+#~ "This may be the most complicated part of setting up your project, so pay "
+#~ "close attention and you’ll have it done in no time!"
+#~ msgstr ""
+#~ "De huidige betaalmethode is PayPal. Hieronder vul je alle lege velden in, "
+#~ "om de IgnitionDeck te laten werken met PayPal zodat je het geld kan laten "
+#~ "overmaken naar je PayPal account, en dan moet je er zeker van zijn dat "
+#~ "IgnitionDeck weer dat elke bestelling afgerond is, en de resultaten "
+#~ "hiervan naar je project widget post. Dit zal het moeilijkste deel zijn "
+#~ "van het opzetten van je project, dus let goed op en je zal het binnen "
+#~ "korte tijd voor elkaar hebben."
+
+#~ msgid "for instructions on getting your Paypal Identity Token."
+#~ msgstr "voor instructies om je PayPal identiteitstoken te krijgen."
+
+#~ msgid ""
+#~ "Rarely required. Sometimes helps when international orders are rejected "
+#~ "because of address issues."
+#~ msgstr ""
+#~ "Bijna nooit vereist. Soms helpt dit wanneer internationale bestellingen "
+#~ "worden afgewezen vanwege problemen met adressen."
+
+#~ msgid "Enter Price"
+#~ msgstr "Voer prijs in"
+
+#~ msgid "Sold out"
+#~ msgstr "Uitverkocht"
+
+#~ msgid "Enter Manual Amount"
+#~ msgstr "Voer handmatig het bedrag in"
+
+#~ msgid "Switch Project Type"
+#~ msgstr "Verander projecttype"
+
+#~ msgid "Back"
+#~ msgstr "Terug"
+
+#~ msgid ""
+#~ "Copy this HTML code and send it to the person who’d like to post this to "
+#~ "their website, or use it yourself.  Make sure, wherever you use it, it’s "
+#~ "pasted as HTML.  We don’t recommend you edit this code in any way, as "
+#~ "it’s been designed to very specifically work at the exact width and "
+#~ "height it is set at."
+#~ msgstr ""
+#~ "Kopieer deze HTML code en verstuur het naar de persoon die het op zijn "
+#~ "website wil plaatsen of gebruik het zelf. Zorg ervoor, waar je het ook "
+#~ "gebruikt, dat het wordt geplakt als HTML. Wij raden niet aan dat je deze "
+#~ "code aanpast, omdat het specifiek is ontworpen om te weken met de exacte "
+#~ "breedte en hoogte waar die op is ingesteld."
+
+#~ msgid ""
+#~ "This creates the HTML code you can use to paste your project widget on "
+#~ "websites outside of your own.  Share this with anyone who’d like to embed "
+#~ "your widget on their website.  You’ll need to select the project you want "
+#~ "the code made for, and then click ‘Generate Code’.  Once clicked, it will "
+#~ "give you the proper code to use for pasting into other websites, and it "
+#~ "will link back to your project on your website.  It will also display up-"
+#~ "to-date information about how your Project is doing!"
+#~ msgstr ""
+#~ "Dit creërt de HTML code waarmee je jouw project widget kunt plakken op "
+#~ "websites buiten die van jezelf. Deel dit met iedereen die jouw widget op "
+#~ "zijn website wilt plakken. Je zult het project moeten selecteren voor "
+#~ "welke je de code wilt maken, waarna je op de knop 'genereer code' drukt. "
+#~ "Eenmaal aangeklikt geeft het je de juiste code die je kan gebruiken om je "
+#~ "widget op andere websites te plakken, en zal het teruglinken naar het "
+#~ "project op jouw website. Het zal ook up-to-date informatie weergeven over "
+#~ "hoe project verloopt!"
+
+#~ msgid "Warning"
+#~ msgstr "Waarschuwing"
+
+#~ msgid ""
+#~ " This will process all pending authorizations related to the selected "
+#~ "campaign."
+#~ msgstr ""
+#~ "Dit zal alle openstaande authorisaties doorvoeren voor de geselecteerde "
+#~ "campagne."
+
+#~ msgid ""
+#~ "Use this screen to process transactions once your fund threshold has been "
+#~ "reached. Please use this feature with care, and remember to clearly state "
+#~ "terms on your website or campaign page."
+#~ msgstr ""
+#~ "Gebruik dit scherm om de betalingen af te handelen zodra je "
+#~ "financieringsdrempel is bereikt. Gebruik deze optie met zorg en onthoud "
+#~ "om de voorwaarden duidelijk op je website of campagne pagina te benoemen."
+
+#~ msgid "Customers will only be charged once."
+#~ msgstr "Bedragen zullen slechts eenmaal in rekening worden gebracht."
+
+#~ msgid "Process Authorizations"
+#~ msgstr "Verwerkings authorisaties"
+
+#~ msgid ""
+#~ "The current Payment Gateway is PayPal.  Below you fill in all those blank "
+#~ "fields, to make IgnitionDeck interface with PayPal so you can collect the "
+#~ "funds to your PayPal account, and then make sure IgnitionDeck knows that "
+#~ "each order is completed, and post the results to your Project Widget."
+#~ msgstr ""
+#~ "De huidige betaalmethode is PayPal. Hieronder vul je alle lege velden in "
+#~ "om IgnitionDeck te laten werken met PayPal zodat je het geld kan laten "
+#~ "overmaken naar je PayPal account, waarna IgnitionDeck weet dat elke "
+#~ "bestelling is gelukt en de resultaten naar je Project Widget post."
+
+#~ msgid "Immediately Deliver Funds"
+#~ msgstr "Onmiddelijke betaling van geld"
+
+#~ msgid "100% Threshold"
+#~ msgstr "100% drempel"
+
+#~ msgid "Choose Project Type"
+#~ msgstr "Kies projecttype"
+
+#~ msgid "Enter Amount"
+#~ msgstr "Voer bedrag in"
+
+#~ msgid "Works with Paypal Standard Only"
+#~ msgstr "Werkt alleen met standaard PayPal"
+
+#~ msgid "Disable Success Action"
+#~ msgstr "Zet de te nemen actie bij succes uit"
+
+#~ msgid "Email Settings Saved"
+#~ msgstr "E-mailinstellingen opgeslagen"
+
+#~ msgid ""
+#~ "Select the components you wish to display and then save. Use the id "
+#~ "listed in the dropdown menu to customize your deck. Currently works on "
+#~ "project_widget, project_mini_widget, and project_page_complete. Simply "
+#~ "add deck=\"id\" within the shortcode."
+#~ msgstr ""
+#~ "Selecteer de componenten die je wilt laten zien en klik dan op opslaan. "
+#~ "Gebruik het id uit het dropdown menu om je deck aan te passen. Dit werkt "
+#~ "momenteel op project_widget, project_mini_widget, en "
+#~ "project_page_complete. Voeg deck=\"id\" toe binnen de shortcode."
+
+#~ msgid "Create new or select deck to edit"
+#~ msgstr "Creëer een nieuw deck of selecteer een deck om aan te passen"
+
+#~ msgid "New Deck"
+#~ msgstr "Nieuw deck"
+
+#~ msgid "Total Raised"
+#~ msgstr "Totaal opgehaald"
+
+#~ msgid "Order"
+#~ msgstr "Bestel"
+
+#~ msgid "Change to modify the order in which levels are displayed."
+#~ msgstr ""
+#~ "Verander dit om de volgorde van het weergeven van niveau's aan te passen."
+
+#~ msgid "License Settings"
+#~ msgstr "Licentie instellingen"
+
+#~ msgid "License Key"
+#~ msgstr "Licentiesleutel"
+
+#, fuzzy
+#~ msgid ""
+#~ "Entering your <a href=\"http://ignitiondeck.com/id/documentation/"
+#~ "ignitiondeck-crowdfunding/setup-ignitiondeck/ignitiondeck-license-keys/\" "
+#~ "target=\"_blank\">license key</a> will enable automatic updates via the "
+#~ "WordPress admin for the duration of your license period."
+#~ msgstr ""
+#~ "Als je jouw <a href=\"http://ignitiondeck.com/id/documentation/setup-"
+#~ "ignitiondeck/ignitiondeck-license-keys/\" target=\"_blank\">licentiecode</"
+#~ "a> invoert zul je automatisch updates ontvangen via het wordpress "
+#~ "adminpaneel gedurende de licentieperiode."
+
+#~ msgid "Project Submitted"
+#~ msgstr "Project toegevoegd"
+
+#, fuzzy
+#~ msgid "Manual Amount"
+#~ msgstr "Voer handmatig het bedrag in"
+
+#~ msgid "Anticipated Ship Date"
+#~ msgstr "Verwachte verzenddatum"
+
+#~ msgid "Submit"
+#~ msgstr "Verstuur"
+
+#, fuzzy
+#~ msgid "IDCF Settings"
+#~ msgstr "Instellingen"
+
+#~ msgid " IgnitionDeck Enterprise"
+#~ msgstr " IgnitionDeck Enterprise"
+
+#~ msgid " IgnitionDeck"
+#~ msgstr " IgnitionDeck"
+
+#~ msgid "Your project is live."
+#~ msgstr "Je project is live."
+
+#~ msgid "My Profile"
+#~ msgstr "Mijn profiel"
+
+#~ msgid "Validate"
+#~ msgstr "Valideer"
+
+#~ msgid " License Valid for"
+#~ msgstr "Licentie geldig tot"
