@@ -35,8 +35,7 @@ function getMemberRootHash($hash)
 
     $table_name = $wpdb->prefix . LEADERBOARD_MEMBERS_TABLE;
     $sql = "SELECT root_hash FROM $table_name WHERE hash = '$hash'";
-    $result = $wpdb->query($sql);
-    $row = $result->fetch_assoc();
+    $row = $wpdb->get_row($sql, ARRAY_A);
     if ($row) {
         return $row['root_hash'];
     }
@@ -51,8 +50,8 @@ function checkMemberExists($hash)
 
     $table_name = $wpdb->prefix . LEADERBOARD_MEMBERS_TABLE;
     $sql = "SELECT 1 FROM $table_name WHERE hash = '$hash'";
-    $result = $wpdb->query($sql);
-    if ($result->fetch_row()) {
+    $row = $wpdb->get_row($sql, ARRAY_A);
+    if ($row) {
         return true;
     }
     return false;
