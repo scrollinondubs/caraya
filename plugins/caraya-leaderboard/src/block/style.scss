@@ -5,10 +5,123 @@
  */
 
 .wp-block-caraya-leaderboard   {
-  background: $red;
-  border: 0.2rem solid $black;
-  color: $black;
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem;
+  
+}
+
+$body-color: #ffffff;
+$text-color: #707070;
+
+body {
+    color: $body-color;
+    color: $text-color;
+    font-family: 'oswald';
+}
+
+.f-32 {
+    font-size: 32px;
+}
+
+
+#pie-container{
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+.caraya-container {
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.flex-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+
+    @media (max-width: 600px) {
+        display: block;
+    }
+}
+
+.flex-container {
+    width: 45%;
+
+    @media (max-width: 600px) {
+        width: 100%;
+    }
+}
+
+.fund-targets {
+    text-align: left;
+}
+
+.color-red {
+    color: #ed5624;
+}
+
+.leaderboard-container {
+    h2 {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+.leaderboard-header {
+    background: #F6F0EB;
+    padding: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.5em;
+
+    &.colorClass1 {
+        border-top: 2px solid $color-1;
+    }
+    &.colorClass2 {
+        border-top: 2px solid $color-2;
+    }
+    &.colorClass3 {
+        border-top: 2px solid $color-3;
+    }
+    &.colorClass4 {
+        border-top: 2px solid $color-4;
+    }
+    &.colorClass5 {
+        border-top: 2px solid $color-5;
+    }
+}
+
+.leaderboard-content {
+    display: flex;
+
+    &.colorClass1{
+       .leaderboard-col {
+         h3{
+          color: $color-1;
+         }
+       }
+    }
+
+    .leaderboard-col {
+        flex-basis: 50%;
+        text-align: center;
+
+        h4,
+        h3 {
+            display: block;
+            margin: 5px;
+            font-weight: 300;
+
+        }
+    }
+
+}
+
+.top-donor{
+  width: 100%;
+  text-align: center;
+  padding: 5px 0px 15px 0px;
+  span{
+    color: $color-1;
+  }
 }
