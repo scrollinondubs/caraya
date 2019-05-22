@@ -50,6 +50,7 @@ registerBlockType( 'caraya/leaderboard', {
 		dataUrl: {
 			type: 'string'
 		},
+	},
 
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
@@ -73,7 +74,6 @@ registerBlockType( 'caraya/leaderboard', {
 					<div className="title-wrapper">
 						<PlainText
 							value={blockTitle}
-							onChange={this.onTitleChange}
 						/>
 					</div>
 					<leaderboard
@@ -95,4 +95,5 @@ registerBlockType( 'caraya/leaderboard', {
 	save: () => {
 		return null;
 	},
+
 } );

@@ -9,10 +9,86 @@
  *
  * CSS for both Frontend+Backend.
  */
-.wp-block-caraya-leaderboard {
-  background: orangered;
-  border: 0.2rem solid #292929;
-  color: #292929;
+body {
+  color: #ffffff;
+  color: #707070;
+  font-family: 'oswald'; }
+
+.f-32 {
+  font-size: 32px; }
+
+#pie-container {
+  margin-top: 60px;
+  margin-bottom: 60px; }
+
+.caraya-container {
+  max-width: 960px;
   margin: 0 auto;
-  max-width: 740px;
-  padding: 2rem; }
+  position: relative; }
+
+.flex-wrapper {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row-reverse;
+      flex-direction: row-reverse;
+  -ms-flex-pack: justify;
+      justify-content: space-between; }
+  @media (max-width: 600px) {
+    .flex-wrapper {
+      display: block; } }
+
+.flex-container {
+  width: 45%; }
+  @media (max-width: 600px) {
+    .flex-container {
+      width: 100%; } }
+
+.fund-targets {
+  text-align: left; }
+
+.color-red {
+  color: #ed5624; }
+
+.leaderboard-container h2 {
+  text-align: center;
+  width: 100%; }
+
+.leaderboard-header {
+  background: #F6F0EB;
+  padding: 10px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.5em; }
+  .leaderboard-header.colorClass1 {
+    border-top: 2px solid #4DB448; }
+  .leaderboard-header.colorClass2 {
+    border-top: 2px solid #ed5624; }
+  .leaderboard-header.colorClass3 {
+    border-top: 2px solid #dce11c; }
+  .leaderboard-header.colorClass4 {
+    border-top: 2px solid #3cc3df; }
+  .leaderboard-header.colorClass5 {
+    border-top: 2px solid #79c46c; }
+
+.leaderboard-content {
+  display: -ms-flexbox;
+  display: flex; }
+  .leaderboard-content.colorClass1 .leaderboard-col h3 {
+    color: #4DB448; }
+  .leaderboard-content .leaderboard-col {
+    -ms-flex-preferred-size: 50%;
+        flex-basis: 50%;
+    text-align: center; }
+    .leaderboard-content .leaderboard-col h4,
+    .leaderboard-content .leaderboard-col h3 {
+      display: block;
+      margin: 5px;
+      font-weight: 300; }
+
+.top-donor {
+  width: 100%;
+  text-align: center;
+  padding: 5px 0px 15px 0px; }
+  .top-donor span {
+    color: #4DB448; }

@@ -58,8 +58,7 @@ export class PieChart extends Component {
     return (
        <Pie
           data={config.data}
-          options={config.options}
-        />
+          options={config.options} />
     );
   }
 
