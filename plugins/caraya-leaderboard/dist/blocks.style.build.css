@@ -11,8 +11,7 @@
  */
 body {
   color: #ffffff;
-  color: #707070;
-  font-family: 'oswald'; }
+  color: #707070; }
 
 .f-32 {
   font-size: 32px; }
@@ -24,7 +23,8 @@ body {
 .caraya-container {
   max-width: 960px;
   margin: 0 auto;
-  position: relative; }
+  position: relative;
+  font-family: 'oswald'; }
 
 .flex-wrapper {
   width: 100%;

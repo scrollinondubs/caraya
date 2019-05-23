@@ -70,15 +70,8 @@ registerBlockType( 'caraya/leaderboard', {
 			const { className, attributes: { blockTitle = '' } = {} } = this.props;
 
 			return (
-				<div className={className}>
-					<div className="title-wrapper">
-						<PlainText
-							value={blockTitle}
-						/>
-					</div>
-					<leaderboard
-						dataUrl={this.props.attributes.dataUrl}
-					/>
+				<div>
+				<Leaderboard />
 				</div>
 			);
 		}
@@ -93,6 +86,7 @@ registerBlockType( 'caraya/leaderboard', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save: () => {
+		//need to look at server side rendering via php instead of using this....
 		return null;
 	},
 

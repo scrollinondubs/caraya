@@ -7,12 +7,11 @@ const { Component } = wp.element;
 /**
  * PieChart Component
  */
-export class PieChart extends Component {
+class PieChart extends Component {
 
   constructor(props) {
     super(...arguments);
     this.props = props;
-
   }
 
   /**
@@ -25,10 +24,9 @@ export class PieChart extends Component {
    * Renders the PieChart component.
    */
   render() {
-
-    const data = leaderData.map(x => x.donationAmount);
-    const names = leaderData.map(x => x.teamName);
-
+    console.log(this.props);
+    const data = this.props.leaderData.map(x => x.donationAmount);
+    const names = this.props.leaderData.map(x => x.teamName);
     const config = {
             type: 'pie',
             data: {
@@ -56,12 +54,17 @@ export class PieChart extends Component {
         };
    
     return (
+      <div>
        <Pie
           data={config.data}
           options={config.options} />
+      </div>
     );
   }
 
 }
+
+
+export default PieChart
 
 

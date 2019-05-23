@@ -1,13 +1,19 @@
 
-export const LeaderboardBlock = (teamName, amountDonated, peopleRecruited, cssClass, topDonor) => (
- <section class='leader-container' >
-  <div class='leaderboard-header {cssClass} ' >{teamName}</div>
-    <div class='leaderboard-content {cssClass} ' >
-    <div class='leaderboard-col'><h4>Total Donated</h4><h3>${amountDonated}</h3></div>
-    <div class='leaderboard-col'><h4>Donors Recruited</h4><h3>{peopleRecruited}</h3></div>
+const LeaderboardBlock = props => {
+  const { leaderProps } = props;
+
+  return(
+    <section class='leader-container' >
+    <div class='leaderboard-header {leaderProps.cssClass} ' >{leaderProps.teamName}</div>
+    <div class='leaderboard-content {leaderProps.cssClass} ' >
+    <div class='leaderboard-col'><h4>Total Donated</h4><h3>${leaderProps.amountDonated}</h3></div>
+    <div class='leaderboard-col'><h4>Donors Recruited</h4><h3>{leaderProps.peopleRecruited}</h3></div>
     </div>
-    if( topDonor ) {
-      <div class='top-donor'>Top Donor: <span>{topDonor}</span></div>
-    }
+    <div class='top-donor'>Top Donor: <span>{leaderProps.topDonor}</span></div>
     </section>
-);
+  );
+
+}
+
+export default LeaderboardBlock;
+
