@@ -10,7 +10,6 @@
 const LEADERBOARD_TEAMS_TABLE = 'leaderboard_teams';
 const LEADERBOARD_MEMBERS_TABLE = 'leaderboard_members';
 const LEADERBOARD_ORDERS_TABLE = 'leaderboard_orders';
-const LEADERBOARD_REFERRAL_TREE_TABLE = 'leaderboard_referral_tree';
 const LEADERBOARD_COOKIE = 'caraya-ry-leaderboard';
 
 function leaderboardActivation()
@@ -75,6 +74,8 @@ function createLeaderboardMembers()
         'hash VARCHAR(255),',
         'email VARCHAR(255),',
         'team_id INT(8),',
+        'parent_hash VARCHAR(255),',
+        'root_hash VARCHAR(255),',
         'PRIMARY KEY (`id`),',
         'CONSTRAINT UNIQUE INDEX `unique_email` (`email`),',
         'FOREIGN KEY (team_id) REFERENCES ' . $leaderBoardTeamsTable . '(id)',
@@ -106,32 +107,6 @@ function createLeaderboardOrders()
         'order_id mediumint(9),',
         'PRIMARY KEY (`id`),',
         'FOREIGN KEY (order_id) REFERENCES ' . $ordersTable . '(id)',
-        ") $charset_collate",
-    ));
-
-    $wpdb->query($create);
-}
-
-function createLeaderboardReferralTree()
-{
-    global $wpdb;
-
-    $table_name = $wpdb->prefix . LEADERBOARD_REFERRAL_TREE_TABLE;
-
-    $query = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($table_name));
-    if ($wpdb->get_var( $query ) == $table_name) {
-        return true;
-    }
-
-    $charset_collate = 'DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci';
-    $create = implode("\r\n", array(
-        "CREATE TABLE `$table_name` (",
-        'id INT(8) NOT NULL AUTO_INCREMENT,',
-        'referral_id VARCHAR(255) NOT NULL,',
-        'parent_id VARCHAR(255),',
-        'root_id VARCHAR(255) NOT NULL,',
-        'PRIMARY KEY (`id`),',
-        'CONSTRAINT UNIQUE INDEX `unique_referral_id` (`referral_id`)',
         ") $charset_collate",
     ));
 
@@ -171,6 +146,8 @@ function importLeaderboardMembers($table_name) {
             array(
                 'hash' => $key,
                 'team_id' => $teamsArray[$value],
+                'parent_hash' => null,
+                'root_hash' => $key
             )
         );
     }
@@ -197,15 +174,10 @@ function deleteLeaderboardOrders() {
     $wpdb->query('DROP TABLE '. $table_name);
 }
 
-function deleteLeaderboardReferralTree() {
-    global $wpdb;
-
-    $table_name = $wpdb->prefix . LEADERBOARD_REFERRAL_TREE_TABLE;
-    $wpdb->query('DROP TABLE '. $table_name);
-}
 
 register_activation_hook(__FILE__, 'leaderboardActivation');
 register_deactivation_hook(__FILE__, 'leaderboardDeactivation');
 
 require_once(plugin_dir_path( __FILE__ ) . 'includes/manage-cookies.php');
 require_once(plugin_dir_path( __FILE__ ) . 'includes/manage-order.php');
+
