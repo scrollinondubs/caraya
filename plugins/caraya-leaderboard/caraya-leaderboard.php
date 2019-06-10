@@ -17,16 +17,14 @@ function leaderboardActivation()
     createLeaderboardTeams();
     createLeaderboardMembers();
     createLeaderboardOrders();
-    createLeaderboardReferralTree();
 }
 
 function leaderboardDeactivation()
 {
     // This is a quick way to toggle deleting of data and starting fresh. Uncomment to drop the tables.
-//    deleteLeaderboardOrders();
-//    deleteLeaderboardReferralTree();
-//    deleteLeaderboardMembers();
-//    deleteLeaderboardTeams();
+    deleteLeaderboardOrders();
+    deleteLeaderboardMembers();
+    deleteLeaderboardTeams();
 }
 
 function createLeaderboardTeams()
@@ -40,11 +38,13 @@ function createLeaderboardTeams()
         return true;
     }
 
-    $charset_collate = 'DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci';
+    $charset_collate = 'DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci';
     $create = implode("\r\n", array(
         "CREATE TABLE `$table_name` (",
         'id INT(8) NOT NULL AUTO_INCREMENT,',
         'name VARCHAR(255) NOT NULL,',
+        'created_at DATETIME NOT NULL DEFAULT current_timestamp(),',
+        'updated_at DATETIME NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),',
         'PRIMARY KEY (`id`),',
         'CONSTRAINT UNIQUE INDEX `unique_name` (`name`)',
         ") $charset_collate",
@@ -66,7 +66,7 @@ function createLeaderboardMembers()
         return true;
     }
 
-    $charset_collate = 'DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci';
+    $charset_collate = 'DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci';
     $leaderBoardTeamsTable = $wpdb->prefix . LEADERBOARD_TEAMS_TABLE;
     $create = implode("\r\n", array(
         "CREATE TABLE `$table_name` (",
@@ -76,6 +76,8 @@ function createLeaderboardMembers()
         'team_id INT(8),',
         'parent_hash VARCHAR(255),',
         'root_hash VARCHAR(255),',
+        'created_at DATETIME NOT NULL DEFAULT current_timestamp(),',
+        'updated_at DATETIME NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),',
         'PRIMARY KEY (`id`),',
         'CONSTRAINT UNIQUE INDEX `unique_email` (`email`),',
         'FOREIGN KEY (team_id) REFERENCES ' . $leaderBoardTeamsTable . '(id)',
@@ -98,13 +100,15 @@ function createLeaderboardOrders()
         return true;
     }
 
-    $charset_collate = 'DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci';
+    $charset_collate = 'DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci';
     $ordersTable = $wpdb->prefix . 'memberdeck_orders';
     $create = implode("\r\n", array(
         "CREATE TABLE `$table_name` (",
         'id INT(8) NOT NULL AUTO_INCREMENT,',
         'referral_id VARCHAR(255),',
         'order_id mediumint(9),',
+        'created_at DATETIME NOT NULL DEFAULT current_timestamp(),',
+        'updated_at DATETIME NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),',
         'PRIMARY KEY (`id`),',
         'FOREIGN KEY (order_id) REFERENCES ' . $ordersTable . '(id)',
         ") $charset_collate",
@@ -118,6 +122,11 @@ function importLeaderboardTeams($table_name) {
 
     $teamsJson = file_get_contents(plugin_dir_path( __FILE__ ) . 'data/teams.json');
     $teamsArray = json_decode($teamsJson, true);
+
+    // Note: We are doing this since the ID, is directly related to RY. There will be future classes.
+    // To account for that we are setting this at 999 for non-ry and can manually add future RY...
+    // classes if the need ever arises.
+    $teamsArray[999] = 'Non-Remote Year';
 
     foreach ($teamsArray as $key => $value) {
         $wpdb->insert(
@@ -174,10 +183,14 @@ function deleteLeaderboardOrders() {
     $wpdb->query('DROP TABLE '. $table_name);
 }
 
+function leaderboardSettingsPage() {
+    add_options_page( 'Settings API Page', 'Settings API Page', 'manage_options', 'settings-api-page', 'settings_api_page' );
+}
 
 register_activation_hook(__FILE__, 'leaderboardActivation');
 register_deactivation_hook(__FILE__, 'leaderboardDeactivation');
 
+require_once(plugin_dir_path( __FILE__ ) . 'admin/settings.php');
 require_once(plugin_dir_path( __FILE__ ) . 'includes/manage-cookies.php');
 require_once(plugin_dir_path( __FILE__ ) . 'includes/manage-order.php');
-
+require_once(plugin_dir_path( __FILE__ ) . 'routes/get-leaderboard.php');

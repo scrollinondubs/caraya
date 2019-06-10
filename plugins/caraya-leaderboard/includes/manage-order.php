@@ -5,6 +5,7 @@
  * Author URI: http://charitymakeover.com/
  */
 
+
 function leaderboardSetOrder($last_order)
 {
     global $wpdb;
@@ -25,6 +26,8 @@ function leaderboardSetOrder($last_order)
             )
         );
     }
+
+    $newLeaderboardUser = leaderboardSetMember($user->user_email);
 }
 
 function getMemberRootHash($hash)
@@ -66,7 +69,7 @@ function leaderboardSetMember($order_email)
 
     // Careful, if a member already exists, we don't want to add them again.
     // This could happen when someone donates using their own referral link.
-    $hash = hash($order_email);
+    $hash = hash('sha256', $order_email);
     if (checkMemberExists($hash)) {
         return;
     }
@@ -76,19 +79,20 @@ function leaderboardSetMember($order_email)
     $root_hash = getMemberRootHash($parent_hash);
 
     if($parent_hash) {
-        $wpdb->insert(
+        $newLeaderboardUser = $wpdb->insert(
             $table_name,
             array(
                 'hash' => $hash,
                 'email' => $order_email,
-                'team_id' => null,
+                'team_id' => 999, // reference importLeaderboardTeams in install file.
                 'parent_hash' => $parent_hash,
                 'root_hash' => $root_hash
             )
         );
     }
+
+    return $newLeaderboardUser;
 }
 
 
 add_action('idc_order_lightbox_before', 'leaderboardSetOrder', 10, 2);
-
