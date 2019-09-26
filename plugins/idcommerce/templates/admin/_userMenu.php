@@ -201,7 +201,9 @@
 								if (!is_idc_free()) {
 									echo '<td class="current-credits">'.(isset($users[$i]->credits) ? $users[$i]->credits : '0').'</td>';
 								}
-								echo '<td class="reg-date">'.(isset($users[$i]->r_date) ? $users[$i]->r_date : '').'</td>';
+								$date = new DateTime($users[$i]->r_date, new DateTimeZone('UTC'));
+								$date->setTimezone($tz);
+								echo '<td class="reg-date">'.$date->format('Y-m-d H:i:s').'</td>';
 								echo '</tr>';
 								//$i++;
 							}
@@ -211,7 +213,9 @@
 
 										echo '<tr id="user-'.$users[$i]->ID.'" class="user-'.$users[$i]->ID.' hentry '.$alt.'">';
 										echo '<th scope="row" class="check-column">&nbsp;<!--<input id="cb-select-'.($i+1).'" type="checkbox" name="post[]" value="'.($i+1).'"/>--></th>';
+										echo '<td class="user-id"><a href="#">'.(!empty($users[$i]->ID) ? $users[$i]->ID : '-').'</a></td>';
 										echo '<td class="name-title"><a href="#">'.$users[$i]->user_login.'</a></td>';
+										echo '<td class="display-name">'.(!empty($users[$i]->display_name) ? $users[$i]->display_name : __('None Found', 'memberdeck')).'</td>';
 										echo '<td class="user-email"><a href="#">'.(isset($users[$i]->user_email) ? $users[$i]->user_email : '').'</a></td>';
 										echo '<td class="current-levels">';
 										$j = 1;

@@ -139,12 +139,12 @@ class ID_Lemon_Way {
 	 * Enqueue scripts
 	 */
 	public function lemonway_enqueue() {
-		wp_register_script('lemonway-js', plugins_url('/js/lemonway.js', __FILE__), array('idcommerce-js'));
+		wp_register_script('lemonway-js', plugins_url('/js/lemonway-min.js', __FILE__), array('idcommerce-js'));
 		wp_enqueue_script('lemonway-js');
 	}
 
 	public function lemonway_admin_enqueue() {
-		wp_register_script('lemonway-js-admin', plugins_url('/js/lemonway-admin.js', __FILE__), array('idcommerce-admin-js'));
+		wp_register_script('lemonway-js-admin', plugins_url('/js/lemonway-admin-min.js', __FILE__), array('idcommerce-admin-js'));
 		wp_enqueue_script('lemonway-js-admin');
 	}
 
@@ -1082,7 +1082,7 @@ class ID_Lemon_Way {
 					}
 					else {
 						$exp = strtotime('+1 years');
-						$e_date = date('Y-m-d h:i:s', $exp);
+						$e_date = date('Y-m-d H:i:s', $exp);
 					}
 					$user = array(
 						'user_id' => $user_id,
@@ -1137,7 +1137,7 @@ class ID_Lemon_Way {
 				}
 				else {
 					$exp = strtotime('+1 years');
-					$e_date = date('Y-m-d h:i:s', $exp);
+					$e_date = date('Y-m-d H:i:s', $exp);
 				}
 				//fwrite($log, 'exp: '.$exp."\n");
 				$reg_key = md5($email.time());
@@ -1147,7 +1147,7 @@ class ID_Lemon_Way {
 					'reg_key' => $reg_key,
 					'data' => array()
 				);
-				$new = ID_Member::add_paypal_user($user);
+				$new = ID_Member::add_ipn_user($user);
 				fwrite($log, "new member id: ". $new."\n");
 				$order = new ID_Member_Order(null, $user_id, $level_id, null, $txn_id, $sub_id, 'active', $e_date, $price);
 				$new_order = $order->add_order();

@@ -28,46 +28,81 @@
 	width: auto;
 	text-decoration: none;
 }
-.wrap ul li.ign_projectmeta_left {
+
+/* Project Meta */
+
+.cmb_metabox .ign_project_meta {
+	margin: 20px 0;
+}
+
+.cmb_metabox .idcf_metabox_label {
+	font-weight: bold;
+}
+
+.cmb_metabox .idcf_metabox_wrapper {
+	margin-top: 5px;
+}
+
+.cmb_metabox .idcf_metabox_wrapper .cmb_radio_inline_option:not(:first-child) {
+	margin-left: 10px;
+}
+
+/* Form Class */
+
+.form-row label {
+	font-weight: bold;
+	display: block;
+}
+
+.form-row label.checkbox, .form-row label.radio {
+	display: inline-block;
+}
+
+.form-row input {
+	margin-top: 5px;
+}
+
+/*
+.wrap .ign_projectmeta_left {
 	padding: 10px 0;
 	margin: 0;
 	float: left;
 	width: 50%;
 	clear: both;
 }
-.wrap ul li.ign_projectmeta_right {
+.wrap .ign_projectmeta_right {
 	padding: 10px 0;
 	margin: 0 2% 0 0;
 	float: left;
 	width: 48%;
 	clear: right;
 }
-.wrap ul li.ign_projectmeta_full {
+.wrap .ign_projectmeta_full {
 	padding: 10px 0;
 	margin: 0;
 	width: 100%;
 	clear: both;
 	display: inline-block;
 }
-.wrap ul li.ign_projectmeta_left_third {
+.wrap .ign_projectmeta_left_third {
 	padding: 10px 0;
 	margin: 0;
 	float: left;
 	width: 33%;
 	clear: both;
 }
-.wrap ul li.ign_projectmeta_third {
+.wrap .ign_projectmeta_third {
 	padding: 10px 0;
 	margin: 0 0 0 2%;
 	width: 31%;
     display: inline-block;
 }
-.wrap ul li.ign_projectmeta_full .customEditor {
+.wrap .ign_projectmeta_full .customEditor {
 	padding: 1px;
 	border: 1px solid #c9c9c9;
 }
 
-.wrap ul li.ign_projectmeta_full label, .wrap ul li.ign_projectmeta_full a.idMoreinfo {
+.wrap .ign_projectmeta_full label, .wrap .ign_projectmeta_full a.idMoreinfo {
 	margin-bottom: 10px;
 	display: inline-block;
 }
@@ -76,21 +111,18 @@
 	width: 450px;
 	margin: 10px 0;
 }
-.wrap .ign_file_upload .upload_button {
-	/*margin-top: 10px;*/
-}
 .wrap .ign_file_upload_image {
 	padding: 0;
 	margin: 0;
 	float: left;
 	clear: none;
 }
-.wrap ul li img.ign_image_tiny {
+.wrap img.ign_image_tiny {
 	padding: 0;
 	margin: 0;
 	width: 70px;
 }
-.wrap ul li.ign_projectmeta_full .ign_image_crop {
+.wrap .ign_projectmeta_full .ign_image_crop {
 	padding: 0;
 	margin: 0 auto;
 	width: 70px;
@@ -171,6 +203,7 @@
 	background-color: #dadde3;
 	text-shadow: 1px 1px 0 #ffffff;
 }
+
 .wrap .projectmeta-levelbox label {
 	font-weight: bold;
 }
@@ -200,6 +233,7 @@
 .wrap a.add-new-h2 {
 	margin: 0;
 }
+
 .id-embedwidget-ss {
 	margin: 15px 30px 0 0;
 	float: left;
@@ -211,7 +245,7 @@
 	font-size: 16px;
 	margin: 10px 0;
 	text-shadow: 2px 2px 0 #ffffff;
-}
+}*/
 
 /* @group MoreInfo Button Styling */
 
@@ -297,12 +331,8 @@ table.widefat tr td.orderoptions a.delete:hover {
 
 /* @group Projects Admin Pages */
 
-span.ig-add-level {
-	cursor: pointer;
-	line-height: 28px;
-}
-.submitbox .submitdelete:hover {
-	color: #FFF !important;
+.wp-core-ui button.delete {
+	color: #a00;
 }
 
 /* @end */
@@ -360,36 +390,3 @@ span.ig-add-level {
 }
 
 /* @end */
-
-/* Supplemental */
-
-.wp-admin .ignitiondeck h2.title {
-	display: inline;
-	vertical-align: middle;
-}
-.wp-admin .ignitiondeck .icon32 {
-	display: inline-block;
-	width: 32px;
-	height: 32px;
-	background-image: url(../ignitiondeck/images/ignitiondeck-plugin-icon.svg);
-	background-size: 32px 32px;
-	background-repeat: no-repeat;
-	background-position: center;
-	vertical-align: middle;
-}
-.wp-admin .ignitiondeck .help {
-	display: inline-block;
-	vertical-align: middle;
-	float: right;
-}
-
-.wp-admin .ignitiondeck .help .button {
-	vertical-align: middle;
-}
-
-.wrap .license_validation {
-	background: #f1f1f1;
-	padding: 0 10px;
-	display: block;
-	border: 1px solid #e5e5e5;
-}

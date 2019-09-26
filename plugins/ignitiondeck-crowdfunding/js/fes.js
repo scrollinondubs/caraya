@@ -1,4 +1,18 @@
+id.form.fes = {
+	'level_count': undefined,
+	'levels': {},
+}
+jQuery(document).trigger('idFesInit');
 jQuery(document).ready(function() {
+	idFesUpdateObj();
+	// target #fes to avoid losing levels inserted post page load
+	jQuery('#fes').on('change', function(e) {
+		var target = e.target;
+		jQuery(document).trigger('id_' + jQuery(target).attr('name'), jQuery(target).val());
+	});
+	jQuery(document).bind('id_project_levels', function(e, value) {
+		idFesUpdateLevelCount(value);
+	});
 	var clkBtn;
     jQuery('input[name="project_fesubmit"]').click(function(e) {
         clkBtn = jQuery(this).attr('name');
@@ -132,6 +146,24 @@ jQuery(document).ready(function() {
 		jQuery('#fes .image_url[data-url="' + thisURL + '"]').toggle();
 	});
 });
+
+function idFesUpdateObj() {
+	idFesUpdateLevelCount();
+}
+
+function idFesLevelCount() {
+	var level_count = jQuery('input[name="project_levels"]').val();
+	return level_count;
+}
+
+function idFesUpdateLevelCount(level_count) {
+	// this function updates our fes object
+	if (typeof(level_count) == 'undefined' || level_count == '') {
+		level_count = idFesLevelCount();
+	}
+	id.form.fes.level_count = level_count;
+	jQuery(document).trigger('idFesLevelCount', id.form.fes.level_count);
+}
 
 function countLevels() {
 	var fesLevels = jQuery('#fes .form-level:visible').length;

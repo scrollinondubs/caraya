@@ -16,6 +16,28 @@ jQuery(document).ready(function() {
 		jQuery('.select-' + projectID).removeAttr('checked');
 	});
 	var levelID = jQuery('#edit-level').val();
+	jQuery('input[name="edit-level-filter"]').change(function() {
+		var options = jQuery('select[name="edit-level"] option');
+		var filter = jQuery(this).val();
+		filter = filter.toLowerCase();
+		console.log(filter);
+		
+		jQuery.each(jQuery(options), function(k, el) {
+			var optionText = jQuery(this).text();
+			optionText = optionText.toLowerCase();
+			if (filter === '') {
+				jQuery(options).show();
+			}
+			else {
+				if (optionText.includes(filter)) {
+					jQuery(this).show();
+				}
+				else {
+					jQuery(this).hide();
+				}
+			}
+		});
+	});
 	jQuery('.level-select').change(function() {
 		if (jQuery(this).attr('checked') == 'checked') {
 			jQuery(this).removeClass('pending');
@@ -49,7 +71,7 @@ jQuery(document).ready(function() {
 			data: {action: 'mdid_get_assignments', Level: levelID},
 			success: function(res) {
 				//console.log(res);
-				json = JSON.parse(res);
+				var json = JSON.parse(res);
 				jQuery.each(json, function(k, v) {
 					var project = this.project;
 					var levels = this.levels;

@@ -24,5 +24,5 @@
 	<?php } 
 	do_action('idc_below_login_form');
 	?>
-	<p><a class="lostpassword" href="<?php echo site_url(); ?>/wp-login.php?action=lostpassword"><?php _e('Lost Password', 'memberdeck'); ?></a></p>
+	<p><a class="lostpassword" href="<?php echo wp_lostpassword_url(); ?>"><?php _e('Lost Password', 'memberdeck'); ?></a></p>
 </div>

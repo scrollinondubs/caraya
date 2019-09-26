@@ -55,7 +55,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
   <div class="ctc-input-row clearfix" id="input_row_screenshot">
       <div class="ctc-input-cell"> <strong>
         <?php _e( 'Export Child Theme as Zip Archive', 'child-theme-configurator' ); ?>
-        </strong> <p class="howto"><?php _e( 'Click "Export Zip" to save a backup of the currently loaded child theme. You can export any of your themes from the Parent/Child tab.' ); ?></p></div>
+        </strong> <p class="howto"><?php _e( 'Click "Export Zip" to save a backup of the currently loaded child theme. You can export any of your themes from the Parent/Child tab.', 'child-theme-configurator' ); ?></p></div>
       <div class="ctc-input-cell-wide"><?php
         include ( CHLD_THM_CFG_DIR . '/includes/forms/zipform.php' ); 
       ?></div>

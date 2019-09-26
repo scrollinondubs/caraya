@@ -11,10 +11,10 @@ class ID_Authorize_Net {
 	private $error_exists;
 	
 	function __construct($api_login, $transaction_key, $test) {
+		define('AUTHORIZENET_LOG_FILE', plugin_dir_path(dirname(__FILE__)).'/lib/Authorize.net/authorize-net.log');
 		$this->auth_api_login = $api_login;
 		$this->auth_transaction_key = $transaction_key;
 		$this->test_mode = $test;
-
 		// Adding filters
 		add_filter('idc_authnet_avs_info_add', array($this, 'idc_authnet_add_address'), 10, 3);
 		add_filter('idc_authnet_validationmode_select', array($this, 'idc_authnet_validationmode_filter'), 10);

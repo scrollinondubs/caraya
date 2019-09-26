@@ -6,8 +6,8 @@
 /*
 Plugin Name: IgnitionDeck
 URI: http://IgnitionDeck.com
-Description: A crowdfunding and ecommerce for WordPress that helps you crowdfund, pre-order, and sell goods online.
-Version: 1.2.34
+Description: A crowdfunding and ecommerce plugin for WordPress that helps you crowdfund, pre-order, and sell goods online.
+Version: 1.3.6
 Author: IgnitionDeck
 Author URI: http://IgnitionDeck.com
 License: GPL2
@@ -17,7 +17,7 @@ define( 'IDF_PATH', plugin_dir_path(__FILE__) );
 
 include_once 'idf-globals.php';
 global $active_plugins, $idf_current_version;
-$idf_current_version = '1.2.34';
+$idf_current_version = '1.3.6';
 include_once 'idf-update.php';
 include_once 'classes/class-idf_requirements.php';
 include_once 'classes/class-idf.php';
@@ -25,6 +25,7 @@ include_once 'classes/class-idf_cache.php';
 include_once 'classes/class-id_dev_tools.php';
 include_once 'idf-cron.php';
 include_once 'idf-functions.php';
+include_once 'idf-filters.php';
 include_once 'idf-cache.php';
 include_once 'idf-admin.php';
 include_once 'classes/class-id_modules.php';
@@ -38,13 +39,14 @@ if (idf_has_idc()) {
 if (idf_has_idcf()) {
 	include_once 'idf-idcf.php';
 }
-//include_once 'idf-stock-browser.php';
+//include_once 'idf-stock-browser.php'; #commented code
 
 add_action('init', 'idf_init');
 
 function idf_init() {
 	// idf-admin.php
-	add_filter('idf_notice_count', 'idf_notice_count');
+	# For menu item notices
+	//add_filter('idf_notice_count', 'idf_notice_count');
 }
 
 register_activation_hook(__FILE__, 'idf_activation');
@@ -67,8 +69,8 @@ function idf_init_set_defaults() {
 		update_option('idf_commerce_platform', 'idc');
 	}
 	$version_array = array(
-		'ignitiondeck-crowdfunding/ignitiondeck.php' => '1.6.8',
-		'idcommerce/idcommerce.php' => '1.8.5'
+		'ignitiondeck-crowdfunding/ignitiondeck.php' => '1.7.0',
+		'idcommerce/idcommerce.php' => '1.9.34'
 	);
 	set_transient('idf_plugin_versions', $version_array);
 	set_site_transient('update_plugins', null);
@@ -194,8 +196,8 @@ function idc_force_update() {
 add_action('init', 'idf_prepare_scripts');
 
 function idf_prepare_scripts() {
-	wp_register_script('idf', plugins_url('js/idf.js', __FILE__));
-	wp_register_script('idf-functions', plugins_url('js/idf-functions.js', __FILE__));
+	wp_register_script('idf', plugins_url('js/idf-min.js', __FILE__));
+	wp_register_script('idf-functions', plugins_url('js/idf-functions-min.js', __FILE__));
 	wp_enqueue_script('idf-functions');
 	wp_localize_script('idf-functions', 'idf_current_url', idf_current_url());
 	wp_localize_script('idf-functions', 'idf_date_format', idf_date_format());
@@ -210,11 +212,11 @@ function idf_lightbox() {
 	if (function_exists('get_plugin_data')) {
 		$idf_data = get_plugin_data(__FILE__);
 	}
-	wp_register_style('magnific', plugins_url('lib/magnific/magnific.css', __FILE__));
-	wp_register_script('magnific', plugins_url('lib/magnific/magnific.js', __FILE__));
-	wp_register_script('idf-admin-media', plugins_url('/js/idf-admin-media.js', __FILE__));
-	wp_register_style('idf', plugins_url('css/idf.css', __FILE__));
-	wp_register_script('idf-stock-browser', plugins_url('js/idf-stock-browser.js', __FILE__));
+	wp_register_style('magnific', plugins_url('lib/magnific/magnific-min.css', __FILE__));
+	wp_register_script('magnific', plugins_url('lib/magnific/magnific-min.js', __FILE__));
+	wp_register_script('idf-admin-media', plugins_url('/js/idf-admin-media-min.js', __FILE__));
+	wp_register_style('idf', plugins_url('css/idf-min.css', __FILE__));
+	wp_register_script('idf-stock-browser', plugins_url('js/idf-stock-browser-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	$checkout_url = array();
 	$platform = idf_platform();
@@ -222,7 +224,14 @@ function idf_lightbox() {
 		if (class_exists('WooCommerce')) {
 			global $woocommerce;
 			$idf_wc_checkout_url = get_option('idf_wc_checkout_url', 'get_cart_url');
-			$checkout_url = $woocommerce->cart->$idf_wc_checkout_url();
+			switch ($idf_wc_checkout_url) {
+				case 'get_cart_url':
+					$checkout_url = wc_get_cart_url();
+					break;
+				default:
+					$checkout_url = wc_get_checkout_url();
+					break;
+			}
 		}
 	}
 	else if ($platform == 'edd' && class_exists('Easy_Digital_Downloads') && !is_admin()) {
@@ -233,7 +242,7 @@ function idf_lightbox() {
 	wp_enqueue_script('idf');
 	wp_enqueue_script('magnific');
 	if ($platform == 'legacy' || $platform == 'wc') {
-		wp_register_script('idflegacy-js', plugins_url('js/idf-legacy.js', __FILE__));
+		wp_register_script('idflegacy-js', plugins_url('js/idf-legacy-min.js', __FILE__));
 		wp_enqueue_script('idflegacy-js');
 	}
 	wp_localize_script('idf', 'idf_platform', $platform);
@@ -246,7 +255,7 @@ function idf_lightbox() {
 	if (isset($idf_data['Version'])) {
 		wp_localize_script('idf', 'idf_version', $idf_data['Version']);
 	}
-	wp_enqueue_script('idf-stock-browser');
+	//wp_enqueue_script('idf-stock-browser');
 }
 
 function idf_font_awesome() {

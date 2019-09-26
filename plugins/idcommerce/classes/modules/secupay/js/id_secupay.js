@@ -90,7 +90,7 @@ jQuery(document).ready(function() {
 		var selClassSubmit = selClass.substring(0,1).toUpperCase() + selClass.substring(1);
 		jQuery('#id-main-submit').removeAttr('disabled').attr('name', 'submitPayment' + selClassSubmit).text(payText);
 		var formattedPrice = jQuery(".product-price").text();
-		setPriceText('prepay', '€', formattedPrice);
+		idcSetPriceText('prepay', '€', formattedPrice);
 		jQuery('.finaldesc').hide();
 		// show description?
 	}

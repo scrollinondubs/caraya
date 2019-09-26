@@ -1,0 +1,9 @@
+{
+  "title":"Paytm",
+  "short_desc":"India’s most trusted Payments platform. Paytm allows you to collect payments efficiently and reliably.",
+  "doclink":"",
+  "status":"live",
+  "type":"module",
+  "requires": "idc",
+  "tags": "crowdfunding commerce gateways"
+}

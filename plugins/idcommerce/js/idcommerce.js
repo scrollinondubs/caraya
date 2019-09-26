@@ -1,6 +1,13 @@
 var idcPayVars = {
-	isGuestCheckout: false,
-	redirectURL: memberdeck_durl
+	isGuestCheckout: 0,
+	redirectURL: memberdeck_durl,
+	idSet: 0,
+	isFree: 0,
+	trial: {
+		'trialPeriod': '',
+		'trialLength': '',
+		'trialType': ''
+	}
 };
 // payment form stuff
 var mc = memberdeck_mc;
@@ -99,9 +106,10 @@ jQuery(document).ready(function() {
 	
 	// Vars and functions used only when it's a checkout form
 	if (jQuery(".checkout-wrapper").length > 0) {
-		setGuestCheckout();
+		jQuery(document).trigger('idcCheckoutLoaded');
 		var credits = jQuery("#payment-form").data('pay-by-credits');
 		var type = jQuery("#payment-form").data('type');
+		setTrialObj();
 		var limitTerm =  jQuery("#payment-form").data('limit-term');
 		var termLength = jQuery('#payment-form').data('term-length');
 		if (limitTerm) {
@@ -109,12 +117,10 @@ jQuery(document).ready(function() {
 			epp = 0;
 		}
 		var logged = idcIsLoggedIn();
-		var isFree = jQuery("#payment-form").data('free');
 		var renewable = jQuery('#payment-form').data('renewable');
 		if (es == '1') {
 			var stripeSymbol = jQuery('#stripe-input').data('symbol');
 		}
-		var idset = jQuery("#payment-form #stripe-input").data('idset');
 		var customerId = jQuery('#stripe-input').data('customer-id');
 		var curSymbol = jQuery(".currency-symbol").children('sup').text();
 		if (credits === 1) {
@@ -137,26 +143,26 @@ jQuery(document).ready(function() {
 		var claim_paypal = claimPaypal();
 		var regPrice = jQuery('input[name="reg-price"]').val();
 		var pwywPrice = parseFloat(jQuery('input[name="pwyw-price"]').val());
-		var formattedPrice = jQuery(".product-price").text();
+		var formattedPrice = jQuery(".currency-symbol .product-price").text();
 		if (txnType == 'preauth') {
-			jQuery("#payment-form #pay-with-paypal").remove();
+			jQuery("#payment-form #pay-with-paypal").parent('div').remove();
 			removeCB();
 			if (idc_elw == '1' && idc_lemonway_method == '3dsecure') {
-				jQuery('#payment-form #pay-with-lemonway').remove();
+				jQuery('#payment-form #pay-with-lemonway').parent('div').remove();
 			}
 			no_methods();
 		}
 		if (type == 'recurring') {
 			var recurring = jQuery("#payment-form").data('recurring');
-			jQuery('#payment-form #pay-with-fd').remove();
-			jQuery('#payment-form #pay-with-mc').remove();
-			jQuery('#payment-form #pay-with-lemonway').remove();
+			jQuery('#payment-form #pay-with-fd').parent('div').remove();
+			jQuery('#payment-form #pay-with-mc').parent('div').remove();
+			jQuery('#payment-form #pay-with-lemonway').parent('div').remove();
 			if (parseFloat(pwywPrice) >= 1 && parseFloat(regPrice) < parseFloat(pwywPrice)) {
-				jQuery('#pay-with-stripe').remove();
+				jQuery('#pay-with-stripe').parent('div').remove();
 			}
 			no_methods();
 		}
-		if (isFree == 'free') {
+		if (idcPayVars.isFree == 'free') {
 			if (jQuery('.checkout-payment').hasClass('active')){
 				jQuery('.checkout-payment').removeClass('active');
 				jQuery('.checkout-confirmation').addClass('active');
@@ -207,14 +213,14 @@ jQuery(document).ready(function() {
 			else {
 				jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppForm.php');
 			}
-			hide_registration();
+			idcHideRegistration();
 			jQuery("#payment-form #finaldescPayPal").show();
 			jQuery("#payment-form #finaldescCredits").hide();
 			jQuery("#payment-form #finaldescOffline").hide();
 			jQuery('#payment-form .reveal-account').hide();
 		}
 		else if (mc == '1' && type !== 'recurring') {
-			jQuery("#payment-form #pay-with-paypal").remove();
+			jQuery("#payment-form #pay-with-paypal").parent('div').remove();
 			jQuery("#payment-form #id-main-submit").text(idc_localization_strings.complete_checkout);
 			jQuery("#payment-form #id-main-submit").attr("name", "submitPaymentMC");
 			jQuery("#finaldescStripe").hide();
@@ -224,10 +230,10 @@ jQuery(document).ready(function() {
 
 			// var globalCurrency = jQuery("#finaldescOffline").data('currency');
 			var globalCurrencySym = jQuery("#finaldescOffline").data('currency-symbol');
-			setPriceText('mc', globalCurrencySym, formattedPrice);
+			idcSetPriceText('mc', globalCurrencySym, formattedPrice);
 		}
 		else if (credits === 1) {
-			jQuery("#payment-form #pay-with-paypal").remove();
+			jQuery("#payment-form #pay-with-paypal").parent('div').remove();
 			jQuery("#payment-form #id-main-submit").text(idc_localization_strings.complete_checkout);
 			jQuery("#payment-form #id-main-submit").attr("name", "submitPaymentCredits");
 			jQuery("#payment-form #finaldescCredits").show();
@@ -252,7 +258,7 @@ jQuery(document).ready(function() {
 			jQuery("#payment-form #id-main-submit").text(idc_localization_strings.pay_with_paypal);
 			jQuery("#payment-form #id-main-submit").attr("name", "submitPaymentPPAdaptive");
 			
-			hide_registration();
+			idcHideRegistration();
 			// Loading the form and setting the payment key
 			if (type == 'recurring' || txnType == 'preauth') {
 				jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppAdaptiveSubForm.php');
@@ -268,15 +274,13 @@ jQuery(document).ready(function() {
 			jQuery('#payment-form .reveal-account').hide();
 		}
 		else {
-			jQuery("#payment-form #pay-with-paypal").remove();
+			jQuery("#payment-form #pay-with-paypal").parent('div').remove();
 			jQuery("#payment-form #id-main-submit").text(idc_localization_strings.complete_checkout);
-			jQuery("#payment-form #finaldescStripe").show();
 			jQuery("#payment-form #finaldescCoinbase").hide();
 			jQuery("#payment-form #finaldescOffline").hide();
 			jQuery(".card-number, .card-cvc, card-expiry-month, card-expiry-year").addClass("required");
-			if (idset != '1') {
-				jQuery("#payment-form #stripe-input").show();
-				show_registration();
+			if (!idcPayVars.idSet) {
+				idcShowRegistration();
 			}
 			if (jQuery('#payment-form .pay_selector').attr('id') == 'pay-with-stripe') {
 				jQuery("#payment-form #id-main-submit").attr("name", "submitPaymentStripe");
@@ -319,223 +323,27 @@ jQuery(document).ready(function() {
 		jQuery('.confirm-screen').show();
 	});
 	jQuery(document).bind('idcPaySelect', function(e, selClass) {
+		e.preventDefault();
 		jQuery(".pay_selector").removeClass('active');
 		jQuery(selClass).addClass("active");
-		if (type == 'recurring') {
-			if (epp) {
-				jQuery("#ppload").unload(memberdeck_pluginsurl + '/templates/_ppSubForm.php');
-			}
-			else if (eppadap) {
-				jQuery("#ppload").unload(memberdeck_pluginsurl + '/templates/_ppAdaptiveSubForm.php');
-			}
-		}
-		else {
-			if (epp) {
-				jQuery("#ppload").unload(memberdeck_pluginsurl + '/templates/_ppForm.php');
-			}
-			else if (eppadap) {
-				jQuery("#ppload").unload(memberdeck_pluginsurl + '/templates/_ppAdaptiveForm.php');
-			}
-		}
-		// #devnote move setGuestCheckout from individual pay selectors to here
-	});
-	// When Stripe Button is Clicked
-	jQuery("#payment-form #pay-with-stripe").click(function(e) {
-		e.preventDefault();
-		setPriceText('stripe', stripeSymbol, formattedPrice);
-		jQuery("#id-main-submit").removeAttr("disabled");
-		if (!idset) {
-			jQuery("#stripe-input").show();
-			show_registration();
-			jQuery(".card-number, .card-cvc, card-expiry-month, card-expiry-year").addClass("required");
-		}
-		jQuery("#id-main-submit").attr("name", "submitPaymentStripe");
-		jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
-
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescStripe").show();
-		setGuestCheckout();
-	});
-	// When Paypal Button is Clicked
-	jQuery("#payment-form #pay-with-paypal").click(function(e) {
-		e.preventDefault();
-		setPriceText('paypal', curSymbol, formattedPrice);
-		jQuery("#id-main-submit").text(idc_localization_strings.pay_with_paypal);
-		jQuery("#id-main-submit").attr("name", "submitPaymentPaypal");
-		jQuery("#id-main-submit").removeAttr("disabled");
-		if (type == 'recurring') {
-			jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppSubForm.php');
-		}
-		else {
-			jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppForm.php');
-		}
-		
-		jQuery("#stripe-input").hide();
-		hide_registration();
-
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescPayPal").show();
-        jQuery(".card-number, .card-cvc, .card-expiry-month, .card-expiry-year").removeClass("required");
-        setGuestCheckout();
-	});
-	// When First Data Button is Clicked
-	jQuery("#payment-form #pay-with-fd").click(function(e) {
-		e.preventDefault();
-		/*if (curSymbol !== fdSymbol) {
-			jQuery('.currency-symbol').text(fdSymbol);
-		}*/
-		setPriceText('fd', '$', formattedPrice);
-		jQuery("#id-main-submit").removeAttr("disabled");
-		if (!idset) {
-			jQuery("#stripe-input").show();
-			show_registration();
-			jQuery(".card-number, .card-cvc, card-expiry-month, card-expiry-year").addClass("required");
-		}
-		jQuery("#id-main-submit").attr("name", "submitPaymentFD");
-		jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
-
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescStripe").show();
-		setGuestCheckout();
-	});
-	jQuery('#payment-form #pay-with-mc').click(function(e) {
-		e.preventDefault();
-		var globalCurrencySym = jQuery("#finaldescOffline").data('currency-symbol');
-		setPriceText('mc', globalCurrencySym, formattedPrice);
-		jQuery("#id-main-submit").removeAttr("disabled");
-		jQuery("#stripe-input").hide();
-		jQuery("#id-main-submit").attr("name", "submitPaymentMC");
-		jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
-
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescOffline").show();
-		setGuestCheckout();
-	});
-	jQuery('#payment-form #pay-with-credits').click(function(e) {
-		e.preventDefault();
-		setPriceText('credits', creditsLabel, formattedPrice);
-		
-		jQuery("#id-main-submit").removeAttr("disabled");
-		jQuery("#stripe-input").hide();
-		jQuery("#id-main-submit").attr("name", "submitPaymentCredits");
-		jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
-
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescCredits").show();
-		setGuestCheckout();
-	});
-	// Coinbase payment gateway selected
-	jQuery('#payment-form #pay-with-coinbase').click(function(e) {
-		e.preventDefault();
-		setPriceText('cb', cbCurSymbol, formattedPrice);
-		jQuery("#id-main-submit").text(idc_localization_strings.pay_with_coinbase);
-		jQuery("#id-main-submit").attr("name", "submitPaymentCoinbase");
-		jQuery("#id-main-submit").removeAttr("disabled");
-		jQuery("#id-main-submit").text(idc_localization_strings.pay_with_coinbase);
-		
-		jQuery("#stripe-input").hide();
-		hide_registration();
-		
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescCoinbase").show();
-        jQuery(".card-number, .card-cvc, .card-expiry-month, .card-expiry-year").removeClass("required");
-        setGuestCheckout();
-	});
-	// Authorize.Net payment gateway selected
-	jQuery('#payment-form #pay-with-authorize').click(function(e) {
-		e.preventDefault();
-		setPriceText('authorize', '$', formattedPrice);
-		jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
-		jQuery("#id-main-submit").attr("name", "submitPaymentAuthorize");
-		jQuery("#id-main-submit").removeAttr("disabled");
-		
-		//console.log('idset: ', idset, ', customerId: ', customerId, ', !idset: ', !idset, ', !customerId: ', !customerId);
-		if (!idset || !customerId) {
-			jQuery("#stripe-input").show();
-			show_registration();
-			jQuery(".card-number, .card-cvc, card-expiry-month, card-expiry-year").addClass("required");
-		}
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescStripe").show();
-		setGuestCheckout();
-	});
-	jQuery('#payment-form #pay-with-ppadaptive').click(function(e) {
-		e.preventDefault();
-		setPriceText('ppadaptive', curSymbol, formattedPrice);
-		jQuery("#id-main-submit").removeAttr("disabled");
-		jQuery("#id-main-submit").text(idc_localization_strings.pay_with_paypal);
-		jQuery("#id-main-submit").attr("name", "submitPaymentPPAdaptive");
-	    jQuery("#id-main-submit").removeAttr("disabled");
-	    
-		jQuery("#stripe-input").hide();
-		jQuery(".pw").parents('.form-row').hide();
-		jQuery(".cpw").parents('.form-row').hide();
-		// Loading the form and setting the payment key
-		if (type == 'recurring' || txnType == 'preauth') {
-			jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppAdaptiveSubForm.php');
-		}
-		else {
-			jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppAdaptiveForm.php');
-		}
-		//jQuery("#finaldescPPAdaptive").show();
-		jQuery('.finaldesc').hide();
-		jQuery("#finaldescPayPal").show();
+		idcPaySelectActions(selClass);
 		setGuestCheckout();
 	});
 	function removeCB() {
-		jQuery("#payment-form #pay-with-coinbase").remove();
+		jQuery("#payment-form #pay-with-coinbase").parent('div').remove();
 		jQuery('#finaldescCoinbase').remove();
 	}
 	jQuery(document).bind('idc_no_methods', function() {
 		no_methods();
 	});
-	function no_methods() {
-		var selCount = jQuery('#payment-form .pay_selector').length;
-		if (selCount < 1) {
-			if (isFree !== 'free') {
-				jQuery(".finaldesc").hide();
-				jQuery("#stripe-input").hide();
-				jQuery('#payment-form #id-main-submit').text(idc_localization_strings.no_payments_available).attr('disabled', 'disabled');
-			}
-		}
-		else if (selCount == 1) {
-			jQuery('.payment-type-selector').hide();
-			var showCC = 0;
-			if (es == 1) {
-				jQuery("#id-main-submit").attr("name", "submitPaymentStripe");
-				showCC = 1;
-			}
-			else if (jQuery('#payment-form .pay_selector').attr('id') == 'pay-with-fd') {
-				jQuery("#payment-form #id-main-submit").attr("name", "submitPaymentFD");
-				showCC = 1;
-			}
-			else if (eauthnet == 1 && !idcPayVars.isGuestCheckout) {
-				jQuery("#payment-form #id-main-submit").attr("name", "submitPaymentAuthorize");
-				showCC = 1;
-			}
-			if (!idset && showCC == 1) {
-				jQuery("#stripe-input").show();
-				show_registration();
-			}
-			if (showCC == 1) {
-				jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
-				jQuery("#finaldescStripe").show();
-				jQuery(".card-number, .card-cvc, card-expiry-month, card-expiry-year").addClass("required");
-				jQuery("#id-main-submit").removeAttr("disabled");
-			}
-			else {
-				//jQuery("#id-main-submit").text("No Payment Options Available");
-			}
-		}
-	}
 
 	function idcCheckoutError() {
-		jQuery("#id-main-submit").attr("disabled", "disabled").addClass('processing');
-		jQuery(".payment-errors").html("");
-		jQuery('#payment-form input, #payment-form select').removeClass(error_class);
 		var error = false;
 		var error_class = idcCheckoutErrorClass();
 		var errorMsg = '';
+		jQuery("#id-main-submit").attr("disabled", "disabled").addClass('processing');
+		jQuery(".payment-errors").html("");
+		jQuery('#payment-form input, #payment-form select').removeClass(error_class);
 		if (jQuery('#stripe-input').is(':visible')) {
 			error = checkCreditCard();
 		}
@@ -609,7 +417,7 @@ jQuery(document).ready(function() {
 					});
 				}
 				else {
-					if (isFree !== 'free') {
+					if (idcPayVars.isFree !== 'free') {
 						//console.log('not free');
 						processPayment();
 					}
@@ -620,16 +428,6 @@ jQuery(document).ready(function() {
 				}
 			}
 		});
-	}
-
-	function hide_registration() {
-		jQuery(".pw").parents('.form-row').hide();
-		jQuery(".cpw").parents('.form-row').hide();
-	}
-
-	function show_registration() {
-		jQuery(".pw").parents('.form-row').show();
-		jQuery(".cpw").parents('.form-row').show();
 	}
 
 	jQuery('.reveal-login').click(function(e) {
@@ -656,7 +454,7 @@ jQuery(document).ready(function() {
 			return;
 		}
 		var submitName = jQuery(this).attr('name');
-		if (es == '1' && isFree !== 'free') {
+		if (es == '1' && idcPayVars.isFree !== 'free') {
 			if (jQuery('.pay_selector').length > 1) {
 				if (jQuery('#pay-with-stripe').hasClass('active')) {
 					Stripe.setPublishableKey(memberdeck_pk);
@@ -731,7 +529,7 @@ jQuery(document).ready(function() {
 		var pwywPrice = parseFloat(jQuery('input[name="pwyw-price"]').val());
 		if (jQuery("#id-main-submit").attr("name") == "submitPaymentStripe") {
 			jQuery("#id-main-submit").text(idc_localization_strings.processing + '...');
-			if (!idset) {
+			if (!idcPayVars.idSet) {
 				var fname = jQuery(".first-name").val();
 				var lname = jQuery(".last-name").val();
 				try {
@@ -819,7 +617,7 @@ jQuery(document).ready(function() {
 								'last_name': lname,
 								'email': email,
 								'pw': pw});
-			if (!idset) {
+			if (!idcPayVars.idSet) {
 				var token = 'none';
 			}
 			else {
@@ -876,7 +674,7 @@ jQuery(document).ready(function() {
 								'last_name': lname,
 								'email': email,
 								'pw': pw});
-			if (!idset) {
+			if (!idcPayVars.idSet) {
 				var token = 'none';
 			}
 			else {
@@ -938,7 +736,7 @@ jQuery(document).ready(function() {
 								'last_name': lname,
 								'email': email,
 								'pw': pw});
-			if (!idset) {
+			if (!idcPayVars.idSet) {
 				var token = 'none';
 			}
 			else {
@@ -1118,9 +916,14 @@ jQuery(document).ready(function() {
 							//console.log(res);
 							var json_b = JSON.parse(res);
 							if (json_b.response == "success") {
-								jQuery('#coinbaseload').html(json_b.button_code);
+								/*var iframeId = 'coinbase_inline_iframe_' + json_b.code;
+								var iframeSrc = 'https://www.coinbase.com/checkouts/' + json_b.code + '/inline';
+								jQuery('#coinbaseload iframe').attr('id', iframeId);
+								jQuery('#coinbaseload iframe').attr('src', iframeSrc);
+								jQuery('#coinbaseload').toggle();*/
+								window.location.href = 'https://www.coinbase.com/checkouts/' + json_b.code;
 								jQuery(document).on('coinbase_button_loaded', function(event, code) {
-									//console.log('#coinbaseload loaded');
+									console.log('#coinbaseload loaded');
 									jQuery(document).trigger('coinbase_show_modal', json_b.code);
 																			
 									jQuery(document).on('coinbase_payment_complete', function(event, code){
@@ -1230,6 +1033,16 @@ jQuery(document).ready(function() {
 		    				var recPeriod = json.recurring_type.charAt(0).toUpperCase();
 		    				jQuery('#buyform input#pp-times').val(1);
 		    				jQuery('#buyform input#pp-recurring').val(recPeriod);
+		    				if (json.trial_period == 1) {
+		    					jQuery('#buyform input[name="a1"]').val('0');
+		    					jQuery('#buyform input[name="p1"]').val(json.trial_length);
+		    					jQuery('#buyform input[name="t1"]').val(json.trial_type.charAt(0).toUpperCase());
+		    				}
+		    				else {
+		    					jQuery('#buyform input[name="a1"]').remove();
+		    					jQuery('#buyform input[name="p1"]').remove();
+		    					jQuery('#buyform input[name="t1"]').remove();
+		    				}
 		    			}
 	    				jQuery('#buyform').attr('action', memberdeck_paypal);
 	    				jQuery('#buyform input[name="currency_code"]').val(cCode);
@@ -1350,8 +1163,10 @@ jQuery(document).ready(function() {
 		var pw = jQuery(".pw").val();
 		var cpw = jQuery(".cpw").val();
 		var regkey = jQuery("form[name='reg-form']").data('regkey');
+		jQuery(this).find('input, select').removeClass(error_class);
 		//console.log(regkey);
 		var update = true;
+		var reqError = false;
 		if (regkey == undefined || regkey == '') {
 			//console.log(uid);
 			//jQuery(".payment-errors").text("There was an error processing your registration. Please contact site administrator for assistance");
@@ -1360,18 +1175,34 @@ jQuery(document).ready(function() {
 
 		if (pw !== cpw) {
 			jQuery(".payment-errors").text(idc_localization_strings.passwords_mismatch_text);
-			jQuery("#id-reg-submit").removeAttr("disabled").removeClass('processing');
 			var error = true;
 		}
 		
 		if (fname.length < 1 || lname.length < 1 || idfValidateEmail(email) == false || pw.length < 5) {
-			jQuery(".payment-errors").append(idc_localization_strings.registration_fields_error_text);
-			jQuery("#id-reg-submit").removeAttr("disabled").removeClass('processing');
 			var error = true;
 		}
+
+		var reqFields = jQuery('form[name="reg-form"] input.required:visible, form[name="reg-form"] select.required:visible');
+		jQuery.each(reqFields, function(index, input) {
+			var val = jQuery(input).val();
+			if (jQuery(input).attr('type') == 'checkbox') {
+				if (jQuery(input).prop('checked') == '0') {
+					jQuery(this).addClass(error_class);
+					error = true;
+					reqError = true;
+				}
+			}
+			else if (val == '' || typeof(val) == 'undefined') {
+				jQuery(this).addClass(error_class);
+				error = true;
+				reqError = true;
+			}
+		});
 		//console.log('update: ' + update);
 		if (error == true) {
 			//console.log('error');
+			jQuery(".payment-errors").append(idc_localization_strings.registration_fields_error_text);
+			jQuery("#id-reg-submit").removeAttr("disabled").removeClass('processing');
 			return false;
 		}
 
@@ -1464,13 +1295,13 @@ jQuery(document).ready(function() {
 		//console.log('checkCreditCard() called');
 		var error = false;
 		// if Credit card field exists
-		if (jQuery(".card-number").length > 0) {
+		if (jQuery("#stripe-input input.card-number").length > 0) {
 			//console.log('credit card exists');
-			var card_number = jQuery(".card-number");
-			var card_cvc = jQuery(".card-cvc");
-			var card_expiry_month = jQuery(".card-expiry-month");
-			var card_expiry_year = jQuery(".card-expiry-year");
-			var zip_code = jQuery(".zip-code");
+			var card_number = jQuery("#stripe-input input.card-number");
+			var card_cvc = jQuery("#stripe-input input.card-cvc");
+			var card_expiry_month = jQuery("#stripe-input input.card-expiry-month");
+			var card_expiry_year = jQuery("#stripe-input input.card-expiry-year");
+			var zip_code = jQuery("#stripe-input input.zip-code");
 			
 			// Credit card number field
 			if (jQuery(card_number).val().length < 10) {
@@ -2122,19 +1953,70 @@ jQuery(document).ready(function() {
 	}
 });
 
+jQuery(document).bind('idcCheckoutLoaded', function (e) {
+	setGuestCheckout();
+	setIdcPayObj();
+});
+
 function idcIsLoggedIn() {
 	return jQuery("#payment-form #logged-input").hasClass('yes');
 }
 
 function setGuestCheckout() {
-	idcPayVars.isGuestCheckout = false;
+	idcPayVars.isGuestCheckout = 0;
 	var guestCheckoutOn = jQuery('#payment-form').data('guest-checkout');
 	if (guestCheckoutOn) {
 		if (!idcIsLoggedIn() && jQuery('#payment-form input.pw').is(':hidden')) {
-			idcPayVars.isGuestCheckout = true;
+			idcPayVars.isGuestCheckout = 1;
 			idcPayVars.redirectURL = idfStripUrlQuery(idf_current_url);
 		}
 	}
+}
+
+function setIdcPayObj() {
+	idcPayVars.idSet = jQuery("#payment-form #stripe-input").data('idset');
+	idcPayVars.isFree = jQuery("#payment-form").data('free');
+}
+
+function no_methods() {
+	var selCount = jQuery('#payment-form .pay_selector').length;
+	if (selCount < 1) {
+		if (idcPayVars.isFree !== 'free') {
+			jQuery(".finaldesc").hide();
+			jQuery("#stripe-input").hide();
+			jQuery('#payment-form #id-main-submit').text(idc_localization_strings.no_payments_available).attr('disabled', 'disabled');
+		}
+	}
+	else if (selCount == 1) {
+		var paySelector = jQuery('#payment-form .pay_selector');
+		jQuery(document).trigger('idcPaySelect', paySelector);
+		jQuery('.payment-type-selector').hide();
+		var showCC = 0;
+		if (es == 1) {
+			idcSetSubmitName('Stripe');
+			showCC = 1;
+		}
+		else if (jQuery('#payment-form .pay_selector').attr('id') == 'pay-with-fd') {
+			idcSetSubmitName('FD');
+			showCC = 1;
+		}
+		else if (eauthnet == 1 && !idcPayVars.isGuestCheckout) {
+			idcSetSubmitName('Authorize');
+			showCC = 1;
+		}
+		if (!idcPayVars.idSet && showCC == 1) {
+			// #devnote showCC should show cc form
+			jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
+			jQuery("#payment-form #stripe-input").show();
+			jQuery("#finaldescStripe").show();
+			jQuery(".card-number, .card-cvc, card-expiry-month, card-expiry-year").addClass("required");
+			jQuery("#id-main-submit").removeAttr("disabled");
+		}
+		else {
+			//jQuery("#id-main-submit").text("No Payment Options Available");
+		}
+	}
+	return selCount;
 }
 
 function idcCheckoutErrorClass() {
@@ -2203,16 +2085,146 @@ function idcCheckoutCustomer() {
 	return customer;
 }
 
-function setPriceText(gateway, symbol, formattedPrice) {
+function idcSelClass(selector) {
+	var selClass = jQuery(selector).attr('id').replace('pay-with-', '');
+	return selClass;
+}
+
+function idcPaySelectActions(selector) {
+	//e.preventDefault();
+	var curSymbol = jQuery(".currency-symbol").children('sup').text(); // #devnote move to object
+	var formattedPrice = jQuery(".currency-symbol .product-price").text(); // #devnote move to object
+	var type = jQuery("#payment-form").data('type'); // #devnote move to object
+	var txnType = jQuery("#payment-form").data('txn-type'); // #devnote move to object
+	selClass = idcSelClass(selector);
+	switch(selClass) {
+		case 'stripe':
+			curSymbol = jQuery('#stripe-input').data('symbol'); // #devnote move to object?
+			idcSetSubmitName('Stripe');
+			jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
+			jQuery('.finaldesc').hide();
+			jQuery("#finaldescStripe").show();
+			idcIdSet();
+			break;
+		case 'paypal':
+			idcSetSubmitName('Paypal');
+			jQuery("#id-main-submit").text(idc_localization_strings.pay_with_paypal);
+			jQuery("#stripe-input, .finaldesc").hide();
+			jQuery("#finaldescPayPal").show();
+        	jQuery(".card-number, .card-cvc, .card-expiry-month, .card-expiry-year").removeClass("required");
+			if (type == 'recurring') {
+				jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppSubForm.php');
+			}
+			else {
+				jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppForm.php');
+			}
+			idcHideRegistration();
+			break;
+		case 'ppadaptive':
+			idcSetSubmitName('PPAdaptive');
+			jQuery("#id-main-submit").text(idc_localization_strings.pay_with_paypal);
+			jQuery("#stripe-input, .finaldesc").hide();
+			jQuery("#finaldescPayPal").show();
+			if (type == 'recurring' || txnType == 'preauth') {
+				jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppAdaptiveSubForm.php');
+			}
+			else {
+				jQuery("#ppload").load(memberdeck_pluginsurl + '/templates/_ppAdaptiveForm.php');
+			}
+			idcHideRegistration();
+			break;
+		case 'fd':
+			curSymbol = '$';
+			idcSetSubmitName('FD');
+			jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
+			jQuery('.finaldesc').hide();
+			jQuery("#finaldescStripe").show();
+			idcIdSet();
+			break;
+		case 'mc':
+			curSymbol = jQuery("#finaldescOffline").data('currency-symbol');
+			idcSetSubmitName('MC');
+			jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
+			jQuery("#stripe-input, .finaldesc").hide();
+			jQuery("#finaldescOffline").show();
+			break;
+		case 'credits':
+			idcSetSubmitName('Credits');
+			jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
+			jQuery("#stripe-input, .finaldesc").hide();
+			jQuery("#finaldescCredits").show();
+			break;
+		case 'coinbase':
+			curSymbol = jQuery('#finaldescCoinbase').data('cb-symbol');
+			idcSetSubmitName('Coinbase');
+			jQuery("#id-main-submit").text(idc_localization_strings.pay_with_coinbase);
+			jQuery("#stripe-input, .finaldesc").hide();
+			jQuery("#finaldescCoinbase").show();
+	        jQuery(".card-number, .card-cvc, .card-expiry-month, .card-expiry-year").removeClass("required");
+			idcHideRegistration();
+			break;
+		case 'authorize':
+			// #integrate with guest checkout
+			curSymbol = '$';
+			idcSetSubmitName('Authorize');
+			jQuery("#id-main-submit").text(idc_localization_strings.complete_checkout);
+			jQuery('.finaldesc').hide();
+			jQuery("#finaldescStripe").show();
+			idcIdSet();
+			break;
+	}
+	if (idcPayVars.trial.trialPeriod == 1) {
+		jQuery("#finaldescTrial").show();
+	}
+	else {
+		jQuery("#finaldescTrial").hide();
+	}
+	jQuery("#id-main-submit").removeAttr("disabled");
+	idcSetPriceText(selClass, curSymbol, formattedPrice);
+}
+
+function idcSetSubmitName(name) {
+	var submitName = 'submitPayment' + name;
+	jQuery("#id-main-submit").attr('name', submitName);
+	jQuery(document).trigger('idcSetSubmitName', submitName);
+}
+
+function idcIdSet() {
+	if (!idcPayVars.idSet) {
+		jQuery("#stripe-input").show();
+		idcShowRegistration();
+		jQuery(".card-number, .card-cvc, card-expiry-month, card-expiry-year").addClass("required");
+	}
+}
+
+function idcHideRegistration() {
+	jQuery(".pw").parents('.form-row').hide();
+	jQuery(".cpw").parents('.form-row').hide();
+}
+
+function idcShowRegistration() {
+	jQuery(".pw").parents('.form-row').show();
+	jQuery(".cpw").parents('.form-row').show();
+}
+
+function idcSetPriceText(gateway, symbol, formattedPrice) {
 	if (gateway == "credits") {
 		var _credits_value = jQuery("#finaldescCredits .credit-value").text();
 		jQuery('.currency-symbol').children('sup').text(symbol);
-		jQuery('.currency-symbol .product-price').text(_credits_value);
+		jQuery('#payment-form .product-price').text(_credits_value);
 	} else {
 		if (jQuery('.currency-symbol').children('sup').text() !== symbol) {
 			jQuery('.currency-symbol').children('sup').text(symbol);
 		}
-		jQuery('.currency-symbol .product-price').text(formattedPrice);
+		jQuery('#payment-form .product-price').text(formattedPrice);
+	}
+}
+
+function setTrialObj() {
+	idcPayVars.trial = {
+		'trialPeriod': parseInt(jQuery('#payment-form').data('trial-period')),
+		'trialLength': parseInt(jQuery('#payment-form').data('trial-length')),
+		'trialType': jQuery('#payment-form').data('trial-type')
 	}
 }
 

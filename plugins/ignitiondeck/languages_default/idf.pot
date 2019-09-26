@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: IgnitionDeck Framework\n"
-"POT-Creation-Date: 2018-02-08 16:27-0500\n"
+"POT-Creation-Date: 2018-12-15 13:08-0500\n"
 "PO-Revision-Date: 2016-10-05 20:02-0400\n"
 "Last-Translator: Nathan Hangen <nhangen@gmail.com>\n"
 "Language-Team: IgnitionDeck <hello@virtuousgiant.com>\n"
@@ -10,13 +10,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: _e;__;_n\n"
 "X-Poedit-SearchPath-0: ../.\n"
 
-#: .././classes/class-id_modules.php:58
+#: .././classes/class-id_modules.php:62
 msgid "(DEV_MODE)"
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Helix"
 msgstr ""
 
-#: .././classes/modules/helix/helix-idcf.php:69
+#: .././classes/modules/helix/helix-idcf.php:71
 msgid "Create Project"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgid "Cart"
 msgstr ""
 
 #: .././classes/modules/helix/templates/_helixCommerceMenu.php:2
-#: .././idf-admin.php:18 .././idf-admin.php:21
+#: .././idf-admin.php:19 .././idf-admin.php:25
 msgid "Dashboard"
 msgstr ""
 
@@ -137,15 +137,13 @@ msgstr ""
 
 #: .././classes/modules/helix/templates/admin/_settingsMenu.php:4
 #: .././classes/modules/recaptcha/templates/admin/_settingsMenu.php:4
-#: .././templates/admin/_idfMenu-old.php:4
-#: .././templates/admin/_idfMenu.php:137 .././templates/admin/_idfMenu.php:140
+#: .././templates/admin/_idfMenu.php:155 .././templates/admin/_idfMenu.php:158
 msgid "Support"
 msgstr ""
 
 #: .././classes/modules/helix/templates/admin/_settingsMenu.php:5
 #: .././classes/modules/recaptcha/templates/admin/_settingsMenu.php:5
-#: .././templates/admin/_idfMenu-old.php:5
-#: .././templates/admin/_idfMenu.php:141
+#: .././templates/admin/_idfMenu.php:159
 msgid "Documentation"
 msgstr ""
 
@@ -163,8 +161,7 @@ msgstr ""
 
 #: .././classes/modules/helix/templates/admin/_settingsMenu.php:32
 #: .././classes/modules/recaptcha/templates/admin/_settingsMenu.php:25
-#: .././templates/admin/_idfMenu-old.php:58
-#: .././templates/admin/_idfMenu.php:110
+#: .././templates/admin/_idfMenu.php:128
 msgid "Save"
 msgstr ""
 
@@ -296,39 +293,46 @@ msgstr ""
 msgid "Generate API Keys"
 msgstr ""
 
-#: .././idf-admin.php:18 .././templates/admin/_idfMenu.php:2
+#: .././idf-admin.php:17
+#, php-format
+msgid ""
+"<span class=\"update-plugins count-%1$d\"><span class=\"plugin-count\">%1$d</"
+"span></span>"
+msgstr ""
+
+#: .././idf-admin.php:19 .././templates/admin/_idfMenu.php:3
 msgid "IgnitionDeck"
 msgstr ""
 
-#: .././idf-admin.php:21
+#: .././idf-admin.php:25
 msgid "IgnitionDeck Dashboard"
 msgstr ""
 
-#: .././idf-admin.php:22
+#: .././idf-admin.php:26
 msgid "Themes"
 msgstr ""
 
-#: .././idf-admin.php:23 .././templates/admin/_idfMenu.php:120
+#: .././idf-admin.php:31 .././templates/admin/_idfMenu.php:138
 msgid "Modules"
 msgstr ""
 
-#: .././idf-admin.php:38 .././templates/admin/_devTools.php:3
+#: .././idf-admin.php:46 .././templates/admin/_devTools.php:3
 msgid "Dev Tools"
 msgstr ""
 
-#: .././idf-admin.php:212
+#: .././idf-admin.php:241
 msgid "Your IgnitionDeck Commerce installation is out of date."
 msgstr ""
 
-#: .././idf-admin.php:212
+#: .././idf-admin.php:241
 msgid "Click here"
 msgstr ""
 
-#: .././idf-admin.php:212
+#: .././idf-admin.php:241
 msgid "to update to the latest version."
 msgstr ""
 
-#: .././idf.php:185
+#: .././idf.php:187
 msgid "Update Plugin"
 msgstr ""
 
@@ -340,305 +344,314 @@ msgstr ""
 msgid "IgnitionDeck Modules"
 msgstr ""
 
-#: .././templates/admin/_extensionList.php:3
-msgid "Flush Module Cache"
+#: .././templates/admin/_extensionList.php:4
+msgid ""
+"IgnitionDeck Modules allow you to upgrade, modify, and customize the default "
+"IgnitionDeck installation in order to achieve additional features sets."
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:6
+#, php-format
+msgid "%sUpgrade to Enterprise%s to fully unlock all available modules."
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:8
+msgid "Use the dropdown below to sort by category"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:11
+msgid "Deactivate All Modules"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:15
+msgid "Show All"
 msgstr ""
 
 #: .././templates/admin/_extensionList.php:16
-msgid "Get Module"
+msgid "Account Management"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:17
+msgid "Analytics"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:18
+msgid "Commerce"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:19
+msgid "Crowdfunding"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:20
+msgid "Interface Customizations"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:21
+msgid "Payment Gateways"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:22
+msgid "Security"
 msgstr ""
 
 #: .././templates/admin/_extensionList.php:23
+msgid "Social"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:25
+msgid "Hide Locked"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:36
+msgid "Get Module"
+msgstr ""
+
+#: .././templates/admin/_extensionList.php:55
 msgid "Activate Plugin"
 msgstr ""
 
-#: .././templates/admin/_extensionList.php:27
+#: .././templates/admin/_extensionList.php:58
 msgid "Installed"
 msgstr ""
 
-#: .././templates/admin/_extensionList.php:35
+#: .././templates/admin/_extensionList.php:66
 #: .././templates/admin/_themeList.php:17
 #: .././templates/admin/_themeList.php:30
 msgid "Activate"
 msgstr ""
 
-#: .././templates/admin/_extensionList.php:39
+#: .././templates/admin/_extensionList.php:70
 msgid "Deactivate"
 msgstr ""
 
-#: .././templates/admin/_extensionList.php:50
+#: .././templates/admin/_extensionList.php:92
 msgid "Docs"
 msgstr ""
 
-#: .././templates/admin/_idfMenu-old.php:2
-msgid "IgnitionDeck Framework"
+#: .././templates/admin/_idfMenu.php:5
+msgid "Welcome to the IgnitionDeck platform!"
 msgstr ""
 
-#: .././templates/admin/_idfMenu-old.php:12
-msgid "IgnitionDeck Account"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:16
+#: .././templates/admin/_idfMenu.php:6
 msgid ""
-"Register for an IgnitionDeck account in order to activate crowdfunding "
-"functionality."
+"Follow the instructions below to get started selling, fundraising, and "
+"crowdfunding."
 msgstr ""
 
-#: .././templates/admin/_idfMenu-old.php:17
-msgid "Register"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:20
-msgid ""
-"You have registered successfully, and IgnitionDeck has been installed and "
-"activated."
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:21
-msgid "Here's how to get started using IgnitionDeck:"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:23
-#: .././templates/admin/_idfMenu.php:13
-msgid "Activate Theme 500"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:23
-#: .././templates/admin/_idfMenu.php:13
-msgid ", if you wish to use it"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:24
-msgid "Configure IgnitionDeck Crowdfunding"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:25
-msgid "Create your first project"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:26
-msgid "Ready to accept pledges"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:26
-msgid "Upgrade to a premium version of the plugins"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:26
-msgid "to activate a payment gateway."
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:27
-msgid ""
-"Use the commerce selector below to choose an eCommerce platform for use with "
-"IgnitionDeck Crowdfunding (IDCF)"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:29 .././templates/admin/_idfMenu.php:8
+#: .././templates/admin/_idfMenu.php:12
 msgid "Disconnect Account"
 msgstr ""
 
-#: .././templates/admin/_idfMenu-old.php:37
-msgid "IDCF Commerce Settings"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:40
-#: .././templates/admin/_idfMenu.php:91
-msgid "Select a commerce platform for use with IgnitionDeck Crowdfunding"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:41
-msgid ""
-"Note: Use of IgnitionDeck Commerce and/or WooCommerce requires purchase of "
-"an IgnitionDeck License."
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:43
-#: .././templates/admin/_idfMenu.php:94
-msgid "Commerce Platform"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:47
-#: .././templates/admin/_idfMenu.php:98
-msgid "IgnitionDeck Commerce"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:49
-#: .././templates/admin/_idfMenu.php:100
-msgid "WooCommerce"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:51
-#: .././templates/admin/_idfMenu.php:102
-msgid "Easy Digital Downloads"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:53
-#: .././templates/admin/_idfMenu.php:104
-msgid "Legacy IgnitionDeck"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:67
-#: .././templates/admin/_idfMenu.php:57
-msgid "License Settings"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:70
-msgid ""
-"Entering your <a href=\"http://ignitiondeck.com/id/documentation/"
-"ignitiondeck-crowdfunding/setup-ignitiondeck/ignitiondeck-license-keys/\" "
-"target=\"_blank\">license key</a> will enable automatic updates via the "
-"WordPress admin for the duration of your license period."
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:74
-#: .././templates/admin/_idfMenu.php:64
-msgid "IDCF License Key"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:80
-#: .././templates/admin/_idfMenu.php:70
-msgid "IDC License Key"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:85
-#: .././templates/admin/_idfMenu.php:75
-msgid "Validate"
-msgstr ""
-
-#: .././templates/admin/_idfMenu-old.php:91
-#: .././templates/admin/_idfMenu.php:81
-msgid " License Valid for"
-msgstr ""
-
-#: .././templates/admin/_idfMenu.php:3
-msgid ""
-"Welcome to the IgnitionDeck platform! Follow the instructions below to get "
-"started selling, fundraising, and crowdfunding."
-msgstr ""
-
-#: .././templates/admin/_idfMenu.php:10
+#: .././templates/admin/_idfMenu.php:15
 msgid ""
 "You have registered successfully, and IgnitionDeck Crowdfunding and "
 "IgnitionDeck Commerce have been installed and activated"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:11
+#: .././templates/admin/_idfMenu.php:16
 msgid "Here's how to get started"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:14
-msgid "Browse our quickstart guides for help getting started"
+#: .././templates/admin/_idfMenu.php:19
+msgid ""
+"Please wait approximately 60 seconds while IgnitionDeck Commerce and "
+"Crowdfunding are silently installed in the background. Once activated, you "
+"will see two new menus in your WordPress sidebar (may require refresh)."
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:17
-msgid "Upgrade your license to unlock more features"
+#: .././templates/admin/_idfMenu.php:20
+msgid ""
+"Next, our free crowdfunding theme framework, Theme 500, will download "
+"automatically. You may"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:23
-msgid "Benefits of Activation"
+#: .././templates/admin/_idfMenu.php:20
+msgid "activate via your themes menu"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:27
-msgid "Automatic installation of our free plugins"
+#: .././templates/admin/_idfMenu.php:20
+msgid "at any time."
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:28
-msgid "Access to support forums"
+#: .././templates/admin/_idfMenu.php:21
+msgid ""
+"Use one of our quickstart guides to help guide the installation and setup "
+"process."
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:29
-msgid "News and updates"
+#: .././templates/admin/_idfMenu.php:24
+msgid "Upgrade your license"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:24
+msgid "to unlock additional features and modules."
 msgstr ""
 
 #: .././templates/admin/_idfMenu.php:30
-msgid "Access to more free themes and modules"
+msgid "Benefits of Activation"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:34
+msgid "Automatic installation of our free plugins"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:35
+msgid "Access to support forums"
 msgstr ""
 
 #: .././templates/admin/_idfMenu.php:36
+msgid "News and updates"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:37
+msgid "Access to more free themes and modules"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:43
 msgid "Activate Now"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:37
+#: .././templates/admin/_idfMenu.php:44
 msgid "Account creation is fast and"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:37
+#: .././templates/admin/_idfMenu.php:44
 msgid "you won&rsquo;t leave your website"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:39
+#: .././templates/admin/_idfMenu.php:46
 msgid "Cannot Activate"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:57 .././templates/admin/_idfMenu.php:88
-#: .././templates/admin/_idfMenu.php:120 .././templates/admin/_idfMenu.php:137
-#: .././templates/admin/_idfMenu.php:152
+#: .././templates/admin/_idfMenu.php:64 .././templates/admin/_idfMenu.php:106
+#: .././templates/admin/_idfMenu.php:138 .././templates/admin/_idfMenu.php:155
+#: .././templates/admin/_idfMenu.php:170
 msgid "Toggle panel"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:59
+#: .././templates/admin/_idfMenu.php:64
+msgid "License Settings"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:66
 msgid ""
 "Entering your <a href=\"https://ignitiondeck.com/id/documentation/"
 "ignitiondeck-crowdfunding/setup-ignitiondeck/ignitiondeck-license-keys/?"
 "utm_source=licensepage&utm_medium=link&utm_campaign=freemium\" target="
-"\"_blank\">license key</a> will enable automatic updates via the WordPress "
-"admin for the duration of your license period."
+"\"_blank\">license key</a> or email address will enable automatic updates "
+"via the WordPress admin for the duration of your license period."
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:69
+msgid "License Validation Method"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:71
+msgid "Email Address"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:72
+msgid "License Keys (Legacy)"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:77
+msgid "IgnitionDeck Account Email"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:82
+msgid "IDCF/IDE License Key"
 msgstr ""
 
 #: .././templates/admin/_idfMenu.php:88
+msgid "IDC License Key"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:93
+msgid "Validate"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:99
+msgid " License Valid for"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:106
 msgid "Crowdfunding Integration"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:92
+#: .././templates/admin/_idfMenu.php:109
+msgid "Select a commerce platform for use with IgnitionDeck Crowdfunding"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:110
 msgid ""
 "Note: Enabling WooCommerce requires the purchase of an IgnitionDeck License."
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:133
+#: .././templates/admin/_idfMenu.php:112
+msgid "Commerce Platform"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:116
+msgid "IgnitionDeck Commerce"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:118
+msgid "WooCommerce"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:120
+msgid "Easy Digital Downloads"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:122
+msgid "Legacy IgnitionDeck"
+msgstr ""
+
+#: .././templates/admin/_idfMenu.php:151
 #, php-format
 msgid "View All %d Modules"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:139
+#: .././templates/admin/_idfMenu.php:157
 msgid ""
 "Our support team is available 9am-5pm EST Monday-Friday. Click the links "
 "below to view our step-by-step documentation or visit the support forums."
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:142
+#: .././templates/admin/_idfMenu.php:160
 msgid "Like this product? Help us out with a"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:142
+#: .././templates/admin/_idfMenu.php:160
 msgid "review"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:143
+#: .././templates/admin/_idfMenu.php:161
 msgid "Not a fan?"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:143
+#: .././templates/admin/_idfMenu.php:161
 msgid "Tell us why"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:152
+#: .././templates/admin/_idfMenu.php:170
 msgid "Available Upgrades"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:155
+#: .././templates/admin/_idfMenu.php:173
 msgid "IgnitionDeck Echelon"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:157
+#: .././templates/admin/_idfMenu.php:175
 msgid "Get Echelon"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:159
+#: .././templates/admin/_idfMenu.php:177
 msgid "IgnitionDeck Enterprise"
 msgstr ""
 
-#: .././templates/admin/_idfMenu.php:161
+#: .././templates/admin/_idfMenu.php:179
 msgid "Get Enterprise"
 msgstr ""
 

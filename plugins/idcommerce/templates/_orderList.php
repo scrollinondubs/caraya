@@ -26,9 +26,9 @@
 						if ($crowdfunding) {
 							$mdid_order = mdid_by_orderid($order->id);
 							if (!empty($mdid_order)) {
-								$meta = ID_Member_Order::get_order_meta($order->id, 'gateway_info', true);
-								if (!empty($meta)) {
-									if ($meta['gateway'] == 'credit') {
+								$gateway_info = ID_Member_Order::get_order_meta($order->id, 'gateway_info', true);
+								if (!empty($gateway_info)) {
+									if ($gateway_info['gateway'] == 'credit') {
 										$price = $levels[$order_level_key]->credit_value;
 										$pay_id = $mdid_order->pay_info_id;
 										$id_order = new ID_Order($pay_id);
@@ -54,7 +54,7 @@
 					<td><?php echo '100'.$order->id; ?></td>
 					<td><?php echo date('F d, Y', strtotime($datetime->format('Y-m-d H:i:s'))); ?></td>
 					<td><?php echo (isset($levels[$order_level_key]) ? $levels[$order_level_key]->level_name : ''); ?></td>
-					<td><?php echo apply_filters('idc_order_price', $price, $order->id); ?></td>
+					<td><?php echo apply_filters('idc_order_price', $price, $order->id, $gateway_info); ?></td>
 					<!--<td><?php echo apply_filters('idc_currency_order_meta', apply_filters('idc_currency_format', $price, ''), $order->id); ?></td>-->
 					<td><?php echo $order->transaction_id; ?></td>
 					<td>

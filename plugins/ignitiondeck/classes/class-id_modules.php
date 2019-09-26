@@ -31,6 +31,9 @@ class ID_Modules {
 	function show_modules($modules) {
 		// show modules in the IDF modules menu
 		$id_modules = $this->get_modules();
+		if (empty($id_modules)) {
+			return $id_modules;
+		}
 		foreach ($id_modules as $module) {
 			$thisfile = (is_dir($this->moddir . $module) ? $this->moddir . $module : $this->custom_moddir . $module);
 			if (is_dir($thisfile) && !in_array($module, $this->exdir)) {
@@ -49,7 +52,8 @@ class ID_Modules {
 					'requires' => $info['requires'],
 					'priority' => (isset($info['priority']) ? $info['priority'] : ''),
 					'category' => (isset($info['category']) ? $info['category'] : ''),
-					'tag' => (isset($info['tag']) ? $info['tag'] : ''),
+					'tags' => (isset($info['tags']) ? $info['tags'] : ''),
+					'status' => (isset($info['status']) ? $info['status'] : '')
 				);
 				if ($info['status'] == 'test') {
 					// allow devs to activate
@@ -139,12 +143,26 @@ class ID_Modules {
 	}
 
 	function module_list_wrapper_class($classes, $item) {
+		if (!empty($classes)) {
+			$classes = explode(' ', $classes);
+		}
+		else {
+			$classes = array();
+		}
 		if (!empty($item->category)) {
-			$classes .= ' '.$item->category;
+			$cat_list = explode(' ', $item->category);
+			foreach ($cat_list as $cat) {
+				$classes[] = $cat;
+			}
 		}
-		if (!empty($item->tag)) {
-			$classes .= ' '.$item->tag;
+		if (!empty($item->tags)) {
+			$tag_list = explode(' ', $item->tags);
+			foreach ($tag_list as $tag) {
+				$classes[] = $tag;
+			}
 		}
+		$classes[] = 'extension';
+		$classes = implode(' ', array_unique($classes));
 		return $classes;
 	}
 
@@ -194,6 +212,30 @@ class ID_Modules {
 
 	public static function save_modules($modules = null) {
 		set_transient('id_modules', $modules, 0);
+	}
+
+	public static function is_module_locked($module) {
+		if (empty($module->requires)) {
+			return 0;
+		}
+		$locked = 1;
+		switch ($module->requires) {
+			case 'idc':
+				if (is_idc_licensed()) {
+					$locked = 0;
+				}
+				break;
+			case 'ide':
+				$pro = get_option('is_id_pro', false);
+				if ($pro) {
+					$locked = 0;
+				}
+				break;
+			default:
+				$locked = 0;
+				break;
+		}
+		return $locked;
 	}
 }
 new ID_Modules();

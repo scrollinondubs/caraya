@@ -7,7 +7,7 @@ function profile_donations_admin() {
 }
 
 function profile_donations_admin_scripts() {
-	wp_register_script('profile_donations-admin_script', plugins_url('js/profile_donations-admin.js', __FILE__));
+	wp_register_script('profile_donations-admin_script', plugins_url('js/profile_donations-admin-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('profile_donations-admin_script');
 }

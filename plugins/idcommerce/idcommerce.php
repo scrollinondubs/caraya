@@ -8,16 +8,16 @@
 Plugin Name: IgnitionDeck Commerce
 URI: http://IgnitionDeck.com
 Description: A powerful, yet simple, content delivery system for WordPress. Features a widgetized dashboard so you can customize your product offerings, instant checkout, credits, and more.
-Version: 1.8.5
-Author: Virtuous Giant
-Author URI: http://VirtuousGiant.com
+Version: 1.9.38
+Author: IgnitionDeck
+Author URI: http://ignitiondeck.com
 License: GPL2
 */
 
 define( 'IDC_PATH', plugin_dir_path(__FILE__) );
 
 global $memberdeck_db_version;
-$memberdeck_db_version = "1.8.5";
+$memberdeck_db_version = "1.9.38";
 global $old_idc_version;
 $old_idc_version = get_option('memberdeck_db_version');
 
@@ -82,6 +82,10 @@ if (!is_idc_free() && function_exists('is_id_pro') && is_id_pro()) {
 if (function_exists('is_id_pro') && is_id_pro()) {
 	include_once 'inc/idcommerce-ide.php';
 }
+include_once 'inc/idcommerce-coinbase.php';
+if (!is_idc_free()) {
+	include_once 'inc/idcommerce-adaptive.php';
+}
 global $crowdfunding;
 global $global_currency;
 if (class_exists('IDF')) {
@@ -89,9 +93,6 @@ if (class_exists('IDF')) {
 	if ($platform == 'idc') {
 		$pwyw = true;
 	}
-}
-if (!is_idc_free()) {
-	include_once 'inc/idcommerce-adaptive.php';
 }
 
 // Adding image size for thumbnails on Dashboard
@@ -111,19 +112,15 @@ register_activation_hook( __FILE__, 'idc_activation' );
 function idc_languages() {
   	load_plugin_textdomain( 'memberdeck', false, dirname( plugin_basename( __FILE__ ) ).'/languages/' );
   	load_plugin_textdomain( 'idcommerce', false, dirname( plugin_basename( __FILE__ ) ).'/languages/' );
-  	add_filter('idc_localization_strings', 'idc_localization_strings');
 }
 
 add_action('plugins_loaded', 'idc_languages');
 
 function idc_init() {
 	do_action('idc_init');
-  	$general = get_option('md_receipt_settings');
+  	$general = maybe_unserialize(get_option('md_receipt_settings'));
 	if (!empty($general)) {
-		if (!is_array($general)) {
-			$general = unserialize($general);
-		}
-		if (isset($general['disable_toolbar']) && $general['disable_toolbar'] == 1) {
+		if (isset($general['disable_toolbar']) && $general['disable_toolbar']) {
 			if (!current_user_can('administrator') && !is_admin()) {
   				show_admin_bar(false);
 			}
@@ -194,7 +191,7 @@ function idc_localization_strings() {
 	$strings['login'] = __('Login', 'memberdeck');
 	$strings['update'] = __('Update', 'memberdeck');
 	$strings['choose_product'] == __('Choose Product', 'memberdeck');
-	return $strings;
+	return apply_filters('idc_localization_strings', $strings);
 }
 
 // Let's determine whether we are installing on multisite or standard WordPress
@@ -235,69 +232,6 @@ function memberdeck_install($blog_id = null) {
 	global $old_idc_version;
 
 	do_action('idc_before_install');
-	
-	if (!empty($old_idc_version) && $old_idc_version < '1.2.7') {
-		// new for 1.2.7 in order to normalize level data
-	    $members = ID_Member::get_members();
-	    foreach ($members as $member) {
-	    	$levels = $member->access_level;
-	    	if (!empty($levels)) {
-	    		$levels = unserialize($levels);
-	    		foreach ($levels as $level) {
-	    			$id_member = new ID_Member($member->user_id);
-	    			$add_level = $id_member->set_level($level);
-	    		}
-	    	}
-	    }
-		// convert serialized gateway settings into unserialized
-    	$idc_gateway_settings = get_option('memberdeck_gateways');
-    	if (!empty($idc_gateway_settings)) {
-    		if (!is_array($idc_gateway_settings)) {
-    			$idc_gateway_settings = unserialize($idc_gateway_settings);
-    		}
-    		update_option('memberdeck_gateways', $idc_gateway_settings);
-    	}
-	}
-
-	if (!empty($old_idc_version) && $old_idc_version <= '1.5.1') {
-		$get_db = get_page_by_title('Dashboard');
-		if (!empty($get_db)) {
-			$dash_settings = get_option('md_dash_settings');
-			if (!empty($dash_settings)) {
-				if (!is_array($dash_settings)) {
-					$dash_settings = unserialize($dash_settings);
-				}
-				$dash_settings['durl'] = $get_db->ID;
-				update_option('md_dash_settings', $dash_settings);
-			}
-		}
-	}
-
-	if (isset($old_idc_version) && $old_idc_version <= '1.5.4') {
-		$global_currency = get_option('idc_global_currency');
-		if (empty($global_currency)) {
-			update_option('idc_global_currency', 'USD');
-		}
-		// If global currency is to Use IDCF (deprecated), set it to USD and store in DB too
-		else if ($global_currency == "idcf") {
-			// Getting IDCF default currency
-			if (class_exists('ID_Project')) {
-				$default_settings = ID_Project::get_project_defaults();
-				if (is_object($default_settings)) {
-					$global_currency = $default_settings->currency_code;
-				} else {
-					$global_currency = "USD";
-				}
-				update_option('idc_global_currency', $global_currency);
-			}
-		}
-
-		// Module settings
-		$module_settings = get_option('idc_modules');
-		if (empty($module_settings)) {
-			update_option('idc_modules', array());
-		}
-	}
 
 	$prefix = md_wpdb_prefix($blog_id);
 
@@ -356,8 +290,11 @@ function memberdeck_install($blog_id = null) {
 					txn_type VARCHAR (250) NOT NULL DEFAULT 'capture',
 					level_type VARCHAR(250) NOT NULL,
 					recurring_type VARCHAR(250) NOT NULL DEFAULT 'NONE',
+					trial_period TINYINT(1),
+					trial_length MEDIUMINT(9),
+					trial_type VARCHAR(250),
 					limit_term TINYINT(1) NOT NULL,
-					term_length MEDIUMINT(9) NOT NULL,
+					term_length MEDIUMINT(9),
 					plan VARCHAR(250),
 					license_count MEDIUMINT(9),
 					enable_renewals TINYINT(1) NOT NULL,
@@ -847,16 +784,16 @@ function idc_set_defaults() {
 		);
 		update_option('md_dash_settings', $dash_settings);
 	}
-	else {
-		if ($old_idc_version <= '1.5.5') {
-			if (!is_array($dash_settings)) {
-				$dash_settings = unserialize($dash_settings);
-			}
-			if (isset($get_db->ID)) {
-				$dash_settings['durl'] = $get_db->ID;
-				update_option('md_dash_settings', $dash_settings);
-			}
+	$receipt_settings = get_option('md_receipt_settings');
+	if (empty($receipt_settings)) {
+		$receipt_settings = array(
+			'co-name' => get_option('blogname'),
+			'co-email' => get_option('admin_email')
+		);
+		if (function_exists('is_id_pro') && is_id_pro()) {
+			$receipt_settings['creator_permissions'] = '3';
 		}
+		update_option('md_receipt_settings', $receipt_settings);
 	}
 }
 
@@ -903,15 +840,16 @@ global $crowdfunding;
 
 function memberdeck_styles() {
 	global $permalink_structure;
+	global $global_currency;
 	if (empty($permalink_structure)) {
 		$prefix = '&';
 	}
 	else {
 		$prefix = '?';
 	}
-	wp_register_script('idcommerce-js', plugins_url('js/idcommerce.js', __FILE__));
-	wp_register_script('idlightbox-js', plugins_url('js/lightbox.js', __FILE__));
-	wp_register_style('idcommerce', plugins_url('css/style.css', __FILE__));
+	wp_register_script('idcommerce-js', plugins_url('js/idcommerce-min.js', __FILE__));
+	wp_register_script('idlightbox-js', plugins_url('js/lightbox-min.js', __FILE__));
+	wp_register_style('idcommerce', plugins_url('css/style-min.css', __FILE__));
 	wp_register_style('font-awesome', "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css");
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('idcommerce-js');
@@ -990,38 +928,45 @@ function memberdeck_styles() {
 				}
 			}
 			wp_localize_script('idcommerce-js', 'memberdeck_mc', $mc);
+			if (!empty($global_currency)) {
+				wp_localize_script('idcommerce-js', 'memberdeck_global_currency', $global_currency);
+			}
+			$ccode = md_currency_symbol($global_currency);
+			if (!empty($ccode)) {
+				wp_localize_script('idcommerce-js', 'memberdeck_ccode', $ccode);
+			}
 			if ($es == '1') {
 				wp_localize_script( 'idcommerce-js', 'memberdeck_es', '1');
 				$pk = $settings['pk'];
 				$tpk = $settings['tpk'];
 				if ($test == '1') {
-					wp_localize_script( 'idcommerce-js', 'memberdeck_pk', $tpk);
+					wp_localize_script( 'idcommerce-js', 'memberdeck_pk', (!empty($tpk) ? $tpk : '0'));
 				}
 				else {
-					wp_localize_script( 'idcommerce-js', 'memberdeck_pk', $pk);
+					wp_localize_script( 'idcommerce-js', 'memberdeck_pk', (!empty($pk) ? $pk : '0'));
 				}
 			}
 			else {
 				wp_localize_script( 'idcommerce-js', 'memberdeck_es', '0');
 			}
 			if ($esc == '1') {
-				wp_register_style('sc_buttons', plugins_url('/lib/connect-buttons.css', __FILE__));
+				wp_register_style('sc_buttons', plugins_url('/lib/connect-buttons-min.css', __FILE__));
 				wp_enqueue_style('sc_buttons');
 			}
 			if ($epp == '1') {
 				wp_localize_script( 'idcommerce-js', 'memberdeck_epp', '1');
-				$pp_email = $settings['pp_email'];
-				$test_email = $settings['test_email'];
+				$pp_email = (!empty($settings['pp_email']) ? $settings['pp_email'] : array());
+				$test_email = (!empty($settings['test_email']) ? $settings['test_email'] : array());
 				$return_url = (!empty($settings['paypal_redirect']) ? $settings['paypal_redirect'] : home_url());
 				if ($test == '1') {
-					wp_localize_script('idcommerce-js', 'memberdeck_pp', $test_email);
+					wp_localize_script('idcommerce-js', 'memberdeck_pp', (!empty($test_email) ? $test_email : array()));
 					wp_localize_script('idcommerce-js', 'memberdeck_paypal', 'https://www.sandbox.paypal.com/cgi-bin/webscr');
-					wp_localize_script('idcommerce-js', 'memberdeck_returnurl', $settings['paypal_test_redirect']);
+					wp_localize_script('idcommerce-js', 'memberdeck_returnurl', (!empty($settings['paypal_test_redirect']) ? $settings['paypal_test_redirect'] : array()));
 				}
 				else {
-					wp_localize_script('idcommerce-js', 'memberdeck_pp', $pp_email);
+					wp_localize_script('idcommerce-js', 'memberdeck_pp', (!empty($pp_email) ? $pp_email : array()));
 					wp_localize_script('idcommerce-js', 'memberdeck_paypal', 'https://www.paypal.com/cgi-bin/webscr');
-					wp_localize_script('idcommerce-js', 'memberdeck_returnurl', $settings['paypal_redirect']);
+					wp_localize_script('idcommerce-js', 'memberdeck_returnurl', (!empty($settings['paypal_redirect']) ? $settings['paypal_redirect'] : array()));
 				}
 			}
 			else {
@@ -1079,7 +1024,7 @@ function memberdeck_styles() {
 	wp_localize_script( 'idcommerce-js', 'memberdeck_siteurl', $homeurl );
 	wp_localize_script( 'idcommerce-js', 'memberdeck_pluginsurl', $pluginsurl );
 	wp_localize_script( 'idcommerce-js', 'memberdeck_durl', $durl);
-	wp_localize_script( 'idcommerce-js', 'idc_localization_strings', apply_filters('idc_localization_strings', ''));
+	wp_localize_script( 'idcommerce-js', 'idc_localization_strings', idc_localization_strings());
 	wp_localize_script( 'idcommerce-js' , 'permalink_prefix', $prefix);
 	wp_localize_script( 'idcommerce-js' , 'is_idc_free',  (is_idc_free() ? '1' : '0'));
 	wp_enqueue_style('idcommerce');
@@ -1167,7 +1112,7 @@ function memberdeck_webhook_listener() {
 
 			$payment_complete = false;
 			$status = null;
-			
+			$trial = 0;
 			foreach($_POST as $key=>$val) {
 	           	$data = array($key => $val);
 
@@ -1176,6 +1121,10 @@ function memberdeck_webhook_listener() {
 				if ($key == "payment_status" && strtoupper($val) == "COMPLETED") {
 	                $payment_complete = true;
 	                //fwrite($log, 'complete'."\n");
+	            }
+	            else if ($key == 'txn_type' && strtoupper($val) == 'SUBSCR_SIGNUP') {
+	            	$payment_complete = true;
+	            	$trial = true;
 	            }
 	            else if ($key == 'txn_type' && strtoupper($val) == 'SUBSCR_CANCEL') {
 	            	$subscription_cancel = true;
@@ -1192,12 +1141,12 @@ function memberdeck_webhook_listener() {
 	        	$guest_checkout = (isset($_GET['guest_checkout']) ? $_GET['guest_checkout'] : 0);
 	            $fname = $vars['first_name'];
 	            $lname = $vars['last_name'];
-	            $price = $vars['mc_gross'];
+	            $price = (empty($trial) ? $vars['mc_gross'] : $vars['mc_amount1']);
 	            $payer_email = $vars['payer_email'];
 	            $email = $_GET['email'];
 	            $product_id = $vars['item_number'];
 	            $ipn_id = $vars['ipn_track_id'];
-	            $txn_id = $vars['txn_id'];
+	            $txn_id = (!$trial ? $vars['txn_id'] : $vars['subscr_id']);
 	       		$txn_check = ID_Member_Order::check_order_exists($txn_id);
 
 	       		if (!empty($txn_check)) {
@@ -1210,14 +1159,14 @@ function memberdeck_webhook_listener() {
 	       			'last_name' => $lname,
 	       			'email' => $email
 	       		);
-
+	       		
 	       		$new_data = array('ipn_id' => $ipn_id);
 
 	            $level = ID_Member_Level::get_level($product_id);
 	            if ($level->limit_term == '1') {
 					$term_length = $level->term_length;
 				}
-	            if (isset($vars['txn_type']) && $vars['txn_type'] == 'subscr_payment') {
+	            if (isset($vars['txn_type']) && ($vars['txn_type'] == 'subscr_payment' || $vars['txn_type'] == 'subscr_signup')) {
 	            	$recurring = true;
 	            	$sub_id = $vars['subscr_id'];
 	            	$new_data['sub_id'] = $sub_id;
@@ -1302,7 +1251,7 @@ function memberdeck_webhook_listener() {
 	            		// now add user to our member table
 	            		$reg_key = md5($email.time());
 	            		$user = array('user_id' => $user_id, 'level' => $access_levels, 'reg_key' => $reg_key, 'data' => $data);
-						$new = ID_Member::add_paypal_user($user);
+						$new = ID_Member::add_ipn_user($user);
 						//fwrite($log, $new."\n");
 					}
 					$order = new ID_Member_Order(null, (isset($user_id) ? $user_id : null), $product_id, null, $txn_id, $sub_id, 'active', $e_date, $price);
@@ -1327,16 +1276,16 @@ function memberdeck_webhook_listener() {
 	            }
 	            //
 	            if ($crowdfunding) {
-	            	if (isset($fields['memberdeck_notify']) && $fields['memberdeck_notify'] == 'pp') {
-						if (isset($fields['mdid_checkout'])) {
-							$mdid_checkout = $fields['mdid_checkout'];
-						}
-						if (isset($fields['project_id'])) {
-							$project_id = $fields['project_id'];
-						}
-						if (isset($fields['project_level'])) {
-							$proj_level = $fields['project_level'];
-						}
+					if (isset($fields['mdid_checkout'])) {
+						$mdid_checkout = $fields['mdid_checkout'];
+					}
+					if (isset($fields['project_id'])) {
+						$project_id = $fields['project_id'];
+					}
+					if (isset($fields['project_level'])) {
+						$proj_level = $fields['project_level'];
+					}
+					if (!empty($project_id) && !empty($proj_level)) {
 						$order = new ID_Member_Order($new_order);
 						$order_info = $order->get_order();
 						$created_at = $order_info->order_date;
@@ -1394,7 +1343,7 @@ function memberdeck_webhook_listener() {
 	        			}
 	        			if (isset($record_id)) {
 	        				$cut_data = $data[$record_id];
-	        				$cut_data['cancel_date'] = date('Y-m-d h:i:s');
+	        				$cut_data['cancel_date'] = date('Y-m-d H:i:s');
 	        				unset($data[$record_id]);
 	        				$data[] = $cut_data;
 	        			}
@@ -1434,7 +1383,7 @@ function memberdeck_webhook_listener() {
 	        			}
 	        			if (isset($record_id)) {
 	        				$cut_data = $data[$record_id];
-	        				$cut_data['dispute_date'] = date('Y-m-d h:i:s');
+	        				$cut_data['dispute_date'] = date('Y-m-d H:i:s');
 	        				unset($data[$record_id]);
 	        				$data[] = $cut_data;
 	        			}
@@ -1455,7 +1404,7 @@ function memberdeck_webhook_listener() {
 	        			unset($level_array[$key]);
 	        			$cancel = ID_Member_Order::cancel_subscription($transaction->id);
 	        			$data = unserialize($match_user->data);
-	        			$data['dispute_date'] = date('Y-m-d h:i:s');
+	        			$data['dispute_date'] = date('Y-m-d H:i:s');
 	        			$data = serialize($data);
 	        			$access_level = serialize($level_array);
 	        			$user = array('user_id' => $user_id, 'level' => $access_level, 'data' => $data);
@@ -1475,13 +1424,13 @@ function memberdeck_webhook_listener() {
 			//fwrite($log, $object->type."\n");
 			if ($object->type == 'invoice.payment_succeeded') {
 				$data = $object->data;
-				$txn_id = $data->object->charge;
+				$is_trial = ((isset($data->object->lines->data[0]->plan->trial_period_days) && $data->object->lines->data[0]->plan->trial_period_days > 0) ? true : false);
+				$txn_id = ($is_trial ? $data->object->number : $data->object->charge);
 				//fwrite($log, $txn_id."\n");
 				$customer = $data->object->customer;
 				//fwrite($log, $customer."\n");
 				$plan = $data->object->lines->data[0]->plan->id;
 				$start = $data->object->lines->data[0]->period->start;
-				$is_trial = ((isset($data->object->lines->data[0]->plan->trial_period_days) && $data->object->lines->data[0]->plan->trial_period_days > 0) ? true : false);
 				//fwrite($log, 'start: '.$start."\n");
 				//fwrite($log, $plan."\n");
 				if (isset($customer)) {
@@ -1516,13 +1465,13 @@ function memberdeck_webhook_listener() {
 								// annually
 								$exp = strtotime('+1 years');
 							}
-							$e_date = date('Y-m-d h:i:s', $exp);
+							$e_date = date('Y-m-d H:i:s', $exp);
 							//fwrite($log, $e_date);
 							if ($level->limit_term == 1) {
 								$term_length = $level->term_length;
 							}
 							$paykey = md5($user_email.time());
-							$order = new ID_Member_Order(null, $user_id, $product_id, null, $txn_id, $plan, 'active', $e_date, $level->level_price);
+							$order = new ID_Member_Order(null, $user_id, $product_id, null, $txn_id, $plan, 'active', $e_date, ($data->object->amount_paid / 100));
 							$new_order = $order->add_order();
 							//fwrite($log, 'new order: '.$new_order."\n");
 							// we need to pass any extra post fields set during checkout
@@ -1534,6 +1483,7 @@ function memberdeck_webhook_listener() {
 							}
 							//
 							if ($crowdfunding) {
+								#devnote only post cf order if it's matched
 								$user_meta = get_user_meta($user_id);
 								$fname = $user_meta['first_name'][0]; // var
 								$lname = $user_meta['last_name'][0]; // var
@@ -1579,7 +1529,7 @@ function memberdeck_webhook_listener() {
 							//
 							do_action('memberdeck_payment_success', $user_id, $new_order, $paykey, $fields, 'stripe');
 							do_action('memberdeck_recurring_success', 'stripe', $user_id, $new_order, (isset($term_length) ? $term_length : null));
-							do_action('memberdeck_stripe_success', $user_id, $email);
+							do_action('memberdeck_stripe_success', $user_id, $user_email);
 							do_action('idmember_receipt', $user_id, $level->level_price, $product_id, 'stripe', $new_order, $fields);
 						}
 					}
@@ -1732,7 +1682,7 @@ function memberdeck_webhook_listener() {
 				            	//fwrite($log, 'exp: '.$exp."\n");
 				            	$reg_key = md5($email.time());
 				            	$user = array('user_id' => $user_id, 'level' => $access_levels, 'reg_key' => $reg_key/*, 'data' => $data*/);
-								$new = ID_Member::add_paypal_user($user);
+								$new = ID_Member::add_ipn_user($user);
 								//fwrite($log, $new."\n");
 							}
 							$order = new ID_Member_Order(null, (isset($user_id) ? $user_id : null), $product_id, null, $txn_id, $sub_id, 'active', $e_date, $price);
@@ -1765,19 +1715,21 @@ function memberdeck_webhook_listener() {
 							if (isset($fields['project_level'])) {
 								$proj_level = $fields['project_level'];
 							}
-							$order = new ID_Member_Order($new_order);
-							$order_info = $order->get_order();
-							$created_at = $order_info->order_date;
-							$pay_id = mdid_insert_payinfo($fname, $lname, $email, $project_id, $txn_id, $proj_level, $price, $status, $created_at);
-							if (isset($pay_id)) {
-								if ($recurring) {
-									$start = strtotime("now");
-									$mdid_id = mdid_insert_order('', $pay_id, $start, $sub_id);
+							if (!empty($project_id) && !empty($proj_level)) {
+								$order = new ID_Member_Order($new_order);
+								$order_info = $order->get_order();
+								$created_at = $order_info->order_date;
+								$pay_id = mdid_insert_payinfo($fname, $lname, $email, $project_id, $txn_id, $proj_level, $price, $status, $created_at);
+								if (isset($pay_id)) {
+									if ($recurring) {
+										$start = strtotime("now");
+										$mdid_id = mdid_insert_order('', $pay_id, $start, $sub_id);
+									}
+									else {
+										$mdid_id = mdid_insert_order('', $pay_id, $new_order, null);
+									}
+									do_action('id_payment_success', $pay_id);
 								}
-								else {
-									$mdid_id = mdid_insert_order('', $pay_id, $new_order, null);
-								}
-								do_action('id_payment_success', $pay_id);
 							}
 						}
 						// Calling the actions for hooks
@@ -2016,7 +1968,7 @@ function memberdeck_webhook_listener() {
 		            	//fwrite($log, 'exp: '.$exp."\n");
 		            	$reg_key = md5($email.time());
 		            	$user = array('user_id' => $user_id, 'level' => $access_levels, 'reg_key' => $reg_key, 'data' => $data);
-						$new = ID_Member::add_paypal_user($user);
+						$new = ID_Member::add_ipn_user($user);
 						//fwrite($log, $new."\n");
 					}
 					$order = new ID_Member_Order(null, (isset($user_id) ? $user_id : null), $product_id, null, $txn_id, (isset($sub_id) ? $sub_id : ''), 'active', $e_date, $price);
@@ -2056,7 +2008,7 @@ function memberdeck_webhook_listener() {
 						}
 	            		// fwrite($log, 'product_id: '.$product_id."\n");
 	            		// fwrite($log, 'proj_level: '.$proj_level."\n");
-						if (isset($project_id) && !empty($project_id) && isset($proj_level)) {
+						if (!empty($project_id) && !empty($proj_level)) {
 							$order = new ID_Member_Order($new_order);
 							$order_info = $order->get_order();
 							$created_at = $order_info->order_date;
@@ -2141,7 +2093,7 @@ function memberdeck_webhook_listener() {
 	        			}
 	        			if (isset($record_id)) {
 	        				$cut_data = $data[$record_id];
-	        				$cut_data['cancel_date'] = date('Y-m-d h:i:s');
+	        				$cut_data['cancel_date'] = date('Y-m-d H:i:s');
 	        				unset($data[$record_id]);
 	        				$data[] = $cut_data;
 	        			}
@@ -2181,7 +2133,7 @@ function memberdeck_webhook_listener() {
 	        			}
 	        			if (isset($record_id)) {
 	        				$cut_data = $data[$record_id];
-	        				$cut_data['dispute_date'] = date('Y-m-d h:i:s');
+	        				$cut_data['dispute_date'] = date('Y-m-d H:i:s');
 	        				unset($data[$record_id]);
 	        				$data[] = $cut_data;
 	        			}
@@ -2202,7 +2154,7 @@ function memberdeck_webhook_listener() {
 	        			unset($level_array[$key]);
 	        			$cancel = ID_Member_Order::cancel_subscription($transaction->id);
 	        			$data = unserialize($match_user->data);
-	        			$data['dispute_date'] = date('Y-m-d h:i:s');
+	        			$data['dispute_date'] = date('Y-m-d H:i:s');
 	        			$data = serialize($data);
 	        			$access_level = serialize($level_array);
 	        			$user = array('user_id' => $user_id, 'level' => $access_level, 'data' => $data);
@@ -2234,14 +2186,10 @@ function memberdeck_disable_others() {
 		remove_filter('the_content', 'wpautop');
 	}
 	else {
-		if (function_exists('idf_current_url')) {
-			if (md_get_durl() == idf_current_url()) {
-				if (class_exists('WPSEO_OpenGraph')) {
-					remove_action('init', 'initialize_wpseo_front');
-				}
-				add_filter( 'jetpack_enable_open_graph', '__return_false', 99 );
-				remove_filter('the_content', 'wpautop');
-			}
+		if (strpos(idf_current_url(), md_get_durl()) !== FALSE) {
+			remove_action('init', 'initialize_wpseo_front');
+			add_filter( 'jetpack_enable_open_graph', '__return_false', 99 );
+			remove_filter('the_content', 'wpautop');
 		}
 	}
 	foreach ($get_array as $get) {

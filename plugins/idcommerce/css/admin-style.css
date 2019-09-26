@@ -34,8 +34,8 @@ body.md-admin {
 body.md-admin p.error, body.md-admin p.success {
   background-color: #fff;
   width: 100%;
-  font-size: 21px;
-  line-height: 24px;
+  font-size: 1em;
+  line-height: 1em;
   text-align: left;
   margin: 0 auto 10px auto;
   display: block;
@@ -245,6 +245,22 @@ body.md-admin .postbox .form-input.half {
 	width: 49.5%;
 	display: inline-block;
 }
+body.md-admin .postbox .form-input.third {
+	width: 33%;
+	display: inline-block;
+}
+body.md-admin .postbox .form-input.fourth {
+	width: 24.625%;
+	display: inline-block;
+}
+body.md-admin .postbox .form-input.sixth {
+	width: 16.1666%;
+	display: inline-block;
+}
+body.md-admin .postbox .form-input.eigth {
+	width: 12.0625%;
+	display: inline-block;
+}
 body.md-admin .postbox .form-input input, body.md-admin .postbox .form-input textarea {
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -272,6 +288,13 @@ body.md-admin .columns #assign-checkbox input, body.md-admin .inline input {
 	vertical-align: text-top;
 }
 
+table#memberdeck-users td.order_item input.order_edit_field {
+	width: 70%;
+}
+
+table#memberdeck-users td.order_item.order_edit i {
+	width: 1em;
+}
 
 .memberdeck form .form-row {
   width: 99%;
@@ -323,11 +346,26 @@ body.md-admin .columns #assign-checkbox input, body.md-admin .inline input {
   box-sizing: border-box;
   /* Opera/IE 8+ */ }
 .memberdeck form .form-row textarea.description {
-	height: 172px; }
-.memberdeck .form-row input[type=button] {
+	height: 172px;
+}
+.memberdeck .form-row.checkbox.inline label {
+	padding-bottom: 0;
 	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+}
+.memberdeck .form-row.checkbox.inline input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+}
+.memberdeck .form-row input[type=button] {
 	width: auto;
 	text-indent: 0;
+	display: inline-block;
 }
 body.md-admin .dashboardlayout li{
 	margin: 5px 0;

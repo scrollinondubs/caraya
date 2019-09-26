@@ -2,7 +2,7 @@
 	$columns = null;
 	// seems to have no effect
 	apply_filters('manage-order_columns', $columns);
-		$p = new pagination;
+		$p = new ID_Pagination();
 		//use query to create ascending and descending variables for column sorting
 		//this first section creates default values so that everything sorts asc at first
 		$orderby = 'id';

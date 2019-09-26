@@ -4,5 +4,6 @@
   "doclink":"",
   "status":"live",
   "type":"module",
-  "requires": "idc"
+  "requires": "idc",
+  "tags": "commerce analytics"
 }

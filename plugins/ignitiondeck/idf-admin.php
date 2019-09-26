@@ -13,18 +13,26 @@ function idf_admin_menus() {
 		global $admin_page_hooks;
 		// pretty red bubble
 		$notice_count = apply_filters('idf_notice_count', 0);
-		$notice_counter = sprintf( '<span class="update-plugins count-%1$d"><span class="plugin-count">%1$d</span></span>', $notice_count);
+		$menu_array = array();
+		$notice_counter = sprintf( __('<span class="update-plugins count-%1$d"><span class="plugin-count">%1$d</span></span>', $notice_count), 'idf');
 		
-		$home = add_menu_page(__('Dashboard', 'idf'), __('IgnitionDeck', 'idf').' '.$notice_counter, 'manage_options', 'idf', 'idf_main_menu', 'dashicons-ignitiondeck');
+		$home = add_menu_page(__('Dashboard', 'idf'), __('IgnitionDeck', 'idf')/*.' '.$notice_counter*/, 'manage_options', 'idf', 'idf_main_menu', 'dashicons-ignitiondeck');
+		if (!empty($home)) {
+			$menu_array[] = $home;
+		}
 		$admin_page_hooks['idf'] = 'ignitiondeck'; // Wipe notification bits from hooks. Thank you WP SEO.
 		
 		$dashboard = add_submenu_page( 'idf', __('IgnitionDeck Dashboard', 'idf'), apply_filters('idf_menu_title_idf', __('Dashboard', 'idf')), 'manage_options', 'idf');
 		$theme_list = add_submenu_page( 'idf', __('Themes', 'idf'), apply_filters('idf_menu_title_idf-themes', __('Themes', 'idf')), 'manage_options', 'idf-themes', 'idf_theme_list');
-		$extension_list = add_submenu_page( 'idf', __('Modules', 'idf'), apply_filters('idf_menu_title_idf-extensions', __('Modules', 'idf')), 'manage_options', 'idf-extensions', 'idf_modules_menu');
-		$menu_array = array($home,
-						$theme_list,
-						$extension_list
-						);
+		if (!empty($theme_list)) {
+			$menu_array[] = $theme_list;
+		}
+		if (idf_registered()) {
+			$extension_list = add_submenu_page( 'idf', __('Modules', 'idf'), apply_filters('idf_menu_title_idf-extensions', __('Modules', 'idf')), 'manage_options', 'idf-extensions', 'idf_modules_menu');
+			if (!empty($extension_list)) {
+				$menu_array[] = $extension_list;
+			}
+		}
 		foreach ($menu_array as $menu) {
 			add_action('admin_print_styles-'.$menu, 'idf_admin_enqueues');
 		}
@@ -44,45 +52,59 @@ function idf_dev_menus() {
 function idf_main_menu() {
 	$requirements = new IDF_Requirements;
 	$install_data = $requirements->install_check();
-	$idf_registered = get_option('idf_registered');
+	$idf_registered = idf_registered();
+	$license_option = get_option('idf_license_entry_options');
+	$id_account = get_option('id_account');
 	$platform = idf_platform();
 	$plugins_path = plugin_dir_path(dirname(__FILE__));
-	$platforms = idf_platforms();
 	$super = idf_is_super();
 	$active_products = array();
 	$is_id_licensed = false;
 	$is_idc_licensed = false;
+	$platforms = idf_platforms();
 	if (idf_has_idcf()) {
 		$idcf_license_key = get_option('id_license_key');
+	}
+	if (idf_has_idc()) {
+		$general = get_option('md_receipt_settings');
+		$general = maybe_unserialize($general);
+		$idc_license_key = (isset($general['license_key']) ? $general['license_key'] : '');
+	}
+	if (isset($_POST['idf_license_entry_options'])) {
+		$license_option = sanitize_text_field($_POST['idf_license_entry_options']);
+		update_option('idf_license_entry_options', $license_option);
+		switch ($license_option) {
+			case 'email':
+				$id_account = sanitize_text_field($_POST['id_account']);
+				do_action('idf_id_update_account', $id_account);
+				break;
+			case 'keys':
+				if (isset($_POST['idcf_license_key'])) {
+					$idcf_license_key = sanitize_text_field($_POST['idcf_license_key']);
+					do_action('idcf_license_update', $idcf_license_key);
+				}
+				if (isset($_POST['idc_license_key'])) {
+					$idc_license_key = sanitize_text_field($_POST['idc_license_key']);
+					do_action('idc_license_update', $idc_license_key);
+				}
+				break;
+		}
+		$platforms = idf_platforms();
+	}
+	if (idf_has_idcf()) {
 		$is_pro = is_id_pro();
 		$is_basic = is_id_basic();
-		if (isset($_POST['idcf_license_key'])) {
-			$is_pro = 0;
-			$is_basic = 0;
-			$idcf_license_key = sanitize_text_field($_POST['idcf_license_key']);
-			do_action('idcf_license_update', $idcf_license_key);
-			$is_pro = is_id_pro();
-			$is_basic = is_id_basic();
-		}
 		if ($is_pro) {
 			$active_products[] = 'IgnitionDeck Enterprise';
 			$is_id_licensed = true;
 		}
 		else if ($is_basic) {
-			$active_products[] = 'IgnitionDeck Crowdfunding';
+			$active_products[] = 'IgnitionDeck Echelon';
 			$is_id_licensed = true;
 		}
 	}
 	if (idf_has_idc()) {
 		$is_idc_licensed = is_idc_licensed();
-		$general = get_option('md_receipt_settings');
-		$general = maybe_unserialize($general);
-		$idc_license_key = (isset($general['license_key']) ? $general['license_key'] : '');
-		if (isset($_POST['idc_license_key'])) {
-			$idc_license_key = sanitize_text_field($_POST['idc_license_key']);
-			do_action('idc_license_update', $idc_license_key);
-			$is_idc_licensed = is_idc_licensed();
-		}
 		if ($is_idc_licensed) {
 			$active_products[] = 'IgnitionDeck Commerce';
 		}
@@ -101,6 +123,10 @@ function idf_main_menu() {
 			}
 		}
 	}
+	$show_takeover = false;
+	if (isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'idf_registered') {
+		$show_takeover = true;
+	}
 	if (isset($_POST['commerce_submit'])) {
 		$platform = sanitize_text_field($_POST['commerce_selection']);
 		update_option('idf_commerce_platform', $platform);
@@ -116,7 +142,10 @@ function idf_main_menu() {
 		echo '<script>location.href="'.site_url('/wp-admin/admin.php?page=idf').'";</script>';
 	}
 	// modules list
-	$data = idf_extension_list();
+	$data = idf_extension_list($filter = array(
+		'key' => 'status',
+		'value' => 'live'
+	));
 	$extension_data = (!empty($data) ? array_slice($data, -3) : array());
 	// upgrades
 	$license_type = 'free';
@@ -217,11 +246,11 @@ function idf_idc_notice() {
 add_action('admin_enqueue_scripts', 'idf_prepare_admin_scripts');
 
 function idf_prepare_admin_scripts() {
-	wp_register_script('idf-admin', plugins_url('/js/idf-admin.js', __FILE__));
-	wp_register_script('idf-admin-media', plugins_url('/js/idf-admin-media.js', __FILE__));
-	wp_register_script('magnific', plugins_url('lib/magnific/magnific.js', __FILE__));
-	wp_register_style('idf-admin', plugins_url('/css/idf-admin.css', __FILE__));
-	wp_register_style('magnific', plugins_url('lib/magnific/magnific.css', __FILE__));
+	wp_register_script('idf-admin', plugins_url('/js/idf-admin-min.js', __FILE__));
+	wp_register_script('idf-admin-media', plugins_url('/js/idf-admin-media-min.js', __FILE__));
+	wp_register_script('magnific', plugins_url('lib/magnific/magnific-min.js', __FILE__));
+	wp_register_style('idf-admin', plugins_url('/css/idf-admin-min.css', __FILE__));
+	wp_register_style('magnific', plugins_url('lib/magnific/magnific-min.css', __FILE__));
 }
 
 add_action('admin_enqueue_scripts', 'idf_prepare_admin_localization');
@@ -246,7 +275,7 @@ add_action('admin_enqueue_scripts', 'idf_additional_enqueues');
 
 function idf_additional_enqueues() {
 	global $post;
-	wp_register_style('ignitiondeck-font', plugins_url('/lib/ignitiondeckfont/ignitiondeckfont.css', __FILE__));
+	wp_register_style('ignitiondeck-font', plugins_url('/lib/ignitiondeckfont/ignitiondeckfont-min.css', __FILE__));
 	wp_enqueue_style('ignitiondeck-font');
 	if (isset($post->post_type) && $post->post_type == 'ignition_product') {
 		// load selective css/scripts
@@ -276,7 +305,7 @@ function idf_admin_enqueues() {
 add_action('admin_init', 'filter_idcf_admin');
 
 function idf_dev_tools_enqueues() {
-	wp_register_script('idf-dev_tools', plugins_url('js/idf-admin-dev_tools.js', __FILE__));
+	wp_register_script('idf-dev_tools', plugins_url('js/idf-admin-dev_tools-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('idf-dev_tools');
 }
@@ -284,19 +313,6 @@ function idf_dev_tools_enqueues() {
 function filter_idcf_admin() {
 	$platform = idf_platform();
 	if (!empty($platform) && $platform !== 'legacy') {
-		global $admin_page_hooks;
-		if (!empty($admin_page_hooks['ignitiondeck'])) {
-			//remove_submenu_page('ignitiondeck', 'project-settings');
-			remove_submenu_page('ignitiondeck', 'payment-options');
-			remove_submenu_page('ignitiondeck', 'custom-settings');
-		}
-		else {
-			remove_submenu_page('idf', 'payment-options');
-			remove_submenu_page('idf', 'custom-settings');
-		}
-		//add_filter('idcf_project_settings_tab', 'filter_idcf_project_settings_tab');
-		add_filter('idcf_custom_settings_tab', 'filter_idcf_custom_settings_tab');
-		add_filter('idcf_payment_settings_tab', 'filter_idcf_payment_settings_tab');
 		remove_action('add_meta_boxes', 'add_ty_url');
 	}
 	if ($platform == 'wc') {
@@ -312,21 +328,6 @@ function filter_idc_admin() {
 	if ($platform !== 'idc') {
 		remove_action('add_meta_boxes', 'mdid_project_metaboxes');
 	}
-}
-
-function filter_idcf_project_settings_tab($tab) {
-	//$tabs = null;
-	return null;
-}
-
-function filter_idcf_custom_settings_tab($tab) {
-	//$tabs = null;
-	return null;
-}
-
-function filter_idcf_payment_settings_tab($tab) {
-	//$tabs = null;
-	return null;
 }
 
 function idf_wc_settings() {

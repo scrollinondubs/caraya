@@ -26,7 +26,7 @@ function ign_meta_boxes(array $meta_boxes) {
 				'name' => __('Campaign End Options', 'ignitiondeck'),
 				'desc' => __('Choose how to handle campaign end. Leave open to keep collecting payments, closed to remove pledge button.', 'ignitiondeck'),
 				'id' => $prefix.'end_type',
-				'class' => $prefix . 'projectmeta_right',
+				'class' => '',
 				'show_help' => true,
 				'options' => array(
 					array(
@@ -40,21 +40,21 @@ function ign_meta_boxes(array $meta_boxes) {
 						'value' => 'closed'
 					)
 				),
-				'type' => 'radio'
+				'type' => 'radio_inline'
 			),
 			array(
 		        'name' => __('Funding Goal', 'ignitiondeck'),
 		        'desc' => __('Amount you are seeking to raise (required)', 'ignitiondeck'),
 		        'id' => $prefix . 'fund_goal',
-		        'class' => $prefix . 'projectmeta_left_third',
+		        'class' => '',
 		        'show_help' => true,
 		        'type' => 'text_money'
 		    ),
-		    (!(function_exists('is_id_pro') && is_id_pro())) ? array('type' => '') : array(
+		    (!(function_exists('is_id_pro') || !is_id_pro())) ? array('type' => '') : array(
 				'name' => __('Proposed Start Date', 'ignitiondeck'),
 				'desc' => __('The date the project creator wishes to start funding', 'ignitiondeck'),
 				'id' => $prefix . 'start_date',
-				'class' => $prefix . 'projectmeta_third',
+				'class' => '',
 				'show_help' => true,
 				'type' => 'text_date'
 			),
@@ -62,7 +62,7 @@ function ign_meta_boxes(array $meta_boxes) {
 		        'name' => __('Fundraising End Date', 'ignitiondeck'),
 		        'desc' => __('Date funding will end (recommended)', 'ignitiondeck'),
 		        'id' => $prefix . 'fund_end',
-		        'class' => $prefix . 'projectmeta_third',
+		        'class' => '',
 		        'show_help' => true,
 		        'type' => 'text_date'
 		    ),
@@ -70,7 +70,7 @@ function ign_meta_boxes(array $meta_boxes) {
 		        'name' => __('Project Short Description', 'ignitiondeck'),
 		        'desc' => __('Used in the grid, widget areas, and on the purchase form', 'ignitiondeck'),
 		        'id' => $prefix . 'project_description',
-		        'class' => $prefix . 'projectmeta_full',
+		        'class' => '',
 		        'show_help' => true,
 		        'type' => 'textarea_small'
 		    ),
@@ -93,10 +93,6 @@ function ign_meta_boxes(array $meta_boxes) {
 		    array(
 		        'type' => 'headline1',
 		        'class' => $prefix . 'projectmeta_headline1'
-		    ),
-		    array(
-		        'type' => 'level1wraptop',
-		        'class' => 'projectmeta_none'
 		    ),
 		    array(
 		        'name' => __('Level Title', 'ignitiondeck'),
@@ -144,13 +140,7 @@ function ign_meta_boxes(array $meta_boxes) {
 		    	'type' => 'text_small'
 		    ),
 			array(
-			    'type' => 'level1wrapbottom',
-			    'class' => 'projectmeta_none'
-			),
-		    
-		   
-			array(
-	            'name' => '<h4 class="ign_projectmeta_title">'.__('Additional Levels', 'ignitiondeck').'</h4>',
+	            'name' => '',
 				'std' => '',
 	            'id' => $prefix . 'level',
 	            'class' => $prefix . 'projectmeta_full new_levels',
@@ -158,7 +148,7 @@ function ign_meta_boxes(array $meta_boxes) {
 	            'type' => 'product_levels'
 	        ),	
 	        array(
-	            'name' => __('Level Management', 'ignitiondeck'),
+	            'name' => '',
 	            'id' => $prefix . 'addlevels',
 	            'class' => $prefix . 'projectmeta_full new_level',
 	            'type' => 'add_levels',

@@ -42,17 +42,24 @@ class ID_Recaptcha {
 	function register_scripts() {
 		$language = get_bloginfo('language');
 		wp_register_script('recaptcha', 'https://www.google.com/recaptcha/api.js?onload=idRecaptchaLoad&render=explicit&hl='.$language.' async defer');
-		wp_register_script('id_recaptcha', plugins_url('js/id_recaptcha.js', __FILE__));
-		wp_register_style('id_recaptcha', plugins_url('css/id_recaptcha.css', __FILE__));
+		wp_register_script('id_recaptcha', plugins_url('js/id_recaptcha-min.js', __FILE__));
+		wp_register_style('id_recaptcha', plugins_url('css/id_recaptcha-min.css', __FILE__));
 		$settings = get_option('id_recaptcha_settings');
-		wp_localize_script('id_recaptcha', 'id_recaptcha_site_id', $settings['id_recaptcha_site_id']);
+		wp_localize_script('id_recaptcha', 'id_recaptcha_site_id', (isset($settings['id_recaptcha_site_id']) ? $settings['id_recaptcha_site_id'] : ''));
 	}
 
 	function enqueue_scripts() {
-		wp_enqueue_script('jquery');
-		wp_enqueue_script('recaptcha');
-		wp_enqueue_script('id_recaptcha');
-		wp_enqueue_style('id_recaptcha');
+		if ($this::has_site_id()) {
+			wp_enqueue_script('jquery');
+			wp_enqueue_script('recaptcha');
+			wp_enqueue_script('id_recaptcha');
+			wp_enqueue_style('id_recaptcha');
+		}
+	}
+
+	function has_site_id() {
+		$settings = get_option('id_recaptcha_settings');
+		return !empty($settings['id_recaptcha_site_id']);
 	}
 
 	function captcha_content($wrapper = 'div') {
@@ -68,7 +75,9 @@ class ID_Recaptcha {
 	}
 
 	function echo_login_captcha() {
-		echo self::render_login_captcha();
+		if ($this::has_site_id()) {
+			echo self::render_login_captcha();
+		}
 	}
 }
 new ID_Recaptcha(); ?>

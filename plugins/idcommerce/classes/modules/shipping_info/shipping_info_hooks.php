@@ -1,7 +1,7 @@
 <?php
 
 function shipping_info_scripts() {
-	wp_register_script('shipping_info-script', plugins_url('js/shipping_info.js', __FILE__));
+	wp_register_script('shipping_info-script', plugins_url('js/shipping_info-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('shipping_info-script');
 }
@@ -101,15 +101,16 @@ function idc_update_idcf_shipping($pay_id){
 	$city = (isset($shipping_info['city']) ? $shipping_info['city'] : '');
 	$zip = (isset($shipping_info['zip']) ? $shipping_info['zip'] : '');
 	// now update
-	$update = new ID_Order($pay_id,
+	$update = new ID_Order(
+		$pay_id,
 		$order->first_name,
 		$order->last_name,
 		$order->email,
 		$address,
-		$city,
-		$state,
-		$zip,
 		$country,
+		$state,
+		$city,
+		$zip,
 		$order->product_id,
 		$order->transaction_id,
 		$order->preapproval_key,

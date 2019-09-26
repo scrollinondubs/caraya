@@ -4,5 +4,6 @@
 	"doclink":"#",
   	"status":"hidden",
   	"type":"module",
-  	"requires": "idc"
+  	"requires": "idc",
+  	"tags": "commerce gateways"
 }

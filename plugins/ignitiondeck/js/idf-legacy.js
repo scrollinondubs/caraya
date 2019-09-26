@@ -1,26 +1,21 @@
 jQuery(document).ready(function() {
+	var selLevel;
 	jQuery(document).bind('idc_lightbox_general', function(e) {
-		// this is fired when we click on a generic support now button
-		var selLevel = jQuery('.idc_lightbox:visible select[name="level_select"]').val();
-		
-		
-		setLBValues(selLevel);
+		selLevel = jQuery('.idc_lightbox:visible select[name="level_select"]').val();
+		setLbValues(selLevel);
 	});
 	jQuery(document).bind('idc_lightbox_level_select', function(e, clickLevel) {
 		selLevel = jQuery('.idc_lightbox:visible select[name="level_select"] option[data-order="'+ clickLevel +'"]').val();
-		//levelDesc = jQuery('.idc_lightbox:visible select[name="level_select"] option[value="'+ selLevel +'"]').data('desc');
-		//levelPrice = jQuery('.idc_lightbox:visible select[name="level_select"] option[value="'+ selLevel +'"]').data('price');
-		setLBValues(selLevel);
+		setLbValues(selLevel);
 	});
 	jQuery('.idc_lightbox select[name="level_select"]').change(function(e) {
-		// this is fired when we change the lightbox level selection
 		if (jQuery(this).has(':visible')) {
 			selLevel = jQuery(this).val();
-			setLBValues(selLevel, false);
+			setLbValues(selLevel, false);
 		}
 	});
-	function setLBValues(selLevel, withProp = true) {
-		if (withProp) {
+	function setLbValues(selLevel, withProp) {
+		if (typeof(withProp) !== 'undefined' && withProp) {
 			var trueLevel = jQuery('.level_select option[value="' + selLevel + '"]');
 			jQuery(trueLevel).prop('selected', true);
 		}

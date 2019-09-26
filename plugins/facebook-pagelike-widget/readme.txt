@@ -1,9 +1,9 @@
-=== Facebook Widget ===
+=== Widget for Social Page Feeds ===
 Contributors: Milap
 Tags: facebook, facebook like box, facebook simple like, facebook fan pages, facebook like button, facebook button share, facebook social bookmarking, facebook feeds, facebook feed widget, social share, wordpress social share, socialmedia, social media widget, social media sharing, social media icon 
-Donate link: https://www.paypal.com/cgi-bin/webscr?business=cemilap.88@gmail.com&cmd=_xclick¤cy_code=USD&amount=5&item_name=Offer%20me%20coffee
+Donate link: https://www.paypal.me/MilapPatel
 Requires at least: 3.0.1
-Tested up to: 4.9
+Tested up to: 5.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,13 @@ This plugin adds a Simple Facebook page Like Widget into your WordPress sidebar,
 
 == Description ==
 
-One of the most popular & lightweight plugin for Facebook page feeds widget with over 5,80,000 downloads and 1,00,000+ active installs.
+> COPYRIGHT DISCLAIMER: THIS PLUGIN ISN'T OFFICIALLY DEVELOPED OR MAINTAINED BY FACEBOOK INC. THIS PLUGIN IS DEVELOPED AND MAINTAINED BY ME ONLY. NO COPYRIGHT INFRINGEMENT INTENDED.
+
+> Did you find this plugin helpful? Please consider [leaving a 5-star review](https://wordpress.org/support/plugin/facebook-pagelike-widget/reviews/?filter=5#new-post).
+
+> Did this plugin made your life easy? Please consider [donating](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=neetap179@gmail.com&lc=US&item_name=Providing+Excellent+WordPress+plugin+support&no_note=0&no_shipping=2&curency_code=USD&bn=PP-DonationsBF:btn_donateCC_LG.gif:NonHosted).
+
+One of the most popular & lightweight plugin for Facebook page feeds widget with over 9,20,000 downloads and 1,00,000+ active installs.
 
 An inside look:
 
@@ -55,9 +61,9 @@ http://codex.wordpress.org/Managing_Plugins
 
 = How to use shortcode ? =
 * You can use below shortcode in Post or Page.
-`[fb_widget fb_url="http://www.facebook.com/Instagram"]`
+`[fb_widget fb_url='http://www.facebook.com/Instagram']`
 You can use more parameters like below.
-`[fb_widget fb_url="http://www.facebook.com/Instagram" width="500" height="450" data_small_header="false" select_lng="ru_RU" data_adapt_container_width="false" data_hide_cover="false" data_show_facepile="false" data_show_posts="true"]`
+`[fb_widget fb_url='http://www.facebook.com/Instagram' width='500' height='450' data_small_header='false' select_lng='ru_RU' data_adapt_container_width='false' data_hide_cover='false' data_show_facepile='false' data_show_posts='true' data_tabs='timeline, messages, events']`
 
 = Widget doesn't working in Mozilla Firefox  = 
 * If widget works great in all browsers except Mozilla Firefox, You must press the settings off "Use protection against tracking in private window", its security settings for Mozilla, nothing to do with my plugin.
@@ -82,6 +88,16 @@ You can use more parameters like below.
 
 
 == Changelog ==
+
+= Version 5.1 =
+* Fixed Cross-Site Scripting (XSS) Vulnerability with plugin shortcode.
+
+= Version 5.0 =
+* Added support for 3 feed type options (timeline,events,messages).
+
+= Version 4.2.3 =
+* Added support for PHP version 7.2
+* Removed Deprecated: Function create_function() error for PHP 7.2. 
 
 = Version 4.2.2 =
 * Solved Shortcode issue with attributes.
@@ -117,7 +133,7 @@ You can use more parameters like below.
 
 * Added support for localization (Multilanguage support)(Added .pot file)
 * Added option to add custom css for widget
-* Added option to select language to show your Facebook widget in any language you want.
+* Added option to select language to show your Facebook Page Feeds in any language you want.
 
 = Version 2.1 =
 

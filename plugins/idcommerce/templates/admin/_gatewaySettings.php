@@ -183,10 +183,11 @@
 									<select id="cb_currency" name="cb_currency">
 										<option value="0"><?php _e('Choose Currency', 'memberdeck'); ?></option>
 										<option value="BTC" <?php echo ($cb_currency == 'BTC' ? 'selected="selected"' : ''); ?>><?php _e('Bitcoin (BTC)', 'memberdeck'); ?></option>
-										<?php if (!empty($cb_currencies)) {
+										<?php 
+										if (!empty($cb_currencies)) {
 											foreach ($cb_currencies as $currency) {
-												echo '<option value="'.strtoupper($currency->iso).'" '.(!empty($cb_currency) && $cb_currency == $currency->iso ? 'selected="selected"' : '').'>'.$currency->name.'</option>';
-											} 
+												echo '<option value="'.strtoupper($currency['id']).'" '.(!empty($cb_currency) && $cb_currency == $currency['id'] ? 'selected="selected"' : '').'>'.$currency['name'].'</option>';
+											}
 										} ?>
 									</select>
 								</div>
@@ -199,7 +200,7 @@
 									<input type="text" name="coinbase_api_secret" id="coinbase_api_secret" value="<?php echo (isset($cb_api_secret) ? $cb_api_secret : ''); ?>"/>
 								</div>
 								<div class="form-input inline">
-									<input type="checkbox" name="ecb" id="ecb" value="1" <?php echo (isset($ecb) && $ecb == 1 ? 'checked="checked"' : ''); ?>/>
+									<input disabled="disabled" type="checkbox" name="ecb" id="ecb" value="1" <?php #disable coinbase until commerce integration is completed echo (isset($ecb) && $ecb == 1 ? 'checked="checked"' : ''); ?>/>
 									<label for="efd"><?php _e('Enable Coinbase', 'memberdeck'); ?></label>
 								</div>
 							</div>

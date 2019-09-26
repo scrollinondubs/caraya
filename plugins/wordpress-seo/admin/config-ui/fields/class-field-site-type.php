@@ -1,10 +1,12 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\ConfigurationUI
  */
 
 /**
- * Class WPSEO_Config_Field_Site_Type
+ * Class WPSEO_Config_Field_Site_Type.
  */
 class WPSEO_Config_Field_Site_Type extends WPSEO_Config_Field_Choice {
 
@@ -27,7 +29,7 @@ class WPSEO_Config_Field_Site_Type extends WPSEO_Config_Field_Choice {
 	}
 
 	/**
-	 * Set adapter
+	 * Set adapter.
 	 *
 	 * @param WPSEO_Configuration_Options_Adapter $adapter Adapter to register lookup on.
 	 */

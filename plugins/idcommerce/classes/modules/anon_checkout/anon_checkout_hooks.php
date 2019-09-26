@@ -1,8 +1,8 @@
 <?php
 
 function anon_checkout_scripts() {
-	wp_register_style('anon_checkout-style', plugins_url('css/anon_checkout.css', __FILE__));
-	wp_register_script('anon_checkout-script', plugins_url('js/anon_checkout.js', __FILE__));
+	wp_register_style('anon_checkout-style', plugins_url('css/anon_checkout-min.css', __FILE__));
+	wp_register_script('anon_checkout-script', plugins_url('js/anon_checkout-min.js', __FILE__));
 	wp_enqueue_style('anon_checkout-style');
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('anon_checkout-script');
@@ -23,7 +23,7 @@ function idc_save_anon_checkout_selections($user_id, $order_id, $paykey = '', $f
 		else {
 			// when in javascript
 			foreach ($fields as $field) {
-				if ($field['name'] == "anonymous_checkout") {
+				if (isset($field['name']) && $field['name'] == "anonymous_checkout") {
 					$anonymous_checkout = $field['value'];
 					break;
 				}

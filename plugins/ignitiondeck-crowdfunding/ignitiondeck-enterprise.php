@@ -370,6 +370,7 @@ function id_submissionForm($post_id = null) {
 				// Create a New Post
 				$args = array(
 					'post_author' => $user_id,
+					'post_content' => '',
 					'post_title' => $project_name,
 					'post_name' => str_replace(' ', '-', $project_name),
 					'post_type' => 'ignition_product',
@@ -471,11 +472,12 @@ function id_submissionForm($post_id = null) {
 						// levels
 						update_post_meta($post_id, 'ign_product_level_count', $project_levels);
 						if (!empty($saved_levels)) {
-							update_post_meta($post_id, 'ign_product_title', (isset($saved_levels[0]['title']) ? $saved_levels[0]['title'] : null)); /* level 1 */
-							update_post_meta($post_id, 'ign_product_price', (isset($saved_levels[0]['price']) ? $saved_levels[0]['price'] : null)); /* level 1 */
-							update_post_meta($post_id, 'ign_product_short_description', (isset($saved_levels[0]['short']) ? $saved_levels[0]['short'] : null)); /* level 1 */
-							update_post_meta($post_id, 'ign_product_details', (isset($saved_levels[0]['long']) ? $saved_levels[0]['long'] : null)); /* level 1 */
-							update_post_meta($post_id, 'ign_product_limit', (isset($saved_levels[0]['limit']) ? $saved_levels[0]['limit'] : null)); /* level 1 */
+							// level 1
+							update_post_meta($post_id, 'ign_product_title', (isset($saved_levels[0]['title']) ? $saved_levels[0]['title'] : null));
+							update_post_meta($post_id, 'ign_product_price', (isset($saved_levels[0]['price']) ? $saved_levels[0]['price'] : null));
+							update_post_meta($post_id, 'ign_product_short_description', (isset($saved_levels[0]['short']) ? $saved_levels[0]['short'] : null));
+							update_post_meta($post_id, 'ign_product_details', (isset($saved_levels[0]['long']) ? $saved_levels[0]['long'] : null));
+							update_post_meta($post_id, 'ign_product_limit', (isset($saved_levels[0]['limit']) ? $saved_levels[0]['limit'] : null));
 		
 							for ($i = 2; $i <= $project_levels; $i++) {
 								update_post_meta($post_id, 'ign_product_level_'.($i).'_title', $saved_levels[$i-1]['title']);
@@ -531,7 +533,7 @@ function id_submissionForm($post_id = null) {
 	$form = new ID_FES(null, (isset($vars) ? $vars : null));
 	do_action('ide_before_fes_display');
 	$output = '<div class="ignitiondeck"><div class="'.apply_filters('id_fes_form_wrapper_class', 'id-fes-form-wrapper').'">';
-	$output .= '<form name="fes" id="fes" action="" method="POST" enctype="multipart/form-data">';
+	$output .= '<form name="fes" id="fes" action="" method="POST" enctype="multipart/form-data" data-status="'.(isset($status) ? $status : 'draft').'">';
 	$output .= $form->display_form();
 	$output .= '</form>';
 	$output .= '</div></div>';
@@ -541,12 +543,12 @@ function id_submissionForm($post_id = null) {
 add_action('init', 'ide_check_create_project', 2);
 
 function ide_check_create_project() {
-	if (isset($_GET['create_project'])&& is_user_logged_in()) {
+	if (!is_user_logged_in()) {
+		return;
+	}
+	if (isset($_GET['create_project'])) {
 		add_action('wp_enqueue_scripts', 'enqueue_enterprise_js');
 		add_filter('the_content', 'ide_create_project');
-		if (class_exists('WPSEO_OpenGraph')) {
-			remove_action('init', 'initialize_wpseo_front');
-		}
 		add_filter( 'jetpack_enable_open_graph', '__return_false', 99 );
 	}
 	else if (isset($_GET['edit_project'])) {
@@ -573,9 +575,6 @@ function ide_check_create_project() {
 			add_filter('the_content', 'ide_edit_project');
 			add_action('wp_enqueue_scripts', 'enqueue_enterprise_js');
 		}
-		if (class_exists('WPSEO_OpenGraph')) {
-			remove_action('init', 'initialize_wpseo_front');
-		}
 		add_filter( 'jetpack_enable_open_graph', '__return_false', 99 );
 	} else if (isset($_GET['export_project'])) {
 		$project_id = get_post_meta($_GET['export_project'], 'ign_project_id', true);
@@ -585,7 +584,9 @@ function ide_check_create_project() {
 }
 
 function ide_create_project($content) {
-	$content = id_submissionForm();
+	if (has_shortcode($content, 'idc_dashboard') || has_shortcode($content, 'memberdeck_dashboard')) {
+		$content = id_submissionForm();
+	}
 	return $content;
 }
 
@@ -637,11 +638,11 @@ function ide_transition_post_status($new_status, $previous_status, $post) {
 }
 
 function enqueue_enterprise_js() {
-	wp_register_script('fes', plugins_url('js/fes.js', __FILE__));
+	wp_register_script('fes', plugins_url('js/fes-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('fes');
 	wp_enqueue_script('jquery-ui-datepicker');
-	wp_register_style('id-datepicker', plugins_url('ign_metabox/style.css', __FILE__));
+	wp_register_style('id-datepicker', plugins_url('ign_metabox/idcf_jquery_ui-min.css', __FILE__));
 	wp_enqueue_style('id-datepicker');
 }
 
@@ -925,7 +926,7 @@ function ide_backer_profile_display($content) {
 			}
 		}
 	$content .= (isset($order_count) && $order_count > 0 ? '<div class="backer_data">'.do_action('ide_before_backer_data').'<p class="backer_supported">'.__('Backed', 'ignitiondeck').'<span class="order_count">'.$order_count.'</span> '.__('projects', 'ignitiondeck').'</p>' : '<div class="backer_data">');
-	$content .= '<p class="backer_joined">'.__('Joined', 'ignitiondeck').' '.date('n - j - Y', strtotime($user->user_registered)).'</p>
+	$content .= '<p class="backer_joined">'.__('Joined', 'ignitiondeck').' '.date(idf_date_format(), strtotime($user->user_registered)).'</p>
 	<div class="id-backer-links">'.(!empty($website_link) ? '<a href="'.$website_link.'" class="website" title="'.__('Website', 'ignitiondeck').'">'.__('Website', 'ignitiondeck').'</a>' : '').''.(!empty($twitter_link) ? '<a href="'.$twitter_link.'" class="twitter" title="'.__('Twitter', 'ignitiondeck').'">'.__('Twitter', 'ignitiondeck').'</a>' : '').(!empty($fb_link) ? '<a href="'.$fb_link.'" class="facebook" title="'.__('Facebook', 'ignitiondeck').'">'.__('Facebook', 'ignitiondeck').'</a>' : '').(!empty($google_link) ? '<a href="'.$google_link.'" class="googleplus" title="'.__('Google Plus', 'ignitiondeck').'">'.__('Google Plus', 'ignitiondeck').'</a>' : '').'</div>'.do_action('ide_after_backer_data').'</div>';
 	$content .= (isset($order_content) ? $order_content : '');
 	$content .= '</div>';
@@ -935,17 +936,22 @@ function ide_backer_profile_display($content) {
 }
 
 function ide_backer_profile_title($title, $id = null) {
-	$dash_settings = get_option('md_dash_settings');
-	if (!empty($dash_settings)) {
-		$dash_settings = maybe_unserialize($dash_settings);
-		$durl = $dash_settings['durl'];
-		if ($durl == $id){
-			$user_id = absint($_GET[apply_filters('idc_backer_profile_slug', 'backer_profile')]);
-			$user = get_user_by('id', $user_id);
-			if (!empty($user)) {
-				$display = $user->display_name;
-				$title = $display;
-			}
+	if (!function_exists('md_get_did')) {
+		return $title;
+	}
+
+	$did = md_get_did();
+
+	if (empty($did)) {
+		return $title;
+	}
+
+	if ($did == $id){
+		$user_id = absint($_GET[apply_filters('idc_backer_profile_slug', 'backer_profile')]);
+		$user = get_user_by('id', $user_id);
+		if (!empty($user)) {
+			$display = $user->display_name;
+			$title = $display;
 		}
 	}
 	return $title;
@@ -1125,7 +1131,7 @@ function ide_creator_profile_display($content) {
 		} else {
 			$content .= '<div class="backer_data">';
 		}
-		$content .= '<p class="backer_joined">'.__('Joined', 'ignitiondeck').' '.date('n - j - Y', strtotime($user->user_registered)).'</p>'.
+		$content .= '<p class="backer_joined">'.__('Joined', 'ignitiondeck').' '.date(idf_date_format(), strtotime($user->user_registered)).'</p>'.
 					'<div class="id-backer-links">'.
 						(!empty($website_link) ? '<a href="'.$website_link.'" class="website" title="'.__('Website', 'ignitiondeck').'">'.__('Website', 'ignitiondeck').'</a>' : '').''.
 						(!empty($twitter_link) ? '<a href="'.$twitter_link.'" class="twitter" title="'.__('Twitter', 'ignitiondeck').'">'.__('Twitter', 'ignitiondeck').'</a>' : '').
@@ -1332,15 +1338,7 @@ add_action('ide_after_enterprise_settings', 'ide_project_approval_settings');
 
 function ide_project_approval_settings() {
 	$enterprise_settings = get_option('idc_enterprise_settings');
-	$auto_approve = (!empty($enterprise_settings['auto_approve']) ? absint($enterprise_settings['auto_approve']) : 0);
-	if (isset($_POST['enterprise_submit'])) {
-		$auto_approve = (isset($_POST['auto_approve']) ? absint($_POST['auto_approve']) : '');
-	}
-	ob_start();
 	include_once('templates/admin/_projectApprovalSettings.php');
-	$content = ob_get_contents();
-	ob_end_clean();
-	echo $content;
 }
 
 add_filter('idc_enterprise_settings', 'ide_save_project_approval_settings');
@@ -1374,5 +1372,58 @@ function ide_auto_approve_button_text($translated_text, $text, $domain) {
 		}
 	}
 	return $translated_text;
+}
+
+add_action('ide_after_enterprise_settings', 'ide_hide_failed_projects');
+
+function ide_hide_failed_projects() {
+	$enterprise_settings = get_option('idc_enterprise_settings');
+	include_once('templates/admin/_projectDisplaySettings.php');
+}
+
+add_filter('idc_enterprise_settings', 'ide_save_failed_project_settings');
+
+function ide_save_failed_project_settings($settings) {
+	if (isset($_POST['enterprise_submit'])) {
+		$hide_failed = (isset($_POST['hide_failed']) ? absint($_POST['hide_failed']) : '');
+		$settings['hide_failed'] = $hide_failed;
+	}
+	return $settings;
+}
+
+add_filter('pre_get_posts', 'ide_filter_project_display');
+
+function ide_filter_project_display($query) {
+	# this is a very slow query, so we need to set a flag
+	# check for instances like dashboard
+	$enterprise_settings = get_option('idc_enterprise_settings');
+	if (!empty($enterprise_settings['hide_failed'])) {
+		if ($query->is_single()) {
+			return;
+		}
+		if (empty($query->query['post_type'])) {
+			return;
+		}
+		if (strpos(idf_current_url(), md_get_durl()) !== FALSE) {
+			return;
+		}
+		$post_type = $query->query['post_type'];
+		if ($post_type == 'ignition_product') {
+			$meta_query = array(
+				array(
+					'key' => 'ign_project_failed',
+					'value' => TRUE,
+					'compare' => '!=',
+					'type' => 'BINARY'
+				),
+				'relation' => 'OR',
+				array(
+					'key' => 'ign_project_failed',
+					'compare' => 'NOT EXISTS',
+				),
+			);
+			$query->set('meta_query', $meta_query);
+		}
+	}
 }
 ?>

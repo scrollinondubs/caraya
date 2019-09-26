@@ -5,7 +5,7 @@ function id_secupay_settings() {
 }
 
 function id_secupay_scripts() {
-	wp_register_script('id_secupay', plugins_url('js/id_secupay.js', __FILE__));
+	wp_register_script('id_secupay', plugins_url('js/id_secupay-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('idcommerce-js');
 	wp_enqueue_script('id_secupay');
@@ -361,7 +361,7 @@ function id_secupay_webhook_handler() {
 						
 						default:
 							$exp = strtotime('+1 years');
-							$e_date = date('Y-m-d h:i:s', $exp);
+							$e_date = date('Y-m-d H:i:s', $exp);
 							break;
 					}
 					$txn_check = ID_Member_Order::check_order_exists($api_return->data->trans_id);
@@ -551,7 +551,7 @@ function id_secupay_idcf_order($user_id, $order_id, $reg_key, $fields, $source) 
 		$get_params->project_level,
 		$the_order->price,
 		'C',
-		isset($the_order->order_date) ? $the_order->order_date : date('Y-m-d h:i:s')
+		isset($the_order->order_date) ? $the_order->order_date : date('Y-m-d H:i:s')
 	);
 	if (!empty($pay_id)) {
 		$mdid_id = mdid_insert_order(null, $pay_id, $order_id, null);

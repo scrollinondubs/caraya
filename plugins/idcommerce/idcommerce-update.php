@@ -115,9 +115,6 @@ function is_idc_free() {
 	if (is_idc_licensed()) {
 		return false;
 	}
-	else if (was_idc_licensed()) {
-		return false;
-	}
 	return true;
 }
 
@@ -137,10 +134,6 @@ function idc_license_type() {
 	$is_licensed = is_idc_licensed();
 	if ($is_licensed) {
 		return 'active';
-	}
-	$was_licensed = was_idc_licensed();
-	if ($was_licensed) {
-		return 'expired';
 	}
 	return 'free';
 }

@@ -70,7 +70,6 @@ class Product_Widget extends WP_Widget {
 			if ($post->post_type == 'ignition_product' && is_single()) {
 				$post_id = $post->ID;
 				$page_project_id = get_post_meta($post_id, 'ign_project_id', true);
-				//$page_project_id = projectPageof($post->ID, $params['product_id']);
 			}
 		
 			// We have three conditions now

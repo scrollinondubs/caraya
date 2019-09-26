@@ -69,13 +69,13 @@ $general = maybe_unserialize($general);
                     <td><?php echo (isset($order_level_key) ? $levels[$order_level_key]->level_name : $level->level_name); ?></td>
                     <?php } ?>
                     <td></td>
-					<td class="right"><?php echo $price; ?></td>
+					<td class="right"><?php echo (!empty($price) ? $price : ''); ?></td>
 				</tr>
                 <tr class="total_price">
 					<td></td>
                     <td class="totalprice"><?php _e('TOTAL', 'memberdeck'); ?>:</td>
 					<td class="totalprice">
-						<span class="currency"><b><?php echo $price; ?></b></span>
+						<span class="currency"><b><?php echo (!empty($price) ? $price : ''); ?></b></span>
                     </td>
 				</tr>
 				</tbody>
@@ -100,8 +100,8 @@ $general = maybe_unserialize($general);
             <?php } ?>
 
             <?php if ((isset($status) && $status == "completed") || !isset($status)) { ?>
-            <div class="text"><?php _e('I just purchased', 'memberdeck'); ?> <?php echo apply_filters('idc_order_level_title', (isset($order_level_key) ? $levels[$order_level_key]->level_name : $level->level_name), $last_order); ?>.<br />
-                <a href="<?php echo apply_filters('idc_order_level_url', home_url(), $last_order); ?>"><?php echo apply_filters('idc_order_level_url', home_url(), $last_order); ?></a>
+            <div class="text"><?php _e('I just purchased', 'memberdeck'); ?> <?php echo apply_filters('idc_text_format', apply_filters('idc_order_level_title', (isset($order_level_key) ? $levels[$order_level_key]->level_name : $level->level_name), $last_order)); ?>.<br />
+                <a href="<?php echo apply_filters('idc_order_level_url', home_url(), $last_order); ?>"><?php echo apply_filters('idc_text_format', apply_filters('idc_order_level_url', home_url(), $last_order)); ?></a>
             </div>
             <?php } ?>
         </div>

@@ -8,10 +8,12 @@
 	<div class="postbox-container" style="width:60%; margin-right: 5%">
 		<div class="metabox-holder">
 			<div class="meta-box-sortables" style="min-height:0;">
+				<?php do_action('ide_above_sc_settings'); ?>
 				<div class="postbox">
 					<h3 class="hndle"><span><?php _e('Application Settings', 'memberdeck'); ?></span></h3>
 					<div class="inside">
 						<form method="POST" action="" id="idsc_settings" name="idsc_settings">
+							<?php do_action('ide_before_sc_settings'); ?>
 							<div class="form-input">
 								<p>
 									<label for="client_id"><?php _e('Production Client ID', 'memberdeck'); ?></label><br/>
@@ -54,13 +56,10 @@
 								</p>
 							</div>
 							<div class="form-check">
-								<input type="checkbox" id="fee_mods" name="fee_mods" value="1" <?php echo (isset($fee_mods) && $fee_mods ? 'checked="checked"' : ''); ?>/>
-								<label for="fee_mods"><?php _e('Enable Per Project Fees', 'memberdeck'); ?></label>
-							</div>
-							<div class="form-check">
 								<input type="checkbox" name="dev_mode" id="dev_mode" value="1" <?php echo (isset($dev_mode) && $dev_mode == 1 ? 'checked="checked"' : ''); ?>/> 
 								<label for="dev_mode"><?php _e('Enable Development Mode', 'memberdeck'); ?></label>
 							</div>
+							<?php do_action('ide_after_sc_settings'); ?>
 							<div class="submit">
 								<input type="submit" name="sc_submit" id="submit" class="button button-primary"/>
 							</div>
@@ -84,6 +83,7 @@
 						</form>
 					</div>
 				</div>
+				<?php do_action('ide_below_sc_settings'); ?>
 			</div>
 		</div>
 	</div>

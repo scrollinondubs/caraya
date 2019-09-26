@@ -396,6 +396,9 @@
 		@include breakpoint(mama-bear) { 
 	  		height: auto;
 	  	}
+	  	.form-row {
+	  		margin-bottom: 0;
+	  	}
 	}
 
 	/* Project Rewards and Attachments */
