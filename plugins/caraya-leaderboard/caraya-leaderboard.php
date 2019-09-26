@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Caraya Leaderboard
- * Description: Create Leaderboard
+ * Description: Leaderboard plugin, built for The Charity Makeover competition for remote year alumni.
  * Author: Charity Makeover
  * Version: 1.0
  * Author URI: http://charitymakeover.com/
@@ -22,9 +22,9 @@ function leaderboardActivation()
 function leaderboardDeactivation()
 {
     // This is a quick way to toggle deleting of data and starting fresh. Uncomment to drop the tables.
-    deleteLeaderboardOrders();
-    deleteLeaderboardMembers();
-    deleteLeaderboardTeams();
+    // deleteLeaderboardOrders();
+    // deleteLeaderboardMembers();
+    // deleteLeaderboardTeams();
 }
 
 function createLeaderboardTeams()
@@ -42,7 +42,7 @@ function createLeaderboardTeams()
     $create = implode("\r\n", array(
         "CREATE TABLE `$table_name` (",
         'id INT(8) NOT NULL AUTO_INCREMENT,',
-        'name VARCHAR(255) NOT NULL,',
+        'name VARCHAR(190) NOT NULL,',
         'created_at DATETIME NOT NULL DEFAULT current_timestamp(),',
         'updated_at DATETIME NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),',
         'PRIMARY KEY (`id`),',
@@ -51,7 +51,6 @@ function createLeaderboardTeams()
     ));
 
     $wpdb->query($create);
-
     importLeaderboardTeams($table_name);
 }
 
@@ -71,11 +70,11 @@ function createLeaderboardMembers()
     $create = implode("\r\n", array(
         "CREATE TABLE `$table_name` (",
         'id INT(8) NOT NULL AUTO_INCREMENT,',
-        'hash VARCHAR(255),',
-        'email VARCHAR(255),',
+        'hash VARCHAR(190),',
+        'email VARCHAR(190),',
         'team_id INT(8),',
-        'parent_hash VARCHAR(255),',
-        'root_hash VARCHAR(255),',
+        'parent_hash VARCHAR(190),',
+        'root_hash VARCHAR(190),',
         'created_at DATETIME NOT NULL DEFAULT current_timestamp(),',
         'updated_at DATETIME NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),',
         'PRIMARY KEY (`id`),',
@@ -105,7 +104,7 @@ function createLeaderboardOrders()
     $create = implode("\r\n", array(
         "CREATE TABLE `$table_name` (",
         'id INT(8) NOT NULL AUTO_INCREMENT,',
-        'referral_id VARCHAR(255),',
+        'referral_id VARCHAR(190),',
         'order_id mediumint(9),',
         'created_at DATETIME NOT NULL DEFAULT current_timestamp(),',
         'updated_at DATETIME NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),',
