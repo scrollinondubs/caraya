@@ -25,8 +25,8 @@
 	p.error, p.success {
 		background-color: #fff;
 		width: 100%;
-		font-size: round($text-size*1.3);
-		line-height: round($text-size*1.5);
+		font-size: round($text-size);
+		line-height: round($text-size);
 		text-align: center;
 		margin: 0 auto;
 		display: block;
@@ -140,7 +140,6 @@
 	  		}
 		}
 		.form-row.date {
-			width: auto;
 			padding-left: 1%;
 		}
 		.form-row textarea.description {
@@ -171,6 +170,10 @@
 				float: none;
 			}
 		}
+		.form-row .label-description {
+			line-height: $text-size * 1.25;
+			margin-left: 8px;
+		}
 		.form-row input, .form-row textarea {
 			font-size: round($text-size - 3);
 			line-height: round($text-size*1.1);
@@ -186,6 +189,9 @@
 		  	&:focus {
 				outline: none;
 			}
+		}
+		.form-row input[type="time"] {
+			padding: 7px 0;
 		}
 		.form-row input[type="file"] {
 			font-size: 16px;
@@ -222,11 +228,11 @@
 		}
 		.finaldesc, .finaldesc p {
 			font-weight: 200;
-			font-size: round($text-size*1.4);
-			line-height: round($text-size*1.6);
+			font-size: round($text-size*1.1);
+			line-height: round($text-size*1.2);
 			color: $text-color;
-			text-align: center;
-			padding: 10px 20px;
+			text-align: left;
+			padding: 10px 40px;
 		}
 		.payment-errors {
 			color: #fff;

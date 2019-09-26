@@ -1,0 +1,1 @@
+jQuery(document).ready(function(){jQuery("#payment-form .pay_selector").length<=1?jQuery("#checkout-form-extra-fields-shipping").removeClass("hide"):jQuery(".pay_selector").click(function(){jQuery("#checkout-form-extra-fields-shipping").removeClass("hide")})});

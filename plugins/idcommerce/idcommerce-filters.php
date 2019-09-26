@@ -96,6 +96,21 @@ function idc_orders_list($content) {
 	return $content;
 }
 
+add_filter('idc_backer_userdata', 'idc_guest_backer_check', 10, 2);
+
+function idc_guest_backer_check($user_data, $order_id) {
+	if (empty($user_data->ID)) {
+		$guest_data = idc_get_order_meta($order_id, 'guest_data');
+		if (!empty($guest_data)) {
+			$user_data = (object) array(
+				'ID' => null,
+				'display_name' => $guest_data['first_name'] .' '. $guest_data['last_name'],
+			);
+		}
+	}
+	return $user_data;
+}
+
 /**
  * Filter called from memberdeck_profile_check() in idc-functions
  */
@@ -178,7 +193,7 @@ function memberdeck_profile_form($content) {
 			$plans = array();
 
 			// Requiring the library of Authorize.Net
-			require("lib/AuthorizeNet/vendor/authorizenet/authorizenet/AuthorizeNet.php");
+			require('lib/AuthorizeNet/sdk-php-master/vendor/autoload.php');
 			define("AUTHORIZENET_API_LOGIN_ID", $settings['auth_login_id']);
 			define("AUTHORIZENET_TRANSACTION_KEY", $settings['auth_transaction_key']);
 			if ($settings['test'] == '1') {
@@ -642,7 +657,6 @@ function memberdeck_login_redirect($redirect_to, $request, $user) {
 			else {
 				$redirect_to = $redirect_to.$prefix.'login_failure=1&error_code='.$error_code;
 			}
-			wp_redirect($redirect_to);
 		}
 	}
     return $redirect_to;
@@ -798,12 +812,14 @@ function idc_price_format($amount, $gateway = null) {
  */
 add_filter('idc_order_price', 'idc_order_price', 10, 2);
 
-function idc_order_price($amount, $order_id) {
+function idc_order_price($amount, $order_id, $gateway_info = null) {
 	global $global_currency;
-	$meta = ID_Member_Order::get_order_meta($order_id, 'gateway_info', true);
-	$amount = apply_filters('idc_price_format', $amount, (!empty($meta['gateway']) ? $meta['gateway'] : $global_currency));
-	if (!empty($meta)) {
-		if ($meta['gateway'] == 'credit') {
+	if (empty($gateway_info)) {
+		$gateway_info = ID_Member_Order::get_order_meta($order_id, 'gateway_info', true);
+	}
+	$amount = apply_filters('idc_price_format', $amount, (!empty($gateway_info['gateway']) ? $gateway_info['gateway'] : $global_currency));
+	if (!empty($gateway_info)) {
+		if ($gateway_info['gateway'] == 'credit') {
 			$amount = 0;
 			$order = new ID_Member_Order($order_id);
 			$the_order = $order->get_order();
@@ -811,7 +827,7 @@ function idc_order_price($amount, $order_id) {
 				$level = ID_Member_Level::get_level($the_order->level_id);
 				if (!empty($level)) {
 					$pwyw_price = ID_Member_Order::get_order_meta($the_order->id, 'pwyw_price', true);
-					if ($pwyw_price > 0 && $meta['currency_code'] == "credits") {
+					if ($pwyw_price > 0 && $gateway_info['currency_code'] == "credits") {
 						$amount = apply_filters('idc_price_format', $pwyw_price, 'credit');
 					}
 					else {
@@ -821,7 +837,7 @@ function idc_order_price($amount, $order_id) {
 			}
 			$amount = $amount.' '. apply_filters('idc_credits_label', __('Credits', 'memberdeck'), true, $amount);
 		} else {
-			$currency_sym = ID_Member_Order::get_order_currency_sym($order_id, $meta);
+			$currency_sym = ID_Member_Order::get_order_currency_sym($order_id, $gateway_info);
 			$amount = $currency_sym.$amount;
 		}
 	}
@@ -829,7 +845,7 @@ function idc_order_price($amount, $order_id) {
 		if ($global_currency == 'credits') {
 			$amount = $amount.' '. apply_filters('idc_credits_label', __('Credits', 'memberdeck'), true, $amount);
 		} else {
-			$currency_sym = ID_Member_Order::get_order_currency_sym($order_id, $meta);
+			$currency_sym = ID_Member_Order::get_order_currency_sym($order_id, $gateway_info);
 			$amount = $currency_sym.$amount;
 		}
 	}
@@ -939,36 +955,8 @@ add_filter('idc_fee_amount', 'idc_fee_calculation', 10, 4);
 //==============================================================================================================================
 if ($crowdfunding) {
 	remove_filter('id_display_currency', 'id_display_currency_filter', 2);
-//	remove_filter('id_price_format', 'id_price_format', 10);
-//	remove_filter('id_funds_raised', 'id_funds_raised', 10);
-//	remove_filter('id_project_goal', 'id_project_goal', 10);
 	add_filter('id_display_currency', 'mdid_display_currency', 11, 2);
-	// add_filter('idc_display_currency', 'mdid_display_currency', 11, 2);
-	add_filter('id_price_format', 'filter_project_price', 11, 3);
-    add_filter('id_funds_raised', 'filter_project_price', 11, 3);
-	add_filter('id_project_goal', 'filter_project_price', 11, 3);
 	add_filter('id_lightbox_currency_symbol', 'idc_global_currency_symbol', 10, 2);
-//	add_filter('id_funds_raised', 'id_idc_funds_format', 11, 3);
-//	add_filter('id_project_goal', 'id_idc_funds_format', 11, 3);
-	// add_filter('id_lightbox_currency_symbol', 'idc_global_currency_symbol', 10, 2);
-}
-
-/**
- * The filter to display either currency or number of credits to purchase a project
- */
-function filter_project_price($amount, $post_id, $noformat = false) {
-	global $global_currency;
-	// Getting the "currency/credit" from options stored in IDC > Crowdfunding / from Project options
-	if ($global_currency == "credits") {
-		if ($noformat) {
-			$amount = $amount;//.' '. apply_filters('idc_credits_label', __('Credits', 'memberdeck'), true);
-		}
-		else {
-			$amount = number_format((float) preg_replace('/[^0-9.]+/', "", $amount));// .' '. apply_filters('idc_credits_label', __('Credits', 'memberdeck'), true);
-		}
-	}
-	// return apply_filters('id_display_currency', $amount, $post_id);
-	return $amount;
 }
 
 /**
@@ -1002,10 +990,14 @@ function mdid_display_currency($amount, $post_id) {
 	}
 	// // Removing all currencies except the formatting
 	// $amount = preg_replace('/[^0-9.,]+/', "", $amount);
-	if ("right" == apply_filters('idc_currency_symbol_position', 'left', $post_id)) {
-		$amount = $amount . " " . $currency_code;
-	} else {
-		$amount = $currency_code.$amount;
+	$idc_currency_position = apply_filters('idc_currency_symbol_position', 'left', $post_id);
+	switch ($idc_currency_position) {
+		case 'right':
+			$amount = $amount . " " . $currency_code;
+			break;
+		default:
+			$amount = $currency_code.$amount;
+			break;
 	}
 	return $amount;
 }
@@ -1052,7 +1044,7 @@ function idc_currency_position($position, $post_id) {
 	}
 	return $position;
 }
-add_filter('id_currency_symbol_position', 'idc_currency_position', 10, 2);
+add_filter('idc_currency_symbol_position', 'idc_currency_position', 10, 2);
 
 function idc_text_format($text) {
 	return stripslashes($text);
@@ -1071,6 +1063,12 @@ function idc_company_name($coname) {
 }
 
 add_filter('idc_company_name', 'idc_company_name');
+
+function idc_order_level_title($title) {
+	return apply_filters('idc_text_format', $title);
+}
+
+add_filter('idc_order_level_title', 'idc_order_level_title');
 
 /**
  * Function for adding some arguments in levels dropdown in Support popup IDCF
@@ -1133,7 +1131,7 @@ function id_idc_hide_grid_protected_projects($query) {
 	// Check if the theme is IgnitionDeck
 	$theme_name = wp_get_theme();
 	$textdomain = $theme_name->get('Template');
-	$is_ignitiondeck_theme = ($textdomain == 'fivehundred' || ($theme_name->get('Author') == 'Virtuous Giant' || $theme_name->get('Author') == 'IgnitionDeck')) && (isset($query->query['post_type']) && $query->query['post_type'] == "ignition_product" && isset($query->query['posts_per_page']) && isset($query->query['paged']));
+	$is_ignitiondeck_theme = idf_is_id_theme() && (isset($query->query['post_type']) && $query->query['post_type'] == "ignition_product" && isset($query->query['posts_per_page']) && isset($query->query['paged']));
 
 	if ((is_archive() && $query->is_main_query()) || $is_ignitiondeck_theme) {
 		$protected_projects = idf_get_object('id_idc_protected_projects');
@@ -1284,6 +1282,12 @@ function idc_display_checkout_descriptions($content, $level, $level_price, $user
 	$offline_description = ob_get_contents();
 	ob_end_clean();
 	$content .= apply_filters('idc_offline_checkout_description', $offline_description, $level, $level_price, (isset($user_data) ? $user_data : ''), $gateways, $general);
+
+	ob_start();
+	include_once 'templates/_checkoutTrialDescription.php';
+	$trial_description = ob_get_contents();
+	ob_end_clean();
+	$content .= apply_filters('idc_trial_checkout_description', $trial_description, $level, $level_price, (isset($user_data) ? $user_data : ''), $gateways, $general);
 
 	return $content;
 }
@@ -1478,8 +1482,8 @@ function idc_custom_group_message_title($title) {
 		if ($level_id > 0) {
 			$level = ID_Member_Level::get_level($level_id);
 			if (!empty($level)) {
-				$level_name = $level->level_name;
-				$title = str_replace(' Group', ' '.$level_name.' '.__('Group', 'memberdeck'), $title);
+				$level_name = idc_text_format($level->level_name);
+				$title = str_replace(' All Members', ' '.$level_name, $title);
 			}
 		}
 	}
@@ -1610,4 +1614,3 @@ function idc_custom_product_message_subject($subject) {
 	}
 	return $subject;
 }
-?>

@@ -63,15 +63,28 @@
   position: relative;
 }
 .ignitiondeck h2.title {
+  color: #434F60;
   font-size: 36px;
   line-height: 48px;
-  color: #232323;
   letter-spacing: 0px;
+  display: inline;
+  vertical-align: middle;
+}
+.wp-admin .ignitiondeck .icon32 {
+  background-image: url(../images/ignitiondeck-plugin-icon.svg);
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 .id-badge {
-  background: url(../images/id-logo.png) center center no-repeat #122E46;
-  -webkit-background-size: 64px 64px;
-  background-size: 64px 64px;
+  background: url(../assets/icon.svg) center center no-repeat;
+  -webkit-background-size: 96px 96px;
+  background-size: 96px 96px;
   color: #fff;
   font-size: 14px;
   text-align: center;
@@ -95,12 +108,15 @@
   letter-spacing: 0px;
 }
 .ignitiondeck .welcome-panel {
-  background: #F5F9FF;
+  background: #FFF;
   border: none;
   padding-bottom: 10px;
 }
 .ignitiondeck .welcome-panel h2 {
   margin-bottom: 10px;
+}
+.ignitiondeck .welcome-panel ol {
+  margin-left: 13px;
 }
 .ignitiondeck .welcome-panel .welcome-panel-column li {
     list-style-type: disc;
@@ -244,16 +260,25 @@
   padding-bottom: 5px;
 }
 .ignitiondeck .postbox .hndle {
-  border: none;
-  padding: 20px 20px 0px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  padding: 8px 12px;
+  margin: 0;
+  line-height: 1.4;
 }
 .ignitiondeck .postbox h2.hndle span {
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
 }
 .ignitiondeck .postbox .handlediv {
-  width: 56px;
-  height: 56px;
+  float: right;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: 0 0;
+  cursor: pointer;
 }
 .ignitiondeck .postbox .inside {
   padding: 0 20px 20px;
@@ -281,13 +306,13 @@
   vertical-align: top;
 }
 .ignitiondeck #idf_license_settings .license_validation {
-    background: #f1f1f1;
-    padding: 0 10px;
-    display: block;
-    border: 1px solid #e5e5e5;
     text-align: center;
-    display: inline-block;
+    border: 1px solid rgba(0,115,170, .4);
     width: 40%;
+    margin-top: 8px;
+    padding: 7px 15px;
+    display: block;
+    display: inline-block;
 }
 .ignitiondeck #idf_modules_widget ul {
   margin: 20px 0 0 0;
@@ -319,6 +344,15 @@
   display: block;
   text-align: right;
   font-size: 125%;
+}
+.wp-admin .ignitiondeck .help {
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
+
+.wp-admin .ignitiondeck .help .button {
+  vertical-align: middle;
 }
 .ignitiondeck .md_help_link {
   height: 18px;
@@ -371,6 +405,14 @@
   width: 49.5%;
   display: inline-block;
 }
+.ignitiondeck .postbox .form-input.third {
+  width: 33%;
+  display: inline-block;
+}
+.ignitiondeck .postbox .form-input.fourth {
+  width: 24.625%;
+  display: inline-block;
+}
 .ignitiondeck .postbox .form-input input, .ignitiondeck .postbox .form-input textarea {
   -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -405,13 +447,22 @@
 }
 .ignitiondeck_page_idf-extensions .extension_header {
      margin: 0;
-     padding: 40px 0 0 0;
+     padding: 40px 20px 0 0;
 }
-.ignitiondeck_page_idf-extensions .bulk_deactivate_modules {
-  margin-left: 28px;
+.ignitiondeck_page_idf-extensions .extension_subheader {
+  margin: 10px 0;
+}
+.ignitiondeck_page_idf-extensions .extension_subheader.form-row.inline input,
+.ignitiondeck_page_idf-extensions .extension_subheader.form-row.inline select,
+.ignitiondeck_page_idf-extensions .extension_subheader.form-row.inline label{
+  line-height: 28px;
+  margin: 0 5px 0 0;
+  display: inline-block;
+}
+.ignitiondeck_page_idf-extensions .extension_subheader.form-row.inline .sep {
+  margin-left: 10px;
 }
 .ignitiondeck_page_idf-extensions .extension {
-  display: inline-block;
   width: 190px;
   vertical-align: top;
   background: rgba(255,255,255,.4);
@@ -419,6 +470,54 @@
   margin: 10px 5px 0 0;
   border-radius: 4px;
   border: 1px solid transparent;
+  display: inline-block;
+  position: relative;
+}
+.ignitiondeck_page_idf-extensions .extension a.lock-url {
+  text-decoration: none;
+}
+.ignitiondeck_page_idf-extensions .extension[data-locked="1"] {
+  /*background: -webkit-linear-gradient(to right, rgba(53, 106, 186, .05), rgba(48, 124, 168, .05), rgba(42, 148, 142, .05));
+  background: -moz-linear-gradient(to right, rgba(53, 106, 186, .05), rgba(48, 124, 168, .05), rgba(42, 148, 142, .05));
+  background: -o-linear-gradient(to right,  rgba(53, 106, 186, .051), rgba(48, 124, 168, .05), rgba(42, 148, 142, .05));
+  background: linear-gradient(to right, rgba(53, 106, 186, .05), rgba(48, 124, 168, .05), rgba(42, 148, 142, .05));*/
+}
+.ignitiondeck_page_idf-extensions .extension[data-locked="1"] .extension-image,
+.ignitiondeck_page_idf-extensions .extension[data-locked="1"] .extension-desc{
+  filter: opacity(20%) blur(0.5px);
+}
+.ignitiondeck_page_idf-extensions .extension-lock {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  position: absolute;
+  top: -webkit-calc(50% - 26px);
+  top: -moz-calc(50% - 26px);
+  top: -o-calc(50% - 26px);
+  top: calc(50% - 26px);
+  left: -webkit-calc(50% - 16.71px);
+  left: -moz-calc(50% - 16.71px);
+  left: -o-calc(50% - 16.71px);
+  left: calc(50% - 16.71px);
+}
+.ignitiondeck_page_idf-extensions .extension-lock .fa {
+  font-size: 4em;
+  line-height: 1em;
+  background: -webkit-linear-gradient(0.25turn, #356ABA, #307CA8, #2A948E);
+  background: -moz-linear-gradient(0.25turn, #356ABA, #307CA8, #2A948E);
+  background: -o-linear-gradient(0.25turn, #356ABA, #307CA8, #2A948E);
+  background: linear-gradient(0.25turn, #356ABA, #307CA8, #2A948E);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -o-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  -o-text-fill-color: transparent;
+  text-fill-color: transparent;
+}
+.ignitiondeck_page_idf-extensions .extension-lock .fa:hover:before {
+  content: "\f09c";
 }
 .ignitiondeck_page_idf-extensions .extension.spotlight {
   border: 1px solid rgba(41, 161, 175, .5);
@@ -429,7 +528,7 @@
   background: rgba(255,255,255,.75);
 } 
 .ignitiondeck_page_idf-extensions .extension-title {
-	text-align: center;
+  text-align: center;
     font-weight: lighter;
     font-size: 130%;
     border-top: 1px solid #eee;
@@ -437,7 +536,7 @@
     padding: 20px 0 0 0;
 } 
 .ignitiondeck_page_idf-extensions .extension-desc {
-	text-align: left;
+  text-align: left;
   padding: 0 0px;
   height: 70px;
   line-height: 100%;
@@ -465,7 +564,7 @@
      max-width: 160px;
 } 
 .ignitiondeck_page_idf-extensions .extension-link {
-	text-align: center;
+  text-align: center;
 }
 
 /* * Themes Grid * */

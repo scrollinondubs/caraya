@@ -106,8 +106,7 @@ function get_levels(showAll) {
 					jQuery('.list-shortcode').show();
 					jQuery('input[name="create_page"]').attr('disabled', 'disabled');
 				}
-				if (leveledit) {
-					//console.log(leveledit);
+				if (leveledit > 0) {
 					jQuery("#product-status").val(levels[leveledit].product_status);
 					jQuery("#product-type").val(levels[leveledit].product_type);
 					jQuery("#level-name").val(levels[leveledit].level_name);
@@ -120,6 +119,20 @@ function get_levels(showAll) {
 					}
 					else {
 						jQuery('#recurring-type').val('monthly');
+					}
+					var trial_period = levels[leveledit].trial_period;
+					if (trial_period == true) {
+						jQuery('#trial_period').attr('checked', 'checked');
+					}
+					else {
+						jQuery('#trial_period').removeAttr('checked');
+					}
+					jQuery('#trial_length').val(levels[leveledit].trial_length);
+					if (levels[leveledit].trial_type.length > 0) {
+						jQuery("#trial-type").val(levels[leveledit].trial_type);
+					}
+					else {
+						jQuery('#trial-type').val('day');
 					}
 					var limit_term = levels[leveledit].limit_term;
 					if (limit_term == 1) {

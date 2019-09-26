@@ -1,20 +1,34 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\Options\Tabs
  */
 
 /**
- * Class WPSEO_Option_Tab
+ * Class WPSEO_Option_Tab.
  */
 class WPSEO_Option_Tab {
 
-	/** @var string Name of the tab */
+	/**
+	 * Name of the tab.
+	 *
+	 * @var string
+	 */
 	private $name;
 
-	/** @var string Label of the tab */
+	/**
+	 * Label of the tab.
+	 *
+	 * @var string
+	 */
 	private $label;
 
-	/** @var array Optional arguments */
+	/**
+	 * Optional arguments.
+	 *
+	 * @var array
+	 */
 	private $arguments;
 
 	/**

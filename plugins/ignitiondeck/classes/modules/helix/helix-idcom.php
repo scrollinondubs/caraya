@@ -2,14 +2,14 @@
 add_action('wp_enqueue_scripts', 'idc_helix_scripts');
 
 function idc_helix_scripts() {
-	wp_register_style('helix_idcom_css', plugins_url('/css/helix_idcom.css', __FILE__));
+	wp_register_style('helix_idcom_css', plugins_url('/css/helix_idcom-min.css', __FILE__));
 	wp_enqueue_style('helix_idcom_css');
 }
 
 add_action('wp_enqueue_scripts', 'helix_idcom_scripts');
 
 function helix_idcom_scripts() {
-	wp_register_script('helix_idcom_js', plugins_url('/js/helix_idcom.js', __FILE__));
+	wp_register_script('helix_idcom_js', plugins_url('/js/helix_idcom-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('helix_idcom_js');
 } 

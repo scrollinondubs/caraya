@@ -50,9 +50,9 @@ Class Helix {
 	}
 
 	function helix_scripts() {
-		wp_register_script('helix_js', plugins_url('js/helix.js', __FILE__));
-		wp_register_style('helix_icons', plugins_url('ignitiondeck-icons/style.css', __FILE__));
-		wp_register_style('helix_css', plugins_url('css/styles-green.css', __FILE__));
+		wp_register_script('helix_js', plugins_url('js/helix-min.js', __FILE__));
+		wp_register_style('helix_icons', plugins_url('ignitiondeck-icons/style-min.css', __FILE__));
+		wp_register_style('helix_css', plugins_url('css/styles-green-min.css', __FILE__));
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('helix_js');
 		wp_enqueue_style('helix_icons');

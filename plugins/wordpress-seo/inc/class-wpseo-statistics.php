@@ -1,17 +1,19 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Internals
  */
 
 /**
- * Class that generates interesting statistics about things
+ * Class that generates interesting statistics about things.
  */
 class WPSEO_Statistics {
 
 	/**
-	 * Returns the post count for a certain SEO rank
+	 * Returns the post count for a certain SEO rank.
 	 *
-	 * @todo Merge/DRY this with the logic virtually the same in WPSEO_Metabox::column_sort_orderby()
+	 * @todo Merge/DRY this with the logic virtually the same in WPSEO_Metabox::column_sort_orderby().
 	 *
 	 * @param WPSEO_Rank $rank The SEO rank to get the post count for.
 	 *
@@ -55,6 +57,6 @@ class WPSEO_Statistics {
 
 		$posts = new WP_Query( $posts );
 
-		return $posts->found_posts;
+		return (int) $posts->found_posts;
 	}
 }

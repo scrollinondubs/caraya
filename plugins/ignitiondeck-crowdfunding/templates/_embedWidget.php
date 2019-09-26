@@ -16,7 +16,7 @@
 				</div><!-- end progress wrapper --> 
 			</div><!-- end pledge -->
 		</div><!-- end product-wrapper -->		
-		<div class="id-product-proposed-end"><?php echo $tr_Only; ?> <?php echo $the_deck->days_left; ?> <?php _e('Days Left', 'ignitiondeck'); ?>.</div>
+		<div class="id-product-proposed-end"><?php echo __('Only', 'ignitiondeck').' '.$the_deck->days_left.' '.__('Days Left', 'ignitiondeck'); ?>.</div>
 		<div class="learn-more-btn"><a href="<?php echo $product_url; ?>" class="main-btn" target="_blank"><?php _e('Learn More', 'ignitiondeck'); ?></a></div>
 		<?php if ($logo_on == true) { ?>
 		<div id="poweredbyID">

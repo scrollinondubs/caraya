@@ -1,5 +1,7 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\Links
  */
 
@@ -9,10 +11,18 @@
  */
 class WPSEO_Link_Content_Processor {
 
-	/** @var WPSEO_Link_Storage */
+	/**
+	 * Holds the link storage instance.
+	 *
+	 * @var WPSEO_Link_Storage
+	 */
 	protected $storage;
 
-	/** @var WPSEO_Meta_Storage */
+	/**
+	 * Holds the meta storage instance.
+	 *
+	 * @var WPSEO_Meta_Storage
+	 */
 	private $count_storage;
 
 	/**

@@ -1,7 +1,7 @@
 <div id="finaldescStripe" class="finaldesc" data-currency-symbol="<?php echo ((isset($es) && $es == 1) ? $stripe_symbol : $cc_currency_symbol); ?>" style="display:none;">
 	<?php
 	_e('Your card will be billed', 'memberdeck');
-	echo ' '.(isset($level_price) ? apply_filters('idc_price_format', $level_price) : '');
+	echo ' '.(isset($level_price) ? '<span class="product-price">'.apply_filters('idc_price_format', $level_price).'</span>' : '');
 	if (empty($combined_purchase_gateways['cc']) || !$combined_purchase_gateways['cc']) {
 		echo ' <span class="currency-symbol">'.((isset($es) && $es == 1) ? $stripe_currency : $cc_currency).'</span> ';
 	}

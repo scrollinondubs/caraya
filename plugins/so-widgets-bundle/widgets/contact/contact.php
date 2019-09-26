@@ -5,6 +5,7 @@ Widget Name: Contact Form
 Description: A light weight contact form builder.
 Author: SiteOrigin
 Author URI: https://siteorigin.com
+Documentation: https://siteorigin.com/widgets-bundle/contact-form-widget/
 */
 
 class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
@@ -67,7 +68,7 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 					'from'                               => array(
 						'type'        => 'text',
 						'label'       => __( 'From email address', 'so-widgets-bundle' ),
-						'description' => __( 'It will appear as if emails are sent from this address. Ideally this should be in the same domain as this server to avoid spam filters.', 'so-widgets-bundle' ),
+						'description' => __( 'It will appear as if emails are sent from this address. Ideally, this should be in the same domain as this server to avoid spam filters.', 'so-widgets-bundle' ),
 						'sanitize'    => 'email',
 					),
 					'default_subject'                  => array(
@@ -123,7 +124,8 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 					),
 					'log_ip_address' => array(
 						'type' => 'checkbox',
-						'label' => __( 'Log IP addresses.', 'so-widgets-bundle' ),
+						'label' => __( 'Log IP addresses', 'so-widgets-bundle' ),
+						'description' => __( 'List in contact emails, the IP address of the form sender.', 'so-widgets-bundle' ),
 						'default' => false,
 					),
 				),
@@ -218,20 +220,40 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 
 					'recaptcha' => array(
 						'type'   => 'section',
-						'label'  => __( 'reCAPTCHA', 'so-widgets-bundle' ),
+						'label'  => __( 'reCAPTCHA v2', 'so-widgets-bundle' ),
 						'fields' => array(
 							'use_captcha' => array(
 								'type'    => 'checkbox',
-								'label'   => __( 'Use reCAPTCHA', 'so-widgets-bundle' ),
+								'label'   => __( 'Use reCAPTCHA v2', 'so-widgets-bundle' ),
 								'default' => false,
+								'description' => sprintf(
+									__( 'Please make sure you register a new reCAPTCHA v2 key %shere%s.', 'so-widgets-bundle' ),
+									'<a href="https://www.google.com/recaptcha/admin/create" target="_blank" rel="noopener noreferrer">',
+									'</a>'
+								),
+								'state_emitter' => array(
+									'callback' => 'conditional',
+									'args'     => array(
+										'use_captcha[show]: val',
+										'use_captcha[hide]: ! val',
+									),
+								),
 							),
 							'site_key'    => array(
 								'type'  => 'text',
-								'label' => __( 'reCAPTCHA Site Key', 'so-widgets-bundle' ),
+								'label' => __( 'reCAPTCHA v2 Site Key', 'so-widgets-bundle' ),
+								'state_handler' => array(
+									'use_captcha[show]' => array( 'slideDown' ),
+									'use_captcha[hide]' => array( 'slideUp' ),
+								),
 							),
 							'secret_key'  => array(
 								'type'  => 'text',
-								'label' => __( 'reCAPTCHA Secret Key', 'so-widgets-bundle' ),
+								'label' => __( 'reCAPTCHA v2 Secret Key', 'so-widgets-bundle' ),
+								'state_handler' => array(
+									'use_captcha[show]' => array( 'slideDown' ),
+									'use_captcha[hide]' => array( 'slideUp' ),
+								),
 							),
 							'theme'       => array(
 								'type'    => 'select',
@@ -240,6 +262,10 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 								'options' => array(
 									'light' => __( 'Light', 'so-widgets-bundle' ),
 									'dark'  => __( 'Dark', 'so-widgets-bundle' ),
+								),
+								'state_handler' => array(
+									'use_captcha[show]' => array( 'slideDown' ),
+									'use_captcha[hide]' => array( 'slideUp' ),
 								),
 							),
 							'type'        => array(
@@ -250,6 +276,10 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 									'image' => __( 'Image', 'so-widgets-bundle' ),
 									'audio' => __( 'Audio', 'so-widgets-bundle' ),
 								),
+								'state_handler' => array(
+									'use_captcha[show]' => array( 'slideDown' ),
+									'use_captcha[hide]' => array( 'slideUp' ),
+								),
 							),
 							'size'        => array(
 								'type'    => 'select',
@@ -258,6 +288,10 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 								'options' => array(
 									'normal'  => __( 'Normal', 'so-widgets-bundle' ),
 									'compact' => __( 'Compact', 'so-widgets-bundle' ),
+								),
+								'state_handler' => array(
+									'use_captcha[show]' => array( 'slideDown' ),
+									'use_captcha[hide]' => array( 'slideUp' ),
 								),
 							),
 						)
@@ -415,6 +449,10 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 							'height'        => array(
 								'type'  => 'measurement',
 								'label' => __( 'Height', 'so-widgets-bundle' )
+							),
+							'height_textarea' => array(
+								'type'  => 'measurement',
+								'label' => __( 'Text Area Height', 'so-widgets-bundle' )
 							),
 							'background'    => array(
 								'type'  => 'color',
@@ -749,6 +787,9 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 	}
 
 	function get_less_variables( $instance ) {
+		if ( empty( $instance['design'] ) ) {
+			return;
+		}
 		if ( empty( $instance['design']['labels']['font'] ) ) {
 			$instance['design']['labels'] = array( 'font' => '' );
 		}
@@ -785,6 +826,7 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 			'field_margin'               => $instance['design']['fields']['margin'],
 			'field_padding'              => $instance['design']['fields']['padding'],
 			'field_height'               => $instance['design']['fields']['height'],
+			'field_height_textarea'      => ! empty( $instance['design']['fields']['height_textarea'] ) ? $instance['design']['fields']['height_textarea'] : '',
 			'field_background'           => $instance['design']['fields']['background'],
 			'field_border_color'         => $instance['design']['fields']['border_color'],
 			'field_border_width'         => $instance['design']['fields']['border_width'],
@@ -960,11 +1002,10 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 	 * Ajax action handler to send the form
 	 */
 	function contact_form_action( $instance, $storage_hash ) {
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], '_contact_form_submit' ) ) {
+		if ( empty( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], '_contact_form_submit' ) ) {
 			// Using `return false;` instead of `wp_die` because this function may sometimes be called as a side effect
-			// of trying to enqueue scripts required for the front end. In those cases `$_POST['_wpnonce']` doesn't exist
-			// and calling `wp_die` will halt script execution and break things. Ideally it should be possible to enqueue
-			// front end scripts without calling widgets' render functions, but that will mean a fairly large refactor.
+			// of trying to enqueue scripts required for the front end or when previewing widgets e.g. in the block editor.
+			// In those cases `$_POST['_wpnonce']` doesn't exist and calling `wp_die` will halt script execution and break things.
 			return false;
 		}
 		if ( empty( $_POST['instance_hash'] ) || $_POST['instance_hash'] != $storage_hash ) {
@@ -993,9 +1034,10 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 				continue;
 			}
 			$field_name = $this->name_from_label( ! empty( $field['label'] ) ? $field['label'] : $i, $field_ids ) . '-' . $instance['_sow_form_id'];
-			$value      = ! empty( $post_vars[ $field_name ] ) ? $post_vars[ $field_name ] : '';
-
-			if ( empty( $value ) ) {
+			$value      = isset( $post_vars[ $field_name ] ) ? $post_vars[ $field_name ] : '';
+			
+			// Can't just use `strlen` here as $value could be an array. E.g. for checkboxes field.
+			if ( empty( $value ) && $value !== '0' ) {
 				if ( $field['required']['required'] ) {
 					// Add in the default subject
 					if ( $field['type'] == 'subject' && ! empty( $instance['settings']['default_subject'] ) ) {
@@ -1041,7 +1083,12 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 			}
 		}
 
-		// Add in the default subject if no subject field is defined in the form at all
+		// Add in a default email address if no email field is defined in the form at all.
+		if ( ! isset( $email_fields['email'] ) && ! empty( $instance['settings']['from'] ) ) {
+			$email_fields['email'] = $instance['settings']['from'];
+		}
+
+		// Add in the default subject if no subject field is defined in the form at all.
 		if ( ! isset( $email_fields['subject'] ) && ! empty( $instance['settings']['default_subject'] ) ) {
 			$email_fields['subject'] = $instance['settings']['default_subject'];
 		}
@@ -1085,14 +1132,16 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 			$success = $this->send_mail( $email_fields, $instance );
 
 			if ( is_wp_error( $success ) ) {
-				$errors['_general']['send'] = $success->get_error_message();
-			} else if ( ! $success ) {
-				$errors['_general']['send'] = __( 'Error sending email, please try again later.', 'so-widgets-bundle' );
+				$errors['_general'] = array( 'send' => $success->get_error_message() );
+			} else if ( empty( $success ) ) {
+				$errors['_general'] = array( 'send' => __( 'Error sending email, please try again later.', 'so-widgets-bundle' ) );
 			} else {
 				// This action will allow other plugins to run code when contact form has successfully been sent 
 				do_action( 'siteorigin_widgets_contact_sent', $instance, $email_fields );
 			}
-		} else {
+		}
+		
+		if ( ! empty( $errors ) ) {
 			// This action will allow other plugins to run code when the contact form submission has resulted in error
 			do_action( 'siteorigin_widgets_contact_error', $instance, $email_fields, $errors );
 		}
@@ -1116,7 +1165,7 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 			$errors['email'] = __( 'The email address is invalid', 'so-widgets-bundle' );
 		}
 
-		if ( empty( $email_fields['subject'] ) ) {
+		if ( ! isset( $email_fields['subject'] ) ) {
 			$errors['subject'] = __( 'Missing subject', 'so-widgets-bundle' );
 		}
 
@@ -1204,9 +1253,9 @@ class SiteOrigin_Widgets_ContactForm_Widget extends SiteOrigin_Widget {
 		}
 		$body = wpautop( trim( $body ) );
 
-		if ( $instance['settings']['to'] == 'ibrossiter@gmail.com' || $instance['settings']['to'] == 'test@example.com' || empty( $instance['settings']['to'] ) ) {
+		if ( $instance['settings']['to'] == 'ibrossiter@gmail.com' || $instance['settings']['to'] == 'test@example.com' || $instance['settings']['to'] == 'support@siteorigin.com' || empty( $instance['settings']['to'] ) ) {
 			// Replace default and empty email address.
-			// Also replaces the email address that comes from the prebuilt layout directory
+			// Also replaces the email address that comes from the prebuilt layout directory and SiteOrigin Support Email
 			$instance['settings']['to'] = get_option( 'admin_email' );
 		}
 		

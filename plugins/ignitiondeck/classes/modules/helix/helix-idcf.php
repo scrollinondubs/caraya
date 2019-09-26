@@ -60,17 +60,21 @@ function helix_crowdfunding_icons() {
 function helix_crowdfunding_menu() {
 	$current_user = wp_get_current_user();
 	$params = helix_params();
-	$project_count = ID_Project::count_user_projects($current_user->ID);
-	if ($project_count <= 0 && is_id_pro()) {
-		$params['my_projects_url'] = ide_create_project_url();
-		add_filter('gettext', function($translated_text, $text, $domain) {
-			if ($domain == 'idf') {
-				if ($text == 'My Projects') {
-					return __('Create Project', 'idf');
-				}
+	if (is_id_pro()) {
+		if (current_user_can('create_edit_projects')) {
+			$project_count = ID_Project::count_user_projects($current_user->ID);
+			if (empty($project_count)) {
+				$params['my_projects_url'] = ide_create_project_url();
+				add_filter('gettext', function($translated_text, $text, $domain) {
+					if ($domain == 'idf') {
+						if ($text == 'My Projects') {
+							return __('Create Project', 'idf');
+						}
+					}
+					return $translated_text;
+				}, 20, 3);
 			}
-			return $translated_text;
-		}, 20, 3);
+		}
 	}
 	ob_start();
 	include_once('templates/_helixCrowdfundingMenu.php');

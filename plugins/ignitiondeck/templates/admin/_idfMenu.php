@@ -1,20 +1,27 @@
 <div class="wrap idf ignitiondeck">
+    <div class="icon32" id="icon-md"></div>
     <h2 class="title"><?php _e('IgnitionDeck', 'idf'); ?></h2>
-    <p class="about-description"><?php _e('Welcome to the IgnitionDeck platform! Follow the instructions below to get started selling, fundraising, and crowdfunding.', 'idf'); ?></p>
+    <p class="about-description">
+        <?php _e('Welcome to the IgnitionDeck platform!', 'idf'); ?><br/>
+        <?php _e('Follow the instructions below to get started selling, fundraising, and crowdfunding.', 'idf'); ?>
+    </p>
     <div class="id-badge"></div>
 <div id="ignitiondeck-panel" class="welcome-panel">
     <div class="welcome-panel-content">
         <?php if ($idf_registered) { ?>
             <a id="idf_reset_account" class="disconnect" href="#"><?php _e('Disconnect Account', 'idf'); ?></a>
             <div class="getting_started">
-                <?php _e('You have registered successfully, and IgnitionDeck Crowdfunding and IgnitionDeck Commerce have been installed and activated', 'idf'); ?>.<br/>
-                <?php _e('Here\'s how to get started', 'idf'); ?>:
+                <div class="getting_started_intro">
+                    <?php _e('You have registered successfully, and IgnitionDeck Crowdfunding and IgnitionDeck Commerce have been installed and activated', 'idf'); ?>.<br/>
+                    <?php _e('Here\'s how to get started', 'idf'); ?>:
+                </div>
                 <ol>
-                    <li><a href="<?php echo site_url('wp-admin/themes.php'); ?>"><?php _e('Activate Theme 500', 'idf'); ?></a><?php _e(', if you wish to use it', 'idf'); ?></li>
-                    <li><?php _e('Browse our quickstart guides for help getting started', 'idf'); ?>&nbsp;&nbsp;&nbsp;<a target="_blank" href="<?php echo $qs_url; ?>?utm_source=licensepage&utm_medium=link&utm_campaign=freemium"><i class="fa fa-file-text-o"></i></a></li>
-                    <?php if ($license_type !== 'ide') { ?>
+                    <li><?php _e('Please wait approximately 60 seconds while IgnitionDeck Commerce and Crowdfunding are silently installed in the background. Once activated, you will see two new menus in your WordPress sidebar (may require refresh).', 'idf'); ?></li>
+                    <li><?php _e('Next, our free crowdfunding theme framework, Theme 500, will download automatically. You may', 'idf'); ?> <a href="<?php echo site_url('wp-admin/themes.php'); ?>"><?php _e('activate via your themes menu', 'idf'); ?></a> <?php _e('at any time.', 'idf'); ?></li>
+                    <li><?php _e('Use one of our quickstart guides to help guide the installation and setup process.', 'idf'); ?>&nbsp;&nbsp;&nbsp;<a target="_blank" href="<?php echo $qs_url; ?>?utm_source=licensepage&utm_medium=link&utm_campaign=freemium"><i class="fa fa-file-text-o"></i></a></li>
+                    <?php if ($license_type !== 'aaa') { ?>
                     <li>
-                        <a target="_blank" href="https://ignitiondeck.com/id/ignitiondeck-pricing/?utm_source=licensepage&utm_medium=link&utm_campaign=freemium"><?php _e('Upgrade your license to unlock more features', 'idf'); ?></a>
+                        <a target="_blank" href="https://ignitiondeck.com/id/ignitiondeck-pricing/?utm_source=licensepage&utm_medium=link&utm_campaign=freemium"><?php _e('Upgrade your license', 'idf'); ?></a> <?php _e('to unlock additional features and modules.', 'idf'); ?>
                     </li>
                     <?php } ?>
                 </ol>
@@ -56,17 +63,28 @@
                 <div id="idf_license_settings" class="postbox <?php echo (empty($idf_registered) || !$idf_registered ? 'disabled' : ''); ?>">
                     <button type="button" class="handlediv button-link" aria-expanded="true"><span class="screen-reader-text"><?php _e('Toggle panel', 'idf'); ?>: <?php _e('License Settings', 'idf'); ?></span><span class="toggle-indicator" aria-hidden="true"></span></button><h2 class="hndle ui-sortable-handle"><span><?php _e('License Settings', 'idf'); ?></span></h2>
                     <div class="inside">
-                        <p><?php _e('Entering your <a href="https://ignitiondeck.com/id/documentation/ignitiondeck-crowdfunding/setup-ignitiondeck/ignitiondeck-license-keys/?utm_source=licensepage&utm_medium=link&utm_campaign=freemium" target="_blank">license key</a> will enable automatic updates via the WordPress admin for the duration of your license period.', 'idf'); ?></p>
+                        <p><?php _e('Entering your <a href="https://ignitiondeck.com/id/documentation/ignitiondeck-crowdfunding/setup-ignitiondeck/ignitiondeck-license-keys/?utm_source=licensepage&utm_medium=link&utm_campaign=freemium" target="_blank">license key</a> or email address will enable automatic updates via the WordPress admin for the duration of your license period.', 'idf'); ?></p>
                         <form name="licenseSettings" action="" method="post">
+                            <div>
+                                <label for="idf_license_entry_options"><?php _e('License Validation Method', 'idf'); ?></label>
+                                <select name="idf_license_entry_options" id="idf_license_entry_options">
+                                    <option value="email" <?php echo (isset($license_option) && $license_option == 'email' ? 'selected="selected"' : ''); ?>><?php _e('Email Address', 'idf'); ?></option>
+                                    <option value="keys" <?php echo (empty($license_option) || $license_option == 'keys' ? 'selected="selected"' : ''); ?>><?php _e('License Keys (Legacy)', 'idf'); ?></option>
+                                </select>
+                            </div>
                             <ul>
+                                <li class="id_account_options license_option">
+                                    <label for="id_account"><?php _e('IgnitionDeck Account Email', 'idf'); ?></label>
+                                    <input name="id_account" id="id_account" value="<?php echo (isset($id_account) ? $id_account : ''); ?>"/>
+                                </li>
                                 <?php if (idf_has_idcf()) { ?>
-                                <li>
-                                    <label for="idcf_license_key" class=""><i class="fa fa-key"></i> <?php _e('IDCF License Key', 'idf'); ?></label><br/>
+                                <li class="license_key_options license_option" style="display: none;">
+                                    <label for="idcf_license_key" class=""><i class="fa fa-key"></i> <?php _e('IDCF/IDE License Key', 'idf'); ?></label><br/>
                                     <input type="text" name="idcf_license_key" id="idcf_license_key" value="<?php echo (isset($idcf_license_key) ? $idcf_license_key : ''); ?>"/>
                                 </li>
                                 <?php } ?>
                                 <?php if (idf_has_idc()) { ?>
-                                <li>
+                                <li class="license_key_options license_option" style="display: none;">
                                     <label for="idc_license_key" class=""><i class="fa fa-key"></i> <?php _e('IDC License Key', 'memberdeck'); ?></label><br/>
                                     <input type="text" name="idc_license_key" id="idc_license_key" value="<?php echo (isset($idc_license_key) ? $idc_license_key : ''); ?>"/>
                                 </li>
@@ -121,13 +139,13 @@
                     <div class="inside">
                         <ul>
                             <?php foreach ($extension_data as $extension) { ?>
-                            <li>
-                                <div class="modules-image" style="background-image: url(<?php echo $extension->thumbnail; ?>);"></div>
-                                <div class="modules-info">
-                                    <strong><?php echo $extension->title; ?></strong><br/>
-                                    <?php echo $extension->short_desc; ?>
-                                </div>
-                            </li>
+                                <li>
+                                    <div class="modules-image" style="background-image: url(<?php echo $extension->thumbnail; ?>);"></div>
+                                    <div class="modules-info">
+                                        <strong><?php echo $extension->title; ?></strong><br/>
+                                        <?php echo $extension->short_desc; ?>
+                                    </div>
+                                </li>
                             <?php } ?>
                         </ul>
                         <p><a href="<?php menu_page_url('idf-extensions');?>" class="modules-link"><?php printf(__('View All %d Modules', 'idf'), count($data)); ?></a>
@@ -136,11 +154,11 @@
                 <div id="idf_support_widget" class="postbox">
                     <button type="button" class="handlediv button-link" aria-expanded="true"><span class="screen-reader-text"><?php _e('Toggle panel', 'idf'); ?>: <?php _e('Support', 'idf'); ?></span><span class="toggle-indicator" aria-hidden="true"></span></button><h2 class="hndle ui-sortable-handle"><span><?php _e('Support', 'idf'); ?></span></h2>
                     <div class="inside">
-                        <p><?php _e('Our support team is available 9am-5pm EST Monday-Friday. Click the links below to view our step-by-step documentation or visit the support forums.', 'idf'); ?></p>
-                        <a href="https://ignitiondeck.com/id/forums/?utm_source=licensepage&utm_medium=link&utm_campaign=freemium" alt="IgnitionDeck Support" title="IgnitionDeck Support" target="_blank"><button class="button button-large button-secondary"><?php _e('Support', 'idf'); ?></button></a>
+                        <p><?php _e('Our support team is available 9am-5pm PST Monday-Friday. Click the links below to view our step-by-step documentation or visit the support forums.', 'idf'); ?></p>
+                        <a href="mailto:support@ignitionwp.com?Subject=IgnitionDeck%20Support%20Request" alt="IgnitionDeck Support" title="IgnitionDeck Support" target="_blank"><button class="button button-large button-secondary"><?php _e('Email Support', 'idf'); ?></button></a>
                         <a href="https://ignitiondeck.com/id/documentation/?utm_source=licensepage&utm_medium=link&utm_campaign=freemium" alt="IgnitionDeck Documentation" title="IgnitionDeck Documentation" target="_blank"><button class="button button-large button-secondary"><?php _e('Documentation', 'idf'); ?></button></a>
                         <p><?php _e('Like this product? Help us out with a', 'idf'); ?> <a href="https://wordpress.org/support/plugin/ignitiondeck/reviews/"><?php _e('review', 'idf'); ?></a>!<br/>
-                        <?php _e('Not a fan?', 'idf'); ?> <a href="mailto:hello@virtuousgiant.com?Subject=IgnitionDeck%20Feedback" target="_blank"><?php _e('Tell us why', 'idf'); ?></a>.</p>
+                        <?php _e('Not a fan?', 'idf'); ?> <a href="mailto:support@ignitionwp.com?Subject=IgnitionDeck%20Feedback" target="_blank"><?php _e('Tell us why', 'idf'); ?></a>.</p>
                      </div>
                 </div>
             </div>
@@ -168,5 +186,3 @@
             <div id="column4-sortables" class="meta-box-sortables ui-sortable empty-container"></div>
         </div>
 </div>
-
-<input type="hidden" id="closedpostboxesnonce" name="closedpostboxesnonce" value="4a00a60188"><input type="hidden" id="meta-box-order-nonce" name="meta-box-order-nonce" value="563de8399f">    </div>

@@ -3,9 +3,9 @@
 Plugin Name: My Wordpress Login Logo
 Plugin URI: http://digitcodes.com
 Description: My Wordpress Login Logo lets you to add a custom logo in your wordpress login page instead of the usual wordpress logo.
-Version: 2.0
+Version: 2.2
 Author: Afsal Rahim
-Author URI: http://afsalrahim.tk
+Author URI: http://afsal.me
 */
 
 if ( !defined( 'DC_MyWP_LoginLogo_URL' ) )

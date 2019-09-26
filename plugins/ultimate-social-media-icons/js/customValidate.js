@@ -58,18 +58,6 @@ function sfsi_validationStep2()
             return false;
         }    
   }
-  
-  /* goolge validation */
-    if(sfsi_validator(SFSI('input[name="sfsi_google_page"]'),'activte') && sfsi_validator(SFSI('input[name="sfsi_google_page"]'),'checked'))
-  {     
-       
-        if(!sfsi_validator(SFSI('input[name="sfsi_google_pageURL"]'),'blank') )
-        {   showErrorSuc("error","Error : Invalid Google+ page Url ",2);
-            SFSI('input[name="sfsi_google_pageURL"]').addClass('inputError');
-            
-            return false;
-        }    
-  }
   /* youtube validation */
     if(sfsi_validator(SFSI('input[name="sfsi_youtube_page"]'),'activte') && sfsi_validator(SFSI('input[name="sfsi_youtube_page"]'),'checked'))
   {     
@@ -234,29 +222,6 @@ function sfsi_validationStep4()
             }      
         }
   }
-  /* validate google */
-  if(sfsi_validator(SFSI('input[name="sfsi_google_countsDisplay"]'),'activte') && sfsi_validator(SFSI('input[name="sfsi_google_countsDisplay"]'),'checked'))
-  {    
-        
-        if(SFSI('input[name="sfsi_google_countsFrom"]:checked').val()=='follower' )
-        {   
-            
-          if(!sfsi_validator(SFSI('input[name="sfsi_google_api_key"]'),'blank'))
-            {   showErrorSuc("error","Error : Please Enter a valid google api key",4);
-                SFSI('input[name="sfsi_google_api_key"]').addClass('inputError');
-                return false;
-            }      
-        }
-        if(SFSI('input[name="sfsi_google_countsFrom"]:checked').val()=='manual' )
-        {   
-            
-          if(!sfsi_validator(SFSI('input[name="sfsi_google_manualCounts"]'),'blank'))
-            {   showErrorSuc("error","Error : Please Enter google+ manual counts ",4);
-                SFSI('input[name="sfsi_google_manualCounts"]').addClass('inputError');
-                return false;
-            }      
-        }
-  }
   /* validate twitter */
   if(sfsi_validator(SFSI('input[name="sfsi_twitter_countsDisplay"]'),'activte') && sfsi_validator(SFSI('input[name="sfsi_twitter_countsDisplay"]'),'checked'))
   {    
@@ -403,21 +368,6 @@ function sfsi_validationStep4()
             }      
         }
   }
-  /* validate Atthis */
-  if(sfsi_validator(SFSI('input[name="sfsi_shares_countsDisplay"]'),'activte') && sfsi_validator(SFSI('input[name="sfsi_shares_countsDisplay"]'),'checked'))
-  {    
-        
-       
-        if(SFSI('input[name="sfsi_shares_countsFrom"]:checked').val()=='manual' )
-        {   
-            
-          if(!sfsi_validator(SFSI('input[name="sfsi_shares_manualCounts"]'),'blank'))
-            {   showErrorSuc("error","Error : Please Enter Share icon manual counts ",4);
-                SFSI('input[name="sfsi_shares_manualCounts"]').addClass('inputError');
-                return false;
-            }      
-        }
-  }
   
   
     return true;
@@ -491,13 +441,13 @@ function sfsi_validationStep5()
             return false;
         }   
         
-  /* validate icons effects   */      
-        if(SFSI('input[name="sfsi_icons_float"]:checked').val()=="yes" && SFSI('input[name="sfsi_icons_stick"]:checked').val()=="yes")
-        {   
-            showErrorSuc("error","Error : Only one allow from Sticking & floating ",5);
-            SFSI('input[name="sfsi_icons_float"][value="no"]').prop("checked", true);
-            return false;
-        }
+       /* validate icons effects   */      
+        // if(SFSI('input[name="sfsi_icons_float"]:checked').val()=="yes" && SFSI('input[name="sfsi_icons_stick"]:checked').val()=="yes")
+        // {   
+        //     showErrorSuc("error","Error : Only one allow from Sticking & floating ",5);
+        //     SFSI('input[name="sfsi_icons_float"][value="no"]').prop("checked", true);
+        //     return false;
+        // }
  
     
     return true;

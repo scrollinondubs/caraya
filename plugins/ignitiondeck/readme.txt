@@ -1,10 +1,10 @@
 === IgnitionDeck Crowdfunding & Commerce ===
-Contributors: virtuousgiant
+Contributors: ignitionwp, digisavvy
 Donate link: https://IgnitionDeck.com
 Tags: crowdfunding, crowd, funding, ecommerce, commerce, marketplace, fundraising, donation, membership, downloads
-Requires at least: 4.8
-Tested up to: 4.9
-Stable tag: 1.2.34
+Requires at least: 4.9
+Tested up to: 5.2
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,9 @@ Crowdfunding and Ecommerce for WordPress. Free theme & available WC integration.
 
 [IgnitionDeck](https://ignitiondeck.com/id/?utm_source=wprepo&utm_medium=link&utm_campaign=freemium) is a WordPress crowdfunding and e-commerce platform that allows you to start selling, crowdfunding, or fundraising immediately using PayPal Standard. [Upgrade options](https://ignitiondeck.com/id/ignitiondeck-pricing/?utm_source=wprepo&utm_medium=link&utm_campaign=freemium) allow you to integrate with multiple gateways, build your own white label crowdfunding platform, and much more.
 
-IgnitionDeck also includes the free Fivehundred [Crowdfunding Theme for WordPress](https://ignitiondeck.com/id/themes/?utm_source=wprepo&utm_medium=link&utm_campaign=freemium), and the hugely popular 500 Classic child theme, which makes building your own crowdfunding site super simple. Have a theme you're happy with? No worries! IgntiionDeck works with almost every WordPress theme right out of the box. There's no code to write, and no theme editing required.
+IgnitionDeck also includes the free Fivehundred [Crowdfunding Theme for WordPress](https://ignitiondeck.com/id/themes/?utm_source=wprepo&utm_medium=link&utm_campaign=freemium), and the hugely popular 500 Classic child theme, which makes building your own crowdfunding site super simple.
+
+Have a theme you're happy with? No worries! IgntiionDeck works with almost every WordPress theme right out of the box. There's no code to write, and no theme editing required.
 
 [See how our customers have used IgntionDeck to build their businesses](https://ignitiondeck.com/id/category/success-stories/?utm_source=wprepo&utm_medium=link&utm_campaign=freemium)
 
@@ -26,7 +28,7 @@ Here's a look at the features included with IgnitionDeck:
 
 * Crowdfunding displays available as post template, widget, or embed code (works automatically with IgnitionDeck themes)
 * Crowdfunding Projects CPT that includes options for fundraising goal, end date, open/closed campaigns, video embed, multiple crowdfunding levels (includes title, price, limit, custom order), FAQ, and Updates
-* Child projects that work two levels deep
+* Parent/child project relationships
 * Front-End sharing via Facebook, Twitter, Google+, Pinterest, LinkedIn, and embed code
 * Shortcodes for every piece of data
 * Custom project taxonomies for categorical data
@@ -62,9 +64,9 @@ Here's a look at the features included with IgnitionDeck:
 
 ####IgnitionDeck Echelon####
 
-* Adds additional gateways, including Stripe, PayPal Adaptive, Authorize.net, First Data, Coinbase, Offline Checkout, and more
+* Adds additional gateways, including Stripe, Authorize.net, First Data, Coinbase, Square, Paytm, Secupay, Offline Checkout, and more
 * Enables pre-orders and 100% funding options
-* Recurring payments (weekly, monthly, annually)
+* Recurring payments (daily, weekly, monthly, annually)
 * Adds support for renewals, automatic checkout page creation, subscriptions, expiring accounts, and free products
 * Additional custom email templates and transactional email integrations with SendGrid and Mandrill
 * Enables virtual currency, pay with credits, and instant checkout
@@ -84,7 +86,7 @@ Here's a look at the features included with IgnitionDeck:
 
 * Front-End Submission for user created projects
 * Front-end account management, creator profiles, backer profiles, and payment profiles
-* Charge platform fees via Stripe Connect & PayPal Adaptive Payments
+* Charge platform fees via Stripe Connect
 * Multisite Support
 * Additional email templates included project submission confirmation, project publication, and project updates
 * Batch process pre-authorizations
@@ -104,7 +106,7 @@ IgnitionDeck Works with any WordPress theme, which means you don’t have to buy
 
 ###Support###
 
-Premium support is available via our [product forums](https://ignitiondeck.com/id/forums/?utm_source=wprepo&utm_medium=link&utm_campaign=freemium)
+Premium support is available via [email support](mailto:support@ignitionwp.com?Subject=IgnitionDeck%20Support%20Request).
 
 ###Developers###
 
@@ -116,17 +118,110 @@ Grab code snippets, child theming guides, and API information on our [developer 
 
 == Frequently Asked Questions ==
 
-[IgnitionDeck FAQ](https://ignitiondeck.com/id/ignitiondeck-pricing#bigfaq?utm_source=wprepo&utm_medium=link&utm_campaign=freemium)
+[IgnitionDeck FAQ](https://ignitiondeck.com/id/ignitiondeck-pricing#bigfaq)
 
 == Support ==
 
-[IgnitionDeck Support Forums](https://ignitiondeck.com/id/forums/?utm_source=wprepo&utm_medium=link&utm_campaign=freemium)
+[IgnitionDeck Support Forums](https://wordpress.org/support/plugin/ignitiondeck)
 
 == Upgrade Notice ==
 
 == Screenshots ==
 
 == Changelog ==
+
+= 1.3.6 = 
+
+* Update IDCF version
+* Update for WordPress 5.2 support
+* Update language files
+
+= 1.3.5 = 
+
+* Update IDCF version
+* Update support links on plugin homepage
+
+= 1.3.4 = 
+
+* Update IDCF version
+* Update for WordPress 5.1 support
+* Update Ignition Deck Dashboard widget support information
+* Update contributor inormation
+
+= 1.3.3 = 
+
+* Update IDCF version
+* Update for WordPress 5.0 support
+
+= 1.3.2 =
+
+* Fix issue causing error by using deprecated get_checkout_url WC function
+* Update IDCF version number
+
+= 1.3.1 =
+
+* Run idf_set_roles on user_registration hook in order to prevent need to refresh prior to seeing Enterprise menus
+* Set default idfPriceFormat to 0.00 when empty
+* Update IDC version
+
+= 1.3.0 =
+
+* Add additional license verification option that uses IgnitionDeck login email, which bypasses license keys for a much smoother experience
+* Fix issue preventing WooCommerce selection without IgnitionDeck Commerce present
+* Default to 0.00 when using idfParseFloat on an empty value
+* Minor CSS updates to IgnitionDeck Dashboard menu
+
+= 1.2.42 =
+
+* Update IDC/IDCF versions
+* Cleanup main dashboard menu, improve instructions, and design
+* Disable modules when not activated
+* Trigger query var after activation
+
+= 1.2.41 =
+
+* Fix level select dropdown height
+* Round idfParseFloat to 2 decimals
+* Remove enqueue call for stock browser js
+* Improve user project count efficiency by using extra conditionals
+
+= 1.2.40 =
+
+* Fix issue with disabled login button when reCAPTCHA is enabled without a Site ID
+* Update IDCF license input text
+* Update banner/logo assets
+
+= 1.2.39 =
+
+* Supplement license validation requests with ID account data in order to prepare migration away from license keys
+
+= 1.2.38 =
+
+* Fix module activation/deactivation link
+
+= 1.2.37 =
+
+* Fix issue with disabled button on lost password screen when recaptcha is enabled
+* Module menu now displays locked modules and links to pricing screen to inform how they can become unlocked
+* New category filter for modules
+* New filter to hide locked modules
+* Pass more arguments through module object, such as status and requires
+* Remove Helix update notices from menu and submenu
+* Add support for form-input third, fourth, sixth, and eighth
+* Remove checks for expired license since we now require an active license in order to maintain functionality
+* Extend get_module_list to filter, given args of key and value
+
+= 1.2.36 =
+
+* Minify js and CSS
+* Update IDCF and IDC versions
+* Remove filters/hooks for removing legacy IDCF menus, which have been removed from IDCF all together
+* New function idf_is_id_theme(), which helps fix bug when child theme author !== IgnitionDeck
+
+= 1.2.35 =
+
+* New idf_sanitize_array function
+* Update IDC version
 
 = 1.2.34 =
 

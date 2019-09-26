@@ -23,10 +23,18 @@ class ID_Member_Order {
 		$price = '0'
 		)
 	{
+		if (empty($order_date)) {
+			$tz = get_option('timezone_string');
+			if (empty($tz)) {
+				$tz = 'UTC';
+			}
+			date_default_timezone_set($tz);
+			$order_date = date('Y-m-d H:i:s');
+		}
 		$this->id = $id;
 		$this->user_id = $user_id;
 		$this->level_id = $level_id;
-		$this->order_date = date('Y-m-d H:i:s');
+		$this->order_date = $order_date;
 		$this->transaction_id = $transaction_id;
 		$this->subscription_id = $subscription_id;
 		$this->status = $status;
@@ -184,6 +192,12 @@ class ID_Member_Order {
 		$res = $wpdb->query($sql);
 	}
 
+	public static function update_order_by_field($id, $column, $value) {
+		global $wpdb;
+		$update = $wpdb->update($wpdb->prefix.'memberdeck_orders', array($column => $value), array('ID' => $id));
+		return $update;
+	}
+
 	/**
 	 * get_order_currency_sym(): Function to get the currency symbol of a payment gateway of an order
 	 * No param is required
@@ -270,6 +284,15 @@ class ID_Member_Order {
 		if (!empty($exp_data)) {
 			$exp = strtotime('+'.$exp_data['count'].' '.$exp_data['term'], $now);
 		}
+		$e_date = date('Y-m-d h:i:s', $exp);
+		return $e_date;
+	}
+
+	public static function set_trial_e_date($level_data, $now = null) {
+		if (empty($now)) {
+			$now = strtotime('now');
+		}
+		$exp = strtotime('+'.$level_data->trial_length.' '.$level_data->trial_type);
 		$e_date = date('Y-m-d h:i:s', $exp);
 		return $e_date;
 	}
@@ -582,9 +605,15 @@ function idc_update_order_meta($order_id, $meta_key, $meta_value) {
 }
 
 function idc_set_order_edate($level_data, $now = null) {
-	if ($level_data->level_type == 'standard') {
-		return ID_Member_Order::set_standard_e_date($level_data, $now);
+	switch ($level_data->level_type) {
+		case 'standard':
+			return ID_Member_Order::set_standard_e_date($level_data, $now);
+		
+		case 'recurring':
+			return ID_Member_Order::set_trial_e_date($level_data, $now);
+
+		default:
+			return;
 	}
-	return;
 }
 ?>

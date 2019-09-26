@@ -99,7 +99,7 @@ if ( !defined( 'ABSPATH' ) )exit;
                     <?php _e( 'Analyze Parent Theme', 'child-theme-configurator' ); ?>
                 </strong>
                 <p class="howto indent">
-                    <?php _e( 'Click "Analyze" to determine stylesheet dependencies and other potential issues.' ); ?>
+                    <?php _e( 'Click "Analyze" to determine stylesheet dependencies and other potential issues.', 'child-theme-configurator' ); ?>
                 </p>
                 </span>
             </div>
@@ -286,6 +286,7 @@ if ( !defined( 'ABSPATH' ) )exit;
 <p class="howto indent"><?php _e( 'Let the Configurator (try to) resolve any stylesheet issues listed above. This can fix many, but not all, common problems.', 'child-theme-configurator' ); ?></p></label>
                 </div>
             </div>
+
             <div id="ctc_dependencies_container" style="display:none">
                 <div class="ctc-input-cell ctc-clear">
                     <p class="howto">
@@ -293,12 +294,12 @@ if ( !defined( 'ABSPATH' ) )exit;
                 </div>
                 <div class="ctc-input-cell-wide sep">
                     <strong class="indent">
-                        <?php _e( 'Remove stylesheet dependencies', 'child-theme-configurator' ); ?>
+                        <?php _e( 'Do not force dependency for these stylesheet handles:', 'child-theme-configurator' ); ?>
                     </strong>
+                    <p id="ctc_dependencies"></p>
                     <p class="howto indent">
-                        <?php _e( 'By default, the order of stylesheets that load prior to the primary stylesheet is preserved by treating them as dependencies. In some cases, stylesheets are detected in the preview that are not used site-wide. If necessary, dependency can be removed for specific stylesheets below.', 'child-theme-configurator' ); ?>
+                        <?php _e( 'By default, the order of stylesheets that load prior to the primary stylesheet is preserved by treating them as dependencies. In some cases, stylesheets are detected in the preview that are not used site-wide. If necessary, dependency can be removed for specific stylesheets above.', 'child-theme-configurator' ); ?>
                     </p>
-                    <div id="ctc_dependencies"></div>
                 </div>
             </div>
             <?php //do_action( 'chld_thm_cfg_enqueue_options' ); // removed for ctc 2.0 ?>
@@ -398,7 +399,7 @@ if ( !defined( 'ABSPATH' ) )exit;
           <strong>
           <?php _e( 'NOTE:', 'child-theme-configurator' ); ?>
           </strong>
-          <?php _e( "This option replaces the Child Theme's existing Menus, Widgets and other Customizer Settings with those from the Parent Theme. You should only need to use this option the first time you configure a Child Theme.", 'child-theme-configurator' ); ?>
+          <?php _e( "This option replaces the Child Theme's existing Menus, Widgets and other Customizer Settings with those from the Parent Theme. You should only need to use this option the first time you configure a Child Theme. <strong>Some themes use additional options that cannot be copied with the free verson of CTC. Click the \"Upgrade\" tab for more information.</strong>", 'child-theme-configurator' ); ?>
         </label>
             
 

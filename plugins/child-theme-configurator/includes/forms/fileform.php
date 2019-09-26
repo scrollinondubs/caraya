@@ -21,7 +21,7 @@ if ( 'parnt' == $template ): ?>
         );
 else: ?>
       <p class="howto">
-      <?php printf( $editorlink, 'functions.php', 'Click to edit functions.php', 'Click to edit files using the Theme Editor' ); ?>
+      <?php printf( $editorlink, 'functions.php', __( 'Click to edit functions.php', 'child-theme-configurator' ), __( 'Click to edit files using the Theme Editor', 'child-theme-configurator' ) ); ?>
       </p>
       <p class="howto">
 <?php 

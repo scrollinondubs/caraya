@@ -6,7 +6,7 @@ function advanced_user_accounts_admin_scripts() {
 		$deps = array();
 		$deps[] = 'idcommerce-admin-menus';
 		$deps[] = 'jquery';
-		wp_register_script('advanced_user_accounts_admin', plugins_url('/js/advanced_user_accounts_admin.js', __FILE__), $deps);
+		wp_register_script('advanced_user_accounts_admin', plugins_url('/js/advanced_user_accounts_admin-min.js', __FILE__), $deps);
 		wp_enqueue_script('advanced_user_accounts_admin');
 		$localization_array = array(
 			'backer_registration' => __('Backer Registration', 'memberdeck'),

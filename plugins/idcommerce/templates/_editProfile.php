@@ -18,7 +18,7 @@
 						<img src="<?php echo ((!empty($idc_avatar_data)) ? $idc_avatar_url : ''); ?>" style="max-width:100%; <?php echo (!empty($idc_avatar_data) ? '' : 'display:none;') ?>" />
 					</div>
 					<div class="form-row half left">
-						<label for="nicename"><?php _e('Display Name <span class="starred">*</span>', 'memberdeck'); ?></label>
+						<label for="nicename"><?php _e('Display Name', 'memberdeck'); ?> <span class="starred">*</span></label>
 						<input type="text" size="20" class="nicename" name="nicename" value="<?php echo (isset($nicename) ? $nicename : ''); ?>"/>
 					</div>
 					<div class="form-row quarter left">
@@ -30,35 +30,35 @@
 						<input type="text" size="20" class="last-name" name="last-name" value="<?php echo (isset($user_lastname) ? $user_lastname : ''); ?>"/>
 					</div>
 					<div class="form-row full">
-						<label for="email"><?php _e('Email Address <span class="starred">*</span>', 'memberdeck'); ?></label>
+						<label for="email"><?php _e('Email Address', 'memberdeck'); ?></label>
 						<input type="email" size="20" class="email" name="email" value="<?php echo (isset($email) ? $email : ''); ?>"/>
 					</div>
                     	
 					<div class="form-row full">
-						<label for="description"><?php _e('Bio', 'memberdeck'); ?></label>
+						<label for="description"><?php _e('Bio', 'memberdeck'); ?> <span class="starred">*</span></label>
 						<textarea row="10" class="description" name="description"><?php echo (isset($description) ? stripslashes(html_entity_decode($description)) : ''); ?></textarea>
 					</div>
 
 					<div class="form-row half left">
-						<label for="location"><?php _e('Company Location', 'memberdeck'); ?></label>
+						<label for="location"><?php _e('Company Location', 'memberdeck'); ?> <span class="starred">*</span></label>
 						<input type="location" size="20" class="location" name="location" value="<?php echo (isset($location) ? $location : ''); ?>"/>
 					</div>
                     
 					<div class="form-row half">
-						<label for="url"><?php _e('Website URL <span class="starred">*</span>', 'memberdeck'); ?></label>
+						<label for="url"><?php _e('Website URL', 'memberdeck'); ?> <span class="starred">*</span></label>
 						<input type="url" size="20" class="url" name="url" value="<?php echo (isset($url) ? $url : ''); ?>"/>
 					</div>
 				
 					<div class="form-row third left">
-						<label for="twitter"><?php _e('Twitter URL', 'memberdeck'); ?></label>
+						<label for="twitter"><?php _e('Twitter URL', 'memberdeck'); ?> <span class="starred">*</span></label>
 						<input type="twitter" size="20" class="twitter" name="twitter" value="<?php echo (isset($twitter) ? $twitter : ''); ?>"/>
                     </div>
                     <div class="form-row third left">
-						<label for="facebook"><?php _e('Facebook URL', 'memberdeck'); ?></label>
+						<label for="facebook"><?php _e('Facebook URL', 'memberdeck'); ?> <span class="starred">*</span></label>
 						<input type="facebook" size="20" class="facebook" name="facebook" value="<?php echo (isset($facebook) ? $facebook : ''); ?>"/>
                     </div>
                     <div class="form-row third">
-						<label for="google"><?php _e('Google URL', 'memberdeck'); ?></label>
+						<label for="google"><?php _e('Google URL', 'memberdeck'); ?> <span class="starred">*</span></label>
 						<input type="google" size="20" class="google" name="google" value="<?php echo (isset($google) ? $google : ''); ?>"/>
 					</div>
 					<?php echo do_action('idc_profile_social_after'); ?>
@@ -101,8 +101,8 @@
 						&nbsp;<button name="cancel_sub" class="hidden invert inline" disabled><?php _e('Cancel Subscription', 'memberdeck'); ?></button>
 					</div>
 					<?php } ?>
-					<strong><?php _e('Instant Checkout', 'memberdeck'); ?></strong>
-					<p class="desc-note">	<?php _e('With instant checkout enabled, you can pay with your credit card without re-entering information. To enable, simply use your credit card to checkout once, and then select &lsquo;enable instant checkout&rsquo; from this screen, and click \'Update Profile\' below.', 'memberdeck'); ?><br><br>
+					<h2><?php _e('Instant Checkout', 'memberdeck'); ?></h2>
+					<p class="desc-note">	<?php _e('With instant checkout enabled, you can pay with your credit card without re-entering information. To enable, simply use your credit card to checkout once, and then select \'enable instant checkout\' from this screen, and click \'Update Profile\' below.', 'memberdeck'); ?><br><br>
 						<?php _e('Your credit card information is never stored on our servers, and is always processed securely.', 'memberdeck'); ?>
 					</p>
 					<?php if (!empty($show_icc)) { ?>

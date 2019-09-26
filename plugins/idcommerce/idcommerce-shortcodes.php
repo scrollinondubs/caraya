@@ -82,11 +82,13 @@ function memberdeck_dashboard() {
 			}
 			if ($pass) {
 				$e_date = ID_Member_Order::get_expiration_data($user_id, $single_level);
-				$sub = new ID_Member_Subscription(null, $user_id, $single_level);
-				$renewable = $sub->is_subscription_renewable();
-				if ($renewable) {
-					$days_left = idmember_e_date_format($e_date);
-					$download->days_left = $days_left;
+				if (!is_idc_free()) {
+					$sub = new ID_Member_Subscription(null, $user_id, $single_level);
+					$renewable = $sub->is_subscription_renewable();
+					if ($renewable) {
+						$days_left = idmember_e_date_format($e_date);
+						$download->days_left = $days_left;
+					}
 				}
 				$license_key = MD_Keys::get_license($user_id, $download->id);
 				$download->key = $license_key;
@@ -321,7 +323,7 @@ function memberdeck_checkout($attrs) {
 			$epp = (isset($gateways['epp']) ? $gateways['epp'] : 0);
 			$es = (isset($gateways['es']) ? $gateways['es'] : 0);
 			$esc = (isset($gateways['esc']) ? $gateways['esc'] : 0);
-			$ecb = (isset($gateways['ecb']) ? $gateways['ecb'] : '');
+			$ecb = 0; #disable coinbase until commerce integration is completed (isset($gateways['ecb']) ? $gateways['ecb'] : '');
 			$eauthnet = (isset($gateways['eauthnet']) ? $gateways['eauthnet'] : '0');
 			$eppadap = (isset($gateways['eppadap']) ? $gateways['eppadap'] : '0');
 			$efd = (isset($gateways['efd']) ? $gateways['efd'] : '0');

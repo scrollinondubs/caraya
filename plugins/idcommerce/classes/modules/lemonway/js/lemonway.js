@@ -170,7 +170,7 @@ jQuery(document).ready(function($) {
 	function lemonWaySelected(formattedPrice, complete_checkout_text, idc_lemonway_method) {
 		var lemonWaySymbol = jQuery('#finaldescStripe').data('currency-symbol');
 		// console.log('lemonWaySymbol: ', lemonWaySymbol);
-		setPriceText('lemonway', lemonWaySymbol, formattedPrice);
+		idcSetPriceText('lemonway', lemonWaySymbol, formattedPrice);
 		jQuery("#id-main-submit").text(complete_checkout_text);
 		jQuery("#id-main-submit").attr("name", "submitPaymentLemonWay");
 		jQuery("#id-main-submit").removeAttr("disabled");

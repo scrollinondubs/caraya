@@ -5,11 +5,11 @@
 		<a href="http://docs.ignitiondeck.com" alt="IgnitionDeck Documentation" title="IgnitionDeck Documentation" target="_blank"><button class="button button-large button-primary"><?php _e('Documentation', 'memberdeck'); ?></button></a>
 	</div>
 	<br style="clear: both;"/>
-	<div class="postbox-container" style="width:50%; margin-right: 5%">
+	<div class="postbox-container" style="width:100%; margin-right: 0%">
 		<div class="metabox-holder">
 			<div class="meta-box-sortables" style="min-height:0;">
 				<div class="postbox">
-					<h3 class="hndle"><span><?php _e('Edit', 'memberdeck'); ?></span></h3>
+					<h3 class="hndle"><span><?php _e('Edit Order', 'memberdeck'); ?></span></h3>
 					<div class="inside">
 						<form method="POST" action="" id="idc_lemonway_settings" name="idc_lemonway_settings">
 							<div class="form-input">

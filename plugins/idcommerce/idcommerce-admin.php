@@ -399,7 +399,7 @@ function idc_settings() {
 			$creator_permissions = absint($_POST['creator_permissions']);
 		}
 		else {
-			$creator_permissions = 1;
+			$creator_permissions = 3;
 		}
 		//Save level-based permissions
 		$allowed_creator_levels = array();
@@ -553,6 +553,10 @@ function idc_settings() {
 	include 'templates/admin/_settingsMenu.php';
 }
 
+// #devnote maybe move to secondary file
+use Coinbase\Wallet\Client;
+use Coinbase\Wallet\Configuration;
+
 function idc_gateways() {
 	$pp_currency = 'USD';
 	$stripe_currency = 'USD';
@@ -627,13 +631,13 @@ function idc_gateways() {
 	}
 
 	if (!is_idc_free()) {
-		$cb_currencies = new stdClass();
-		require("lib/Coinbase/lib/Coinbase.php");
-		try {
-			$coinbase = Coinbase::withApiKey((!empty($cb_api_key) ? $cb_api_key : ''), (!empty($cb_api_secret) ? $cb_api_secret : ''));
-			$cb_currencies = $coinbase->getCurrencies();
-		} catch (Exception $e) {
-			echo '<div class="error message">'.__('Could not connect to Coinbase', 'memberdeck').'. '.$e->getMessage().'</div>';
+		$cb_client = idc_init_coinbase_client();
+		$accounts = idc_test_coinbase_client($cb_client);
+		if ($accounts->status) {
+			$cb_currencies = $cb_client->getCurrencies();
+		}
+		else {
+			echo '<div class="error message">'.__('Could not connect to Coinbase', 'memberdeck').': '.$accounts->data.'</div>';
 		}
 	}
 	// Getting Module settings for lemonway checkbox
@@ -1033,7 +1037,6 @@ function idc_sc_settings() {
 	$dev_client_id = (isset($sc_settings['dev_client_id']) ? $sc_settings['dev_client_id'] : '');
 	$fee_type = (isset($sc_settings['fee_type']) ? $sc_settings['fee_type'] : 'flat');
 	$app_fee = (isset($sc_settings['app_fee']) ? $sc_settings['app_fee'] : '0');
-	$fee_mods = (isset($sc_settings['fee_mods']) ? $sc_settings['fee_mods'] : '0');
 	$dev_mode = (isset($sc_settings['dev_mode']) ? $sc_settings['dev_mode'] : '0');
 	$button_style = (isset($sc_settings['button_style']) ? $sc_settings['button_style'] : 'stripe-connect');
 	
@@ -1042,18 +1045,15 @@ function idc_sc_settings() {
 		$dev_client_id = sanitize_text_field($_POST['dev_client_id']);
 		$fee_type = sanitize_text_field($_POST['fee_type']);
 		$app_fee = sanitize_text_field($_POST['app_fee']);
-		$fee_mods = (isset($_POST['fee_mods']) ? absint($_POST['fee_mods']) : 0);
 		$dev_mode = (isset($_POST['dev_mode']) ? absint($_POST['dev_mode']) : 0);
-		IDC_Modules::set_module_status('fee_mods', $fee_mods);
 		$button_style = sanitize_text_field($_POST['button-style']);
 		$sc_settings = array('client_id' => $client_id,
 			'dev_client_id' => $dev_client_id,
 			'fee_type' => $fee_type,
 			'app_fee' => $app_fee,
-			'fee_mods' => $fee_mods,
 			'dev_mode' => $dev_mode,
 			'button_style' => $button_style);
-		update_option('md_sc_settings', serialize($sc_settings));
+		update_option('md_sc_settings', apply_filters('idc_sc_settings', $sc_settings));
 
 	}
 	if ($dev_mode == 1) {
@@ -1090,8 +1090,8 @@ function idc_s3_settings() {
 }
 
 function idmember_admin_js() {
-	wp_register_script('idcommerce-admin-js', plugins_url('js/idcommerce-admin.js', __FILE__));
-	wp_register_script('idcommerce-admin-levels', plugins_url('js/idcommerce-admin-levels.js', __FILE__));
+	wp_register_script('idcommerce-admin-js', plugins_url('js/idcommerce-admin-min.js', __FILE__));
+	wp_register_script('idcommerce-admin-levels', plugins_url('js/idcommerce-admin-levels-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	$ajaxurl = site_url('/wp-admin/admin-ajax.php');
 	$currencies = plugins_url('/inc/currencies.json', __FILE__);
@@ -1100,18 +1100,18 @@ function idmember_admin_js() {
 	wp_localize_script('idcommerce-admin-js', 'md_ajaxurl', $ajaxurl);
 	wp_localize_script('idcommerce-admin-js', 'md_currencies', $currencies);
 	wp_localize_script('idcommerce-admin-js', 'idc_global_currencies', $global_currencies);
-	wp_localize_script('idcommerce-admin-js', 'idc_localization_strings', apply_filters('idc_localization_strings', ''));
+	wp_localize_script('idcommerce-admin-js', 'idc_localization_strings', idc_localization_strings());
 	wp_localize_script('idcommerce-admin-js', 'idc_stripe_currencies', $stripe_currencies);
 	wp_localize_script('idcommerce-admin-js', 'idc_product_filter', (isset($_GET['show_all_idc_products']) ? sanitize_text_field($_GET['show_all_idc_products']) : '0'));
 	wp_enqueue_script('idcommerce-admin-levels');
 	wp_enqueue_script('idcommerce-admin-js');
 	wp_enqueue_script('jquery-ui-datepicker');
-	wp_enqueue_style('jquery-ui-core', '//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
+	wp_enqueue_style('jquery-ui-core', '//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.min.css');
 	wp_enqueue_media();
 }
 
 function idmember_admin_menu_js() {
-	wp_register_script('idcommerce-admin-menus', plugins_url('js/idcommerce-admin-menus.js', __FILE__));
+	wp_register_script('idcommerce-admin-menus', plugins_url('js/idcommerce-admin-menus-min.js', __FILE__));
 	$menu_js_localization_array = array(
 		'durl' => md_get_durl(),
 		'idf_prefix' => idf_get_querystring_prefix(),
@@ -1150,50 +1150,50 @@ function idc_load_idf_admin_js() {
 }
 
 function mdid_admin_scripts() {
-	wp_register_script('cf', plugins_url('/js/cf.js', __FILE__));
+	wp_register_script('cf', plugins_url('/js/cf-min.js', __FILE__));
 	wp_enqueue_script('cf');
 }
 
 function idc_email_scripts() {
-	wp_register_script('idc-email', plugins_url('/js/idcommerce-admin-email.js', __FILE__));
+	wp_register_script('idc-email', plugins_url('/js/idcommerce-admin-email-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('idc-email');
 }
 
 function md_sc_scripts() {
-	wp_register_script('md_sc', plugins_url('/js/mdSC.js', __FILE__));
-	wp_register_style('sc_buttons', plugins_url('/lib/connect-buttons.css', __FILE__));
+	wp_register_script('md_sc', plugins_url('/js/mdSC-min.js', __FILE__));
+	wp_register_style('sc_buttons', plugins_url('/lib/connect-buttons-min.css', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('md_sc');
 	wp_enqueue_style('sc_buttons');
 	$sc_settings = get_option('md_sc_settings');
 	if (!empty($sc_settings)) {
 		if (!is_array($sc_settings)) {
-			$sc_settings = unserialize($sc_settings);
+			$sc_settings = maybe_unserialize($sc_settings);
 		}
 		if (is_array($sc_settings)) {
 			$client_id = $sc_settings['client_id'];
 			$dev_client_id = $sc_settings['dev_client_id'];
-			$dev_mode = $sc_settings['dev_mode'];
+			$dev_mode = (isset($sc_settings['dev_mode']) ? $sc_settings['dev_mode'] : 0);
 			if ($dev_mode == 1) {
 				$md_sc_clientid = $dev_client_id;
 			}
 			else {
 				$md_sc_clientid = $client_id;
 			}
-			wp_localize_script('md_sc', 'md_sc_clientid', $md_sc_clientid);
+			wp_localize_script('md_sc', 'md_sc_clientid', (isset($md_sc_clientid) ? array($md_sc_clientid) : array()));
 		}
 	}
 }
 
 function idmember_admin_styles() {
-	wp_register_style('idcommerce-admin', plugins_url('css/admin-style.css', __FILE__));
+	wp_register_style('idcommerce-admin', plugins_url('css/admin-style-min.css', __FILE__));
 	wp_enqueue_style('idcommerce-admin');
 }
 
 function idmember_metabox_styles() {
-	wp_register_script('idcommerce-metabox', plugins_url('js/idcommerce-metabox.js', __FILE__));
-	wp_register_script('idcommerce-admin-levels', plugins_url('js/idcommerce-admin-levels.js', __FILE__));
+	wp_register_script('idcommerce-metabox', plugins_url('js/idcommerce-metabox-min.js', __FILE__));
+	wp_register_script('idcommerce-admin-levels', plugins_url('js/idcommerce-admin-levels-min.js', __FILE__));
 	wp_enqueue_script('idcommerce-admin-levels');
 	wp_enqueue_script('idcommerce-metabox');
 	$ajaxurl = admin_url('/admin-ajax.php');
@@ -1243,13 +1243,19 @@ add_action('admin_init', 'idmember_load_admin_scripts');
 
 function idc_users() {
 	global $pagenow;
+
+	$default_tz = get_option('timezone_string');
+	if (empty($default_tz)) {
+		$default_tz = "UTC";
+	}
+	$tz = new DateTimeZone($default_tz);
+
 	$users = array();
 	$levels = array();
 	$member = new ID_Member();
 	$users = array_reverse($member->get_allowed_users());
 	$total_users = count($users);
-	$level = new ID_Member_Level();
-	$levels = $level->get_levels();
+	$levels = ID_Member_Level::get_levels();
 	for ($i = 0; $i < count($levels); $i++) {
 		$count = ID_Member_Level::get_level_member_updated_count($levels[$i]->id);
 		$levels[$i]->count = $count;
@@ -1367,6 +1373,12 @@ function idc_users() {
 }
 
 function idc_orders() {
+	#devnote timestamps should be stored in UTC
+	$default_tz = get_option('timezone_string');
+	if (empty($default_tz)) {
+		$default_tz = "UTC";
+	}
+	$tz = new DateTimeZone($default_tz);
 	// number of results to show per page
 	$row_count = 20;
 	// what's on the page now?
@@ -1446,10 +1458,7 @@ function idc_orders() {
 		$misc = ' WHERE user_id = '.absint($_GET['user_id']);
 	}
 	$orders = ID_Member_Order::get_orders($search, $limit, (isset($misc) ? $misc : ''), 'DESC');
-	$default_timezone = get_option('timezone_string');
-	if (empty($default_timezone)) {
-		$default_timezone = "UTC";
-	}
+
 	include_once 'templates/admin/_orderList.php';
 	include_once 'templates/admin/_preorderStatus.php';
 }
@@ -1489,14 +1498,14 @@ function edit_order_details() {
 		echo '<script>location.href="admin.php?page=idc-orders";</script>';
 	}
 
-	$default_timezone = get_option('timezone_string');
-	if (empty($default_timezone)) {
-		$default_timezone = "UTC";
+	$default_tz = get_option('timezone_string');
+	if (empty($default_tz)) {
+		$default_tz = "UTC";
 	}	
-	$time_zone = new DateTimeZone($default_timezone);
+	$tz = new DateTimeZone($default_tz);
 
 	$datetime = new DateTime($order_data->order_date);	//$datetime->format('Y-m-d H:i:s')
-	$datetime->setTimezone($time_zone);
+	$datetime->setTimezone($tz);
 	
 	include_once 'templates/admin/_orderEdit.php';
 }
@@ -1923,12 +1932,11 @@ function idc_save_level_admin($level_submit, $args, $level_id = null, $ajax = fa
 				$combined_product = sanitize_text_field($_POST['combined_recurring_product']);
 			}
 		}
-		if (isset($_POST['limit_term'])) {
-			$limit_term = absint($_POST['limit_term']);
-		}
-		else {
-			$limit_term = 0;
-		}
+		$trial_period = (isset($_POST['trial_period']) ? absint($_POST['trial_period']) : 0);
+		$trial_length = (isset($_POST['trial_length']) ? absint($_POST['trial_length']) : null);
+		$trial_type = ($trial_period && isset($_POST['trial_type']) ? sanitize_text_field($_POST['trial_type']) : null);
+
+		$limit_term = (isset($_POST['limit_term']) ? absint($_POST['limit_term']) : 0);
 		$term_length = sanitize_text_field($_POST['term_length']);
 		$plan = sanitize_text_field($_POST['plan']);
 		$license_count = (isset($_POST['license-count']) ? sanitize_text_field($_POST['license-count']) : '-1');
@@ -1966,6 +1974,9 @@ function idc_save_level_admin($level_submit, $args, $level_id = null, $ajax = fa
 		'txn_type' => $txn_type,
 		'level_type' => $license_type,
 		'recurring_type' => $recurring,
+		'trial_period' => $trial_period,
+		'trial_length' => $trial_length,
+		'trial_type' => $trial_type,
 		'limit_term' => $limit_term,
 		'term_length' => $term_length,
 		'plan' => $plan,
@@ -2000,6 +2011,9 @@ function idc_save_level_admin($level_submit, $args, $level_id = null, $ajax = fa
 		$txn_type = '';
 		$license_type = '';
 		$recurring = '';
+		$trial_period = 0;
+		$trial_length = '';
+		$trial_type = '';
 		$limit_term = 0;
 		$term_length = '';
 		$plan = '';
@@ -2020,4 +2034,20 @@ function idc_save_level_admin($level_submit, $args, $level_id = null, $ajax = fa
 	}
 }
 add_action('idc_save_product', 'idc_save_level_admin', 10, 3);
+
+function idc_order_item_update() {
+	if (empty($_POST['args'])) {
+		return 0;
+	}
+	
+	$args = idf_sanitize_array($_POST['args']);
+	if (empty($args['id']) || empty($args['column']) || empty($args['value'])) {
+		return 0;
+	}
+	$update = ID_Member_Order::update_order_by_field($args['id'], $args['column'], $args['value']);
+	echo $update;
+	exit;
+}
+
+add_action('wp_ajax_idc_order_item_update', 'idc_order_item_update');
 ?>

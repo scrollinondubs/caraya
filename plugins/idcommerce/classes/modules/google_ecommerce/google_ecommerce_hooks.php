@@ -1,7 +1,7 @@
 <?php
 function google_ecommerce_scripts() {
 	$property_code = get_transient('idc_ga_property_code');
-	wp_register_script('google_ecommerce-script', plugins_url('js/google_ecommerce.js', __FILE__));
+	wp_register_script('google_ecommerce-script', plugins_url('js/google_ecommerce-min.js', __FILE__));
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('google_ecommerce-script');
 	wp_localize_script('google_ecommerce-script', 'idc_ga_property_code', $property_code);

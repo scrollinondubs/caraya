@@ -104,22 +104,35 @@
 											<option value="monthly"><?php _e('Monthly', 'memberdeck'); ?></option>
 											<option value="annual"><?php _e('Annual', 'memberdeck'); ?></option>
 										</select>
-										<?php if (!$es) {
-											echo '<div style="display: none">';
-										} ?>
-										<br/>
-										<label for="plan"><?php _e('Stripe Plan Name', 'memberdeck'); ?><br/><?php _e('*can only be used once', 'memberdeck'); ?></label>
-										<input type="text" name="plan" id="plan" value=""/>
-										<?php if (!$es) {
-											echo '</div>';
-										} ?>
-										<br/>
+										<div <?php echo (!$es ? 'style="display: none"' : ''); ?>>
+											<label for="plan"><?php _e('Stripe Plan Name', 'memberdeck'); ?></label>
+											<input type="text" name="plan" id="plan" value=""/>
+										</div>
+										<div class="inline">
+											<input type="checkbox" name="trial_period" id="trial_period" value="1"/>
+											<label for="trial_period"><?php _e('Offer Free Trial', 'memberdeck'); ?></label>
+										</div>
+										<div>
+											<label for="trial_length"><?php _e('Trial Length', 'memberdeck'); ?></label>
+											<input type="number" name="trial_length" id="trial_length" value="" />
+										</div>
+										<div>
+											<label for="trial_type"><?php _e('Trial Type', 'memberdeck'); ?></label>
+											<select name="trial_type" id="trial_type">
+												<option value="day"><?php _e('Day(s)', 'memberdeck'); ?></option>
+												<option value="weekly"><?php _e('Week(s)', 'memberdeck'); ?></option>
+												<option value="monthly"><?php _e('Month(s)', 'memberdeck'); ?></option>
+												<option value="annual"><?php _e('Year(s)', 'memberdeck'); ?></option>
+											</select>
+										</div>
 										<div class="inline">
 											<input type="checkbox" name="limit_term" id="limit_term" value="1"/>
 											<label for="limit_term"><?php _e('Limit Number of Payments', 'memberdeck'); ?></label>
 										</div>
-										<label for="term_length"><?php _e('Number of Payments', 'memberdeck'); ?></label>
-										<input type="text" name="term_length" id="term_length" value="" />
+										<div>
+											<label for="term_length"><?php _e('Number of Payments', 'memberdeck'); ?></label>
+											<input type="text" name="term_length" id="term_length" value="" />
+										</div>
 									</div>
 									<?php if (!is_idc_free()) { ?>
 									<div class="form-input">
@@ -554,7 +567,6 @@
 								<div class="form-input" <?php echo (isset($enable_default_product) && !$enable_default_product ? 'style="display: none;"' : ''); ?>>
 									<br/>
 									<select name="default_product" id="default_product" data-selected="<?php echo (isset($default_product) ? $default_product : ''); ?>">
-										<option>-- <?php _e('Choose Product', 'memberdeck'); ?> --</option>
 									</select>
 								</div>
 								<?php if (function_exists('is_id_pro') && is_id_pro()) { ?>

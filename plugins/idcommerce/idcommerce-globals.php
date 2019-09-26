@@ -54,7 +54,7 @@ $permalink_structure = get_option('permalink_structure');
 6. Stripe API Version
 */
 global $stripe_api_version;
-$stripe_api_version = "2014-05-19";
+$stripe_api_version = "2017-05-25";
 
 /**
 7. Combined Purchases

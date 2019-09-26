@@ -20,6 +20,10 @@ class ID_FES {
 	function __construct($form = null, $vars = null) {
 		if (empty($form)) {
 			$this->form = apply_filters('id_fes_form_init', $form, $vars);
+			$this->form[] = array(
+				'before' => '<div class="id_fes_errors upper">',
+				'after' => '</div>'
+				);
 			$this->form[] = self::id_fes_project_name_field($vars);
 			if (empty($vars['status']) || strtoupper($vars['status']) !== 'PUBLISH') {
 				// draft or pending review
@@ -103,11 +107,11 @@ class ID_FES {
 							'type' => 'number',
 							'wclass' => 'form-row half left',
 							'class' => '',
-							'misc' => 'step="any" min="0"'
+							'misc' => 'step="0.25" min="0"'
 							);
 						$this->form[] = array(
 							'label' => __('Level Limit', 'ignitiondeck'),
-							'value' => (isset($vars['levels'][0]['limit']) ? $vars['levels'][0]['limit'] : ''),
+							'value' => (isset($vars['levels'][0]['limit']) ? $vars['levels'][0]['limit'] : null),
 							'name' => 'project_level_limit[]',
 							'id' => 'project_level_1_limit',
 							'type' => 'number',
@@ -137,7 +141,7 @@ class ID_FES {
 								);
 							$this->form[] = array(
 								'label' => __('Level Limit', 'ignitiondeck'),
-								'value' => (isset($vars['levels'][0]['limit']) ? $vars['levels'][0]['limit'] : ''),
+								'value' => (isset($vars['levels'][0]['limit']) ? $vars['levels'][0]['limit'] : null),
 								'name' => 'project_level_limit[]',
 								'id' => 'project_level_1_limit',
 								'type' => 'hidden',
@@ -184,11 +188,11 @@ class ID_FES {
 								'type' => 'number',
 								'wclass' => 'form-row half left',
 								'class' => 'required',
-								'misc' => 'step="any" min="0"'
+								'misc' => 'step="0.25" min="0"'
 								);
 							$this->form[] = array(
 								'label' => __('Level Limit', 'ignitiondeck'),
-								'value' => (isset($vars['levels'][$i]['limit']) ? $vars['levels'][$i]['limit'] : ''),
+								'value' => (isset($vars['levels'][$i]['limit']) ? $vars['levels'][$i]['limit'] : null),
 								'name' => 'project_level_limit[]',
 								'id' => 'project_level_'.($i + 1).'_limit',
 								'type' => 'number',
@@ -204,7 +208,7 @@ class ID_FES {
 									'wclass' => 'form-row pretty_dropdown',
 									'value' => (isset($vars['levels'][$i]['fund_type']) ? $vars['levels'][$i]['fund_type'] : 'capture'),
 									'options' => apply_filters('ide_fund_options', array(
-										array('value' => 'capture', 'title' => 'Immediately Deliver Funds', 'misc' => ($vars['fund_types'] == 'preauth' ? 'disabled="disabled"' : '')), 
+										array('value' => 'capture', 'title' => __('Immediately Deliver Funds', 'ignitiondeck'), 'misc' => ($vars['fund_types'] == 'preauth' ? 'disabled="disabled"' : '')), 
 										array('value' => 'preauth', 'title' => '100% Threshold', 'misc' => ($vars['fund_types'] == 'capture' || $vars['fund_types'] == 'c_sub' ? 'disabled="disabled"' : '')),))
 									);
 							}
@@ -272,7 +276,7 @@ class ID_FES {
 					'id' => 'project_level_1_price',
 					'type' => 'number',
 					'wclass' => 'form-row half left',
-					'misc' => 'disabled="disabled" step="any" min="0"'
+					'misc' => 'disabled="disabled" step="0.25" min="0"'
 					);
 				$this->form[] = array(
 					'label' => __('Level Limit', 'ignitiondeck'),
@@ -294,7 +298,7 @@ class ID_FES {
 					);
 					$fund_type_args['options'] = array();
 					// Pushing both the options, removing on checks then
-					$option = array('value' => 'capture', 'title' => 'Immediately Deliver Funds');
+					$option = array('value' => 'capture', 'title' => __('Immediately Deliver Funds', 'ignitiondeck'));
 					array_push($fund_type_args['options'], $option);
 					$option = array('value' => 'preauth', 'title' => '100% Threshold');
 					array_push($fund_type_args['options'], $option);
@@ -343,6 +347,10 @@ class ID_FES {
 					);
 				$this->form[] = 	array(
 					'after' => '</div><div class="border-bottom"></div>'
+					);
+				$this->form[] = array(
+					'before' => '<div class="id_fes_errors lower">',
+					'after' => '</div>'
 					);
 				$submit_button = array(
 					'value' => (isset($vars['status']) && strtoupper($vars['status']) == 'PUBLISH' ? __('Update', 'ignitiondeck') : __('Update Submission', 'ignitiondeck')),
@@ -396,7 +404,7 @@ class ID_FES {
 			);
 			$fund_type_args['options'] = array();
 			// Pushing both the options, removing on checks then
-			$option = array('value' => 'capture', 'title' => 'Immediately Deliver Funds');
+			$option = array('value' => 'capture', 'title' => __('Immediately Deliver Funds', 'ignitiondeck'));
 			array_push($fund_type_args['options'], $option);
 			$option = array('value' => 'preauth', 'title' => '100% Threshold');
 			array_push($fund_type_args['options'], $option);
@@ -439,7 +447,7 @@ class ID_FES {
 			'id' => 'project_name',
 			'type' => 'text',
 			'class' => 'required',
-			'wclass' => 'form-row twothird left'
+			'wclass' => 'form-row'
 		);
 		return $field;
 	}
@@ -447,13 +455,13 @@ class ID_FES {
 	public static function id_fes_goal_field($vars) {
 		$field = array(
 			'label' => __('Goal Amount', 'ignitiondeck'),
-			'value' => (isset($vars['project_goal']) ? $vars['project_goal'] : ''),
+			'value' => (isset($vars['project_goal']) ? $vars['project_goal'] : '1.00'),
 			'name' => 'project_goal',
 			'id' => 'project_goal',
 			'type' => 'number',
 			'class' => 'required',
 			'wclass' => 'form-row onethird',
-			'misc' => 'step="any" min="0"'
+			'misc' => 'step="0.25" min="1.00"'
 		);
 		return $field;
 	}
@@ -465,6 +473,9 @@ class ID_FES {
 			'hide_empty' => false
 		);
 		$categories = get_categories($args);
+		if (empty($categories)) {
+			return null;
+		}
 		$cat_form = array(
 			'label' => __('Project Category', 'ignitiondeck'),
 			'value' => (isset($vars['project_category']) ? $vars['project_category'] : ''),
@@ -596,6 +607,7 @@ class ID_FES {
 			'name' => 'project_hero',
 			'id' => 'project_hero',
 			'type' => 'file',
+			'after' => '</div>',
 			'wclass' => 'form-row half left'
 		);
 		return $field;
@@ -607,7 +619,7 @@ class ID_FES {
 			'name' => 'project_hero_removed',
 			'id' => 'project_hero_removed',
 			'type' => 'hidden',
-			'wclass' => 'hide'
+			'wclass' => 'hide',
 		);
 		return $field;
 	}

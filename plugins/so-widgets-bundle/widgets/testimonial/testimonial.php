@@ -4,6 +4,7 @@ Widget Name: Testimonials
 Description: Display some testimonials.
 Author: SiteOrigin
 Author URI: https://siteorigin.com
+Documentation: https://siteorigin.com/widgets-bundle/testimonials-widget/
 */
 
 class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
@@ -89,7 +90,7 @@ class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
 
 					'new_window' => array(
 						'type' => 'checkbox',
-						'label' => __('Open In New Window', 'so-widgets-bundle'),
+						'label' => __('Open in a new window', 'so-widgets-bundle'),
 					),
 				)
 			),
@@ -136,7 +137,7 @@ class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
 									'width' => array(
 										'type' => 'text',
 										'label' => __( 'Resolution', 'so-widgets-bundle' ),
-										'description' => __( 'The resolution to treat as a mobile resolution.', 'so-widgets-bundle' ),
+										'description' => __( 'The resolution to treat as a tablet resolution.', 'so-widgets-bundle' ),
 										'default' => 800,
 										'sanitize' => 'intval',
 									)
@@ -165,7 +166,7 @@ class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
 									'width' => array(
 										'type' => 'text',
 										'label' => __( 'Resolution', 'so-widgets-bundle' ),
-										'description' => __( 'The resolution to treat as a tablet resolution.', 'so-widgets-bundle' ),
+										'description' => __( 'The resolution to treat as a mobile resolution.', 'so-widgets-bundle' ),
 										'default' => 480,
 										'sanitize' => 'intval',
 									)
@@ -188,7 +189,7 @@ class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
 						'fields' => array(
 							'image_shape' => array(
 								'type' => 'select',
-								'label' => __('Testimonial image shape', 'so-widgets-bundle'),
+								'label' => __('Image shape', 'so-widgets-bundle'),
 								'options' => array(
 									'square' => __('Square', 'so-widgets-bundle'),
 									'round' => __('Round', 'so-widgets-bundle'),
@@ -213,16 +214,16 @@ class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
 						'fields' => array(
 							'testimonial_background' => array(
 								'type' => 'color',
-								'label' => __('Widget Background', 'so-widgets-bundle'),
+								'label' => __('Widget background', 'so-widgets-bundle'),
 							),
 							'text_background' => array(
 								'type' => 'color',
-								'label' => __('Text Background', 'so-widgets-bundle'),
+								'label' => __('Text background', 'so-widgets-bundle'),
 								'default' => '#f0f0f0',
 							),
 							'text_color' => array(
 								'type' => 'color',
-								'label' => __('Text Color', 'so-widgets-bundle'),
+								'label' => __('Text color', 'so-widgets-bundle'),
 								'default' => '#444444',
 							),
 						),
@@ -239,7 +240,7 @@ class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
 
 					'border_radius' => array(
 						'type' => 'slider',
-						'label' => __( 'Testimonial Radius', 'so-widgets-bundle' ),
+						'label' => __( 'Text background radius', 'so-widgets-bundle' ),
 						'integer' => true,
 						'default' => 4,
 						'max' => 100,
@@ -302,6 +303,9 @@ class SiteOrigin_Widgets_Testimonials_Widget extends SiteOrigin_Widget {
 	}
 
 	function get_less_variables( $instance ){
+		if ( empty( $instance ) ) {
+			return array();
+		}
 		return array (
 			'image_size' => intval($instance['design']['image']['image_size']) . 'px',
 			'testimonial_size' => round(100/$instance['settings']['per_line'], 4) . '%',

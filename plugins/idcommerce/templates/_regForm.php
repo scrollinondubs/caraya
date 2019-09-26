@@ -1,4 +1,4 @@
-<div class="memberdeck">
+<div class="memberdeck ignitiondeck">
 	<form action="" method="POST" id="payment-form" name="reg-form" data-regkey="<?php echo (isset($reg_key) ? $reg_key : ''); ?>">
 		<div id="logged-input" class="no">
 			<div class="form-row third left">

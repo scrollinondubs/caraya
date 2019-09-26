@@ -18,8 +18,7 @@ function helix_wc_orders_url() {
 }
 
 function helix_wc_cart_url() {
-	global $woocommerce;
-	return $woocommerce->cart->get_cart_url();
+	return wc_get_cart_url();
 }
 
 /*

@@ -26,11 +26,7 @@ Visit http://ryanfait.com/ for more information.
 var checkboxHeight = "18";
 var radioHeight = "20.5";
 var selectWidth = "";
-
-
 /* No need to change anything after this */
-
-
 document.write('<style type="text/css">input.styled { display: none; } select.styled { position: relative; width: ' + selectWidth + 'px; opacity: 0; filter: alpha(opacity=0); z-index: 5; } .disabled { opacity: 0.5; filter: alpha(opacity=50); }</style>');
 
 var Custom = {
@@ -141,4 +137,13 @@ var Custom = {
 		}
 	}
 }
-window.onload = Custom.init;
+
+var prev_onload = window.onload;
+window.sfsi_styled_input=Custom;
+
+if('function' === typeof prev_onload){
+    prev_onload(),Custom.init();
+}
+else{
+    Custom.init();
+}

@@ -1,0 +1,13 @@
+.sq-input {
+    font-size: 13px;
+    line-height: 18px;
+    padding: 8px;
+    height: 36px;
+    color: #90a4ae;
+    display: block;
+    border: 1px solid #e7ebed;
+    border-radius: 4px 4px 4px 4px;
+    width: 100%;
+    background: #fdfdfd;
+    font-weight: 100;
+}

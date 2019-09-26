@@ -17,6 +17,16 @@ function idf_date_format() {
 	return $date_format;
 }
 
+function idf_sanitize_array($array) {
+	if (empty($array)) {
+		return $array;
+	}
+	foreach ($array as $k=>$v) {
+		$array[$k] = sanitize_text_field($v);
+	}
+	return $array;
+}
+
 function idf_platform() {
 	$platform = get_option('idf_commerce_platform', 'idc');
 	return $platform;
@@ -107,21 +117,45 @@ function idf_crowdfunding() {
 
 function idf_platforms() {
 	$platforms = array();
-	/*if (!function_exists('is_id_licensed') || !is_id_licensed()) {
-		return $platforms;
-	}*/
 	if (class_exists('ID_Member')) {
 		$platforms[] = 'idc';
 	}
-	if (class_exists('EDD_API')) {
-		$platforms[] = 'edd';
-	}
-	if (class_exists('WC_Install') && idf_has_idc()) {
-		if (!is_idc_free()) {
-			$platforms[] = 'wc';
+	if (idf_has_idcf()) {
+		if (is_id_basic() || is_id_pro()) {
+			if (class_exists('EDD_API')) {
+				$platforms[] = 'edd';
+			}
+			if (class_exists('WC_Install')) {
+				$platforms[] = 'wc';
+			}
 		}
 	}
 	return $platforms;
+}
+
+function idf_is_id_theme() {
+	$theme_info = wp_get_theme();
+	$theme_author = strtolower($theme_info->get('Author'));
+	if ($theme_author == 'ignitiondeck' || $theme_author == 'virtuousgiant') {
+		return true;
+	}
+	if (is_child_theme()) {
+		$parent_array = array(
+			'fivehundred',
+			'fundify',
+			'crowdpress'
+		);
+		if (in_array($theme_info->template, $parent_array)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function idf_process_account_validation($response) {
+	// this is where we would return a list of valid downloads by level id
+	$license_level = json_decode($response);
+	return $license_level;
 }
 
 function idf_process_validation($response) {
@@ -258,7 +292,7 @@ function idf_fh_delivery() {
 	}
 }
 
-function idf_extension_list() {
+function idf_extension_list($filter = null) {
 	$plugins = get_plugins();
 	/*$plugin_array = array();
 	if (!empty($plugins)) {
@@ -279,6 +313,15 @@ function idf_extension_list() {
 	$json = curl_exec($ch);
 	curl_close($ch);
 	$data = apply_filters('id_module_list', json_decode($json));
+	if (!empty($filter)) {
+		$new_data = array();
+		foreach ($data as $item) {
+			if (empty($item->{$filter['key']}) || $item->{$filter['key']} == $filter['value']) {
+				$new_data[] = $item;
+			}
+		}
+		$data = $new_data;
+	}
 	return $data;
 }
 
@@ -463,17 +506,23 @@ function idf_image_layout_by_dimensions($width, $height) {
 }
 
 function idf_registered() {
+	return get_option('idf_registered');
+}
+
+function idf_do_register() {
 	update_option('idf_regsitered_post', $_POST);
 	idf_deliver_plugins();
 	update_option('idf_registered', 1);
 	if (isset($_POST['Email'])) {
 		$email = esc_attr($_POST['Email']);
 		update_option('id_account', $email);
+		idf_id_update_account($email);
+		idf_id_set_validation_type();
 	}
 	exit;
 }
 
-add_action('wp_ajax_idf_registered', 'idf_registered');
+add_action('wp_ajax_idf_do_register', 'idf_do_register');
 
 function idf_reset_account() {
 	$options_array = array();

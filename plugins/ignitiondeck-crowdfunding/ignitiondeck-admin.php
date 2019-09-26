@@ -30,6 +30,7 @@ function ign_create_post_type() {
 		'capability_type' => 'post',
 		'menu_icon' => 'dashicons-ignitiondeck',
 		'query_var' => true,
+		'show_in_rest' => true,
 		'rewrite' => apply_filters('id_register_project_post_rewrite', array('slug' => $slug, 'with_front' => true)),
 		'has_archive' => apply_filters('id_register_project_post_has_archive', $slug),
 		'supports' => array('title', 'editor', 'comments', 'author', 'thumbnail'),
@@ -51,6 +52,7 @@ function ign_create_taxonomy() {
 		'show_ui' => true,
 		'show_admin_column' => true,
 		'query_var' => true,
+		'show_in_rest' => true,
 		'rewrite' => array('slug' => 'project-category')
 	);
 	$args = apply_filters('project_category_args', $args);
@@ -66,6 +68,7 @@ function ign_create_taxonomy() {
 		'show_ui' => true,
 		'show_admin_column' => true,
 		'query_var' => true,
+		'show_in_rest' => true,
 		'rewrite' => array('slug' => 'project-type')
 	);
 	$pt_args = apply_filters('project_type_args', $pt_args);
@@ -81,7 +84,7 @@ add_image_size('id_profile_image', 370, 208, true);
  */
 
 function enqueue_admin_js() {
-	wp_register_script('ignitiondeck-admin', plugins_url('/js/ignitiondeck-admin.js', __FILE__));
+	wp_register_script('ignitiondeck-admin', plugins_url('/js/ignitiondeck-admin-min.js', __FILE__));
 	wp_enqueue_script('jQuery');
 	wp_enqueue_script('ignitiondeck-admin');
 	if (is_multisite() && is_id_network_activated()) {
@@ -94,7 +97,7 @@ function enqueue_admin_js() {
 	wp_localize_script('ignitiondeck-admin', 'id_ajaxurl', $id_ajaxurl);
 	global $post;
 	if (isset($post->post_type) && $post->post_type == 'ignition_product') {
-	    wp_register_script( 'ignitiondeck', plugins_url('/js/ignitiondeck.js', __FILE__));
+	    wp_register_script( 'ignitiondeck', plugins_url('/js/ignitiondeck-min.js', __FILE__));
 	    wp_enqueue_script('ignitiondeck');
 	    wp_localize_script('ignitiondeck', 'id_ajaxurl', $id_ajaxurl);
 	    wp_enqueue_script('idf');
@@ -105,7 +108,7 @@ function enqueue_admin_js() {
 add_action('admin_enqueue_scripts', 'enqueue_admin_js');
 
 function enqueue_admin_css() {
-	wp_register_style( 'admin-css', plugins_url('/ignitiondeck-admin.css', __FILE__));
+	wp_register_style( 'admin-css', plugins_url('/ignitiondeck-admin-min.css', __FILE__));
 	wp_enqueue_style( 'admin-css');
 }
 
@@ -158,7 +161,7 @@ function manage_ign_product_columns($column_name, $id) {
 		if (isset($project_id)) {
 			$project = new ID_Project($project_id);
 			$post_id = $project->get_project_postid();
-			$raised = apply_filters('id_funds_raised', $project->get_project_raised(), $post_id);
+			$raised = $project->get_project_raised();
 			echo $raised;
 		}
 		break;
@@ -243,22 +246,13 @@ function id_admin_menus() {
 		//$project_settings = add_menu_page( __('Project Settings', 'ignitiondeck'), __('IDCF', 'ignitiondeck'), 'manage_options', 'ignitiondeck', 'product_settings', 'dashicons-ignitiondeck');
 		$project_settings = add_submenu_page( 'idf', __('Project Settings', 'ignitiondeck'), __('Project Settings', 'ignitiondeck'), 'manage_options', 'ignitiondeck', 'product_settings');
 		if (is_id_licensed()) {
-			$custom_settings = add_submenu_page( 'idf', __('Custom Project Settings', 'ignitiondeck'), __('Custom Settings', 'ignitiondeck'), 'manage_options', 'custom-settings', 'custom_settings');
-	    	$payment_settings = add_submenu_page( 'idf', __('IDCF Payment Settings', 'ignitiondeck'), __('Payment Settings', 'ignitiondeck'), 'manage_options', 'payment-options', 'paypal_payment_options');
 	    	$deck_settings = add_submenu_page( 'idf', __('Deck Builder', 'ignitiondeck'), __('Deck Builder', 'ignitiondeck'), 'manage_options', 'deck-builder', 'deck_builder');
 	    }
 	    $order_menu = add_submenu_page( 'idf', __('IDCF Orders', 'ignitiondeck'), __('IDCF Orders', 'ignitiondeck'), 'manage_options', 'order_details', 'order_details');
-		if (is_id_licensed() && $platform == 'legacy') {
-			$email_settings = add_submenu_page( 'ignitiondeck', __('Email Settings', 'ignitiondeck'), __('Email Settings', 'ignitiondeck'), 'manage_options', 'email-settings', 'email_settings');
-	    }
-	    //add_submenu_page( 'ignitiondeck', 'Social Settings', 'Social Settings ', 'manage_options', 'social-settings', 'social_application');
-	    //add_submenu_page( 'ignitiondeck', 'Payment Form Settings', 'Payment Form Settings', 'manage_options', 'form-settings', 'form_settings');
-		//add_submenu_page( 'ignitiondeck', 'Asked Question', 'Asked Question', 'manage_options', 'asked_questions', 'asked_questions');
 		$edit_order = add_submenu_page( $order_menu, __('Edit Order', 'ignitiondeck'), '', 'manage_options', 'edit_order', 'edit_order');
 		$view_order = add_submenu_page( $order_menu, __('View order', 'ignitiondeck'), '', 'manage_options', 'view_order', 'view_order');
 		$delete_order = add_submenu_page( $order_menu, __('Delete Order', 'ignitiondeck'), '', 'manage_options', 'delete_order', 'delete_order');
 		$add_order = add_submenu_page( $order_menu, __('Add Order', 'ignitiondeck'), '', 'manage_options', 'add_order', 'add_order');	
-		//add_submenu_page( $order_menu, 'Refund', '', 'manage_options', 'refund', 'refund_order');
 		do_action('id_submenu');
 		if (function_exists('id_font_awesome')) {
 			add_action('admin_print_styles-'.$project_settings, 'id_font_awesome');
@@ -268,12 +262,7 @@ function id_admin_menus() {
 		}
 		$menus = array($project_settings, $order_menu, $edit_order, $view_order, $delete_order, $add_order);
 		if (is_id_licensed()) {
-			$menus[] = $custom_settings;
-			$menus[] = $payment_settings;
 			$menus[] = $deck_settings;
-			if ($platform == 'legacy') {
-				$menus[] = $email_settings;
-			}
 		}
 		$menus = apply_filters('id_menu_enqueue', $menus);
 		if (is_array($menus)) {
@@ -440,34 +429,41 @@ function edit_order() {
  *  function for updating order on submission of form
  */
 function update_order() {
+	#devnote use ID_Order->update_order();
 	if ( isset($_POST['btnUpdateOrder']) ) {
 		global $wpdb;
-		$orderid = $_GET['orderid'];
+		$order_id = absint($_GET['orderid']);
 		if (isset($_POST['manual-input']) && $_POST['manual-input'] !== "") {
-			$price = $_POST['manual-input'];
+			$price = sanitize_text_field($_POST['manual-input']);
 		}
 		else {
-			$price = $_POST['prod_price'];
+			$price = sanitize_text_field($_POST['prod_price']);
+		}
+		$order = new ID_Order($order_id);
+		$the_order = $order->get_order();
+		if (empty($the_order)) {
+			return;
 		}
 		$sql = "UPDATE ".$wpdb->prefix."ign_pay_info SET
-				first_name = '".$_POST['first_name']."',
-				last_name = '".$_POST['last_name']."',
-				email = '".$_POST['email']."',
-				address = '".$_POST['address']."',
-				country = '".$_POST['country']."',
-				state = '".$_POST['state']."',
-				city = '".$_POST['city']."',
-				zip = '".$_POST['zip']."',
-				status = '".$_POST['status']."',
-				product_id = '".$_POST['product_id']."',
-				product_level = '".$_POST['product_level']."',
+				first_name = '".sanitize_text_field($_POST['first_name'])."',
+				last_name = '".sanitize_text_field($_POST['last_name'])."',
+				email = '".sanitize_email($_POST['email'])."',
+				address = '".sanitize_text_field($_POST['address'])."',
+				country = '".sanitize_text_field($_POST['country'])."',
+				state = '".sanitize_text_field($_POST['state'])."',
+				city = '".sanitize_text_field($_POST['city'])."',
+				zip = '".sanitize_text_field($_POST['zip'])."',
+				status = '".sanitize_text_field($_POST['status'])."',
+				product_id = '".absint($_POST['product_id'])."',
+				product_level = '".sanitize_text_field($_POST['product_level'])."',
 				prod_price = '".$price."'
-				WHERE id = '".$_GET['orderid']."'
+				WHERE id = '".$order_id."'
 				";
 		$wpdb->query( $sql );
 		
 		wp_redirect( "admin.php?page=order_details" );
-		do_action('id_order_update', $orderid);
+		do_action('id_modify_order', $order_id, 'update', $the_order);
+		do_action('id_update_order', $order_id, $the_order);
 		exit;
 	}
 }
@@ -504,13 +500,10 @@ function view_order() {
  *  Function for deleting Order
  */
 function delete_order() {
-	global $wpdb;
-	$orderid = $_GET['orderid'];
-	do_action('id_pre_order_delete', $orderid);
-    $sql = "DELETE FROM ".$wpdb->prefix."ign_pay_info WHERE id = '".$orderid."'";
-    $wpdb->query( $sql );
-	do_action('id_order_delete', $orderid);
-	do_action('id_modify_order', $orderid, 'delete');
+	if (!empty($_GET['orderid'])) {
+		$order_id = absint($_GET['orderid']);
+		$delete = ID_Order::delete_order($order_id);
+	}
 	echo '<script type="text/javascript">window.location = "admin.php?page=order_details";</script>';
 	exit;
 }
@@ -558,7 +551,6 @@ function add_order() {
 		do_action('id_insert_order', $pay_info_id);
 		
 		$product_settings = getProductSettings($_POST['product_id']);
-		$mailchip_settings = getMailchimpSettings();
 		echo '<script type="text/javascript">window.location = "admin.php?page=order_details";</script>'; //wp_redirect( "admin.php?page=order_details" );
 		exit;
 	}
@@ -763,18 +755,6 @@ function product_settings() {
 			}
 			$purchase_default = array('option' => $purl_sel, 'value' => $purl);
 			update_option('id_purchase_default', $purchase_default);
-			if (idf_exists() && idf_platform() == 'legacy') {
-				// ty url
-				$tyurl_sel = esc_attr($_POST['ign_option_ty_url']);
-				if ($tyurl_sel == 'page_or_post') {
-					$tyurl = absint($_POST['ign_ty_post_name']);
-				}
-				else {
-					$tyurl = esc_attr($_POST['id_project_URL']);
-				}
-				$ty_default = array('option' => $tyurl_sel, 'value' => $tyurl);
-				update_option('id_ty_default', $ty_default);
-			}
 			if (isset($_POST['auto_insert'])) {
 				$auto_insert = absint($_POST['auto_insert']);
 			}
@@ -805,122 +785,6 @@ function product_settings() {
 	echo '</div>';
 }
 
-function custom_settings() {
-	global $wpdb;
-
-	if (isset($_GET['pid']) && $_GET['pid'] !== "") {
-		$pid = $_GET['pid'];
-		$pay_selection = getDefaultPaymentMethod();
-		$project = new ID_Project($pid);
-		$product_settings = $project->get_project_settings();
-		$products = $project->the_project();
-
-		if (!empty($product_settings)) {
-			$form = unserialize($product_settings->form_settings);
-			$serializedForm = $product_settings->form_settings;
-			$mc_api = $product_settings->mailchimp_api_key;
-			$mc_list = $product_settings->mailchimp_list_id;
-			$aweber_email = $product_settings->aweber_email;
-			$mailtype = $product_settings->active_mailtype;
-			$paypal_email = $product_settings->paypal_email;
-			$currency_code = $product_settings->currency_code;
-		}
-		else {
-			$mc_api = '';
-			$mc_list = '';
-			$aweber_email = '';
-			$mailtype = '';
-			$paypal_email = '';
-			$currency_code = 'USD';
-			$form = '';
-			$serializedForm = serialize($form);
-		}
-	}
-	else {
-		$products = ID_Project::get_all_projects();
-	}
-
-	if (isset($_POST['btnSubmitProdSettings'])) {
-		if (isset($_POST['mailchimp_api_key'])) {
-			$mc_api = $_POST['mailchimp_api_key'];
-		}
-		if (isset($_POST['mailchimp_list_id'])) {
-			$mc_list = $_POST['mailchimp_list_id'];
-		}
-		if (isset($_POST['aweber_email'])) {
-			$aweber_email = $_POST['aweber_email'];
-		}
-		if (isset($_POST['active_mailtype'])) {
-			$mailtype = $_POST['active_mailtype'];
-		}
-		if (isset($_POST['paypal_email'])) {
-			$paypal_email = $_POST['paypal_email'];
-		}
-		if (isset($_POST['currency_code'])) {
-			$currency_code = $_POST['currency_code'];
-		}
-		if (isset($_POST['ignitiondeck_form'])) {
-			$form = $_POST['ignitiondeck_form'];
-			$serializedForm = serialize($_POST['ignitiondeck_form']);
-		}
-
-		if (empty($product_settings)) {
-			$sql_insert_product = "INSERT INTO ".$wpdb->prefix."ign_product_settings (
-										product_id,
-										mailchimp_api_key,
-										mailchimp_list_id,
-										aweber_email,
-										active_mailtype,
-										form_settings,
-										paypal_email,
-										currency_code
-									) VALUES (
-										'".$_GET['pid']."',
-										'".$mc_api."',
-										'".$mc_list."',
-										'".$aweber_email."',
-										'".$mailtype."',
-										'".$serializedForm."',
-										'".$paypal_email."',
-										'".$currency_code."'
-									)";
-			$wpdb->query($sql_insert_product);
-			$message = '<div class="updated fade below-h2" id="message" class="updated"><p>'.__('Save Settings', 'ignitiondeck').'</p></div>';	
-		}
-		else {
-			$sql_update_product = "UPDATE ".$wpdb->prefix."ign_product_settings SET
-									mailchimp_api_key = '".$mc_api."',
-									mailchimp_list_id = '".$mc_list."',
-									aweber_email = '".$aweber_email."',
-									active_mailtype = '".$mailtype."',
-									form_settings = '".$serializedForm."',
-									paypal_email = '".$paypal_email."',
-									currency_code = '".$currency_code."'								
-									WHERE product_id = '".$_GET['pid']."'
-									";
-			$wpdb->query($sql_update_product);						
-			$message = '<div class="updated fade below-h2" id="message" class="updated"><p>'.__('Settings Updated', 'ignitiondeck').'</p></div>';	
-		}
-	}
-
-	else if (isset($_POST['btnClearProdSettings']) && $_POST['btnClearProdSettings'] !="") {
-		$pid = $_GET['pid'];
-		$project = new ID_Project($pid);
-		$clear = $project->clear_project_settings();
-		echo '<script>window.location="";</script>';
-	}
-
-	else if (isset($_POST['btnClearAllSettings']) && $_POST['btnClearAllSettings'] !="") {
-		$sql = "DELETE FROM ".$wpdb->prefix."ign_product_settings";
-		$clear_all_product_settings = $wpdb->query($sql);
-	}
-	
-	echo '<div class="wrap">
-			'.admin_menu_html();
-	include_once ('templates/admin/_customSettings.php');
-	echo '</div>';
-}
-
 function admin_menu_html() {
 	$platform = idf_platform();	
 	 //All the lines, with #GLOBALS['<variable name>']; replace with $<variable name>
@@ -935,14 +799,9 @@ function admin_menu_html() {
 			<h3 class="nav-tab-wrapper">';
 	$menu .= apply_filters('idcf_project_settings_tab', '<a '.(($_GET['page'] == "ignitiondeck") ? ' class="nav-tab nav-tab-active"' : ' class="nav-tab"').' href="admin.php?page=ignitiondeck">'.__('Project Settings', 'ignitiondeck').'</a>');
 	if (is_id_licensed()) {
-		$menu .= apply_filters('idcf_custom_settings_tab', '<a '.(($_GET['page'] == "custom-settings") ? ' class="nav-tab nav-tab-active"' : ' class="nav-tab"').' href="admin.php?page=custom-settings">'.__('Custom Project Settings', 'ignitiondeck').'</a>');
-		$menu .= apply_filters('idcf_payment_settings_tab', '<a '.(($_GET['page'] == "payment-options") ? ' class="nav-tab nav-tab-active"' : ' class="nav-tab"').'href="admin.php?page=payment-options">'.__('Payment Settings', 'ignitiondeck').'</a>');
 		$menu .= '<a '.(($_GET['page'] == "deck-builder") ? ' class="nav-tab nav-tab-active"' : ' class="nav-tab"').'href="admin.php?page=deck-builder">'.__('Deck Builder', 'ignitiondeck').'</a>';
 	}
 	$menu .= '<a '.(($_GET['page'] == "order_details") ? ' class="nav-tab nav-tab-active"' : ' class="nav-tab"').' href="admin.php?page=order_details">'.__('Orders', 'ignitiondeck').'</a>';
-	if (is_id_licensed() && $platform == 'legacy') {
-		$menu .= '<a '.(($_GET['page'] == "email-settings") ? ' class="nav-tab nav-tab-active"' : ' class="nav-tab"').' href="admin.php?page=email-settings">'.__('Email List Settings', 'ignitiondeck').'</a>';
-	}	
 	$menu_sub = '</h3></div>';
 		
 	return apply_filters('id_submenu_tab', $menu).$menu_sub;
@@ -1078,116 +937,49 @@ function save_purchase_url($post_id) {
 }
 add_action('save_post', 'save_purchase_url', 10, 2);
 
-function save_ty_url($post_id) {
-	// check nonce
-	if (!isset($_POST['add_ty_url_box_nonce']) || !wp_verify_nonce($_POST['add_ty_url_box_nonce'], 'add_ty_url_box')) {
-		return $post_id;
-	}
-	
-	// check capabilities
-	if ('post' == $_POST['post_type']) {
-		
-		if (!current_user_can('edit_post', $post_id)) {
-			return $post_id;
-		}
-
-	}
-	elseif (!current_user_can('edit_page', $post_id)) {
-		return $post_id;
-	}
-
-	// exit on autosave	
-	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-		return $post_id;
-	}
-	
-	if(isset($_POST['ign_option_ty_url']))
-	{
-		update_post_meta($post_id, 'ign_option_ty_url', esc_attr($_POST['ign_option_ty_url']));
-	}
-	
-	if ($_POST['ign_option_ty_url'] == "external_url") {		// If the Project URL is selected as external URL, that is the popup box is used to insert link
-		if(isset($_POST['ty_project_URL'])) {
-			update_post_meta($post_id, 'ty_project_URL', esc_attr($_POST['ty_project_URL']));
-			//update_post_meta($post_id, 'id_project_URL', $_POST['id_project_URL']);
-		} else {
-			delete_post_meta($post_id, 'ty_project_URL');
-		}
-		delete_post_meta($post_id, 'ign_ty_post_name');
-	} else if ($_POST['ign_option_ty_url'] == "page_or_post") {		// If project URL is some other Project page or Post page, then save its name
-		if(isset($_POST['ign_ty_post_name']))
-		{
-		
-			if($_POST['ign_ty_post_name'] != '')
-			{
-				update_post_meta($post_id, 'ign_ty_post_name', esc_attr($_POST['ign_ty_post_name']));
-			}
-		}
-		delete_post_meta($post_id, 'ty_project_URL');
-	} else if ($_POST['ign_option_ty_url'] == "current_page") {		// If it is the current page that is used as Project page, do nothing
-		// Do nothing as the project page is the ignition_project page itself
-		
-		// Deleting the Meta data for other types of $_POST['ign_option_project_url'] if it was previously stored
-		delete_post_meta($post_id, 'ign_ty_post_name');
-		delete_post_meta($post_id, 'ty_project_URL');
-	}
-}
-add_action('save_post', 'save_ty_url', 10, 2);
-
 /**
  * Function to save project parent in post meta using the meta_box
  */
 function save_project_parent($post_id) {
 	// Get it's parent id for using below
-	$parent_id = get_post_meta($post_id, 'ign_project_parent', true);
+	$old_parent = get_post_meta($post_id, 'ign_project_parent', true);
 
-	// Saving parent if it's not empty
-	if(isset($_POST['ign_option_project_parent']) && !empty($_POST['ign_option_project_parent'])) {
-		// updating post meta for parent id of $post_id if it's changed
-		if ($parent_id != $_POST['ign_option_project_parent']) {
-			update_post_meta($post_id, 'ign_project_parent', esc_attr($_POST['ign_option_project_parent']));
-
-			// Removing the $post_id from older parent's children
-			$old_parent_children = get_post_meta($parent_id, 'ign_project_children', true);
-			// If nothing is in post meta field ign_project_children then don't do anything
-			if (!empty($old_parent_children)) {
-				$index_post_id = array_search($post_id, $old_parent_children);
-				if (!($index_post_id === false)) {
-					unset($old_parent_children[$index_post_id]);
+	if (isset($_POST['ign_option_project_parent'])) {
+		$new_parent = absint($_POST['ign_option_project_parent']);
+		update_post_meta($post_id, 'ign_project_parent', $new_parent);
+		if (!empty($new_parent)) {
+			if ($old_parent !== $new_parent) {
+				$old_parent_children = get_post_meta($old_parent, 'ign_project_children', true);
+				if (!empty($old_parent_children)) {
+					// remove current $post_id from $old_parent_children
+					$index_post_id = array_search($post_id, $old_parent_children);
+					if (!($index_post_id === false)) {
+						unset($old_parent_children[$index_post_id]);
+					}
+					update_post_meta($parent_id, 'ign_project_children', $old_parent_children);
 				}
-				// Saving back the array into post meta in ign_project_children
-				update_post_meta($parent_id, 'ign_project_children', $old_parent_children);
+			}
+			
+			$parent_children = get_post_meta($new_parent, 'ign_project_children', true);
+
+			if (empty($parent_children)) {
+				$parent_children = array();
+			}
+
+			if (array_search($post_id, $parent_children) === false) {
+				array_push($parent_children, $post_id);
+				update_post_meta($new_parent, 'ign_project_children', $parent_children);
 			}
 		}
-		
-		// Now saving this into post meta of parent post id, but first getting the post meta of parent
-		$parent_children = get_post_meta($_POST['ign_option_project_parent'], 'ign_project_children', true);
-		// If nothing is in post meta field ign_project_children, then start it from an empty array
-		if (empty($parent_children)) {
-			$parent_children = array();
-		}
-
-		// Adding the current post_id into children if needed
-		if (array_search($post_id, $parent_children) === false) {
-			array_push($parent_children, $post_id);
-			update_post_meta($_POST['ign_option_project_parent'], 'ign_project_children', $parent_children);
-		}
-	}
-	// removing the parent if value is null
-	else {
-		delete_post_meta($post_id, 'ign_project_parent');
-		
-		// getting the parent's children and removing $post_id from them
-		$parent_children = get_post_meta($parent_id, 'ign_project_children', true);
-
-		// If nothing is in post meta field then don't do anything
-		if (!empty($parent_children)) {
-			$index_post_id = array_search($post_id, $parent_children);
-			if (!($index_post_id === false)) {
-				unset($parent_children[$index_post_id]);
+		else {
+			$parent_children = get_post_meta($old_parent, 'ign_project_children', true);
+			if (!empty($parent_children)) {
+				$index_post_id = array_search($post_id, $parent_children);
+				if (!($index_post_id === false)) {
+					unset($parent_children[$index_post_id]);
+				}
+				update_post_meta($old_parent, 'ign_project_children', $parent_children);
 			}
-			// Saving back the array into post meta in ign_project_children
-			update_post_meta($parent_id, 'ign_project_children', $parent_children);
 		}
 	}
 }
@@ -1285,36 +1077,5 @@ function id_idf_notice() {
 	echo '<div class="updated">
 	       <p>This plugin requires the <a href="'.$url.'">IgnitionDeck Framework</a> in order to function properly.</p>
 	    </div>';
-}
-
-class ID_MCE_Buttons {
-	function __construct() {
-		if(is_admin()) {
-			if ( current_user_can('edit_posts') && current_user_can('edit_pages') && get_user_option('rich_editing') == 'true') {
-        		add_filter('tiny_mce_version', array(&$this, 'tiny_mce_version') );
-        		add_filter("mce_external_plugins", array(&$this, "id_mce_plugin"));
-        		add_filter('mce_buttons_2', 'id_mce_shortcodes');
-        	}
-		}
-	}
-	function id_mce_shortcodes($buttons) {
-		$buttons[] = 'idshortcodes';
-		return $buttons;
-	}
-	function id_mce_plugin($plugin_array) {
-		$plugin_array['idshortcodes']  =  plugins_url('/js/idmce.js', __FILE__);
-		return $plugin_array;
-	}
-	function tiny_mce_version($version) {
-		return ++$version;
-	}
-
-}
-
-//add_action('init', 'ID_MCE_Buttons');
-
-function ID_MCE_Buttons() {
-	global $ID_MCE_Buttons;
-	$ID_MCE_Buttons = new ID_MCE_Buttons();
 }
 ?>

@@ -29,7 +29,7 @@
 					<?php if ($installed && !$active) { ?>
 						<button class="button activate_theme" data-theme="<?php echo $item->slug; ?>"><?php _e('Activate', 'idf'); ?></button>
 					<?php } else { ?>
-						<button class="button <?php echo (!$active ? 'button-primary' : ''); ?>" onclick="location.href='<?php echo $link; ?>'"><?php echo $text; ?></button>
+						<button class="button <?php echo (!$active ? 'button-primary' : ''); ?>" onclick="window.open('<?php echo $link; ?>', '_blank')"><?php echo $text; ?></button>
 					<?php } ?>
 				</div>
 			</div>

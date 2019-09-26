@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
     Class: ChildThemeConfiguratorCSS
     Plugin URI: http://www.childthemeconfigurator.com/
     Description: Handles all CSS input, output, parsing, normalization and storage
-    Version: 2.2.9
+    Version: 2.5.0
     Author: Lilaea Media
     Author URI: http://www.lilaeamedia.com/
     Text Domain: chld_thm_cfg
@@ -43,12 +43,14 @@ class ChildThemeConfiguratorCSS {
     var $enqueue;           // whether or not to load parent theme
     var $ignoreparnt;       // no not parse or enqueue parent
     var $qpriority;
+    var $mpriority;
     var $hasstyles;
     var $parntloaded;
     var $childloaded;
     var $parnt_deps;        // 
     var $child_deps;        //
     var $forcedep;
+    var $swappath;
     var $addl_css;
     var $cssunreg;
     var $csswphead;
@@ -95,6 +97,7 @@ class ChildThemeConfiguratorCSS {
     var $configvars = array(
         'addl_css',
         'forcedep',
+        'swappath',
         'cssunreg',
         'csswphead',
         'cssnotheme',
@@ -106,6 +109,7 @@ class ChildThemeConfiguratorCSS {
         'childloaded',
         'ignoreparnt',
         'qpriority',
+        'mpriority',
         'enqueue',
         'handling',
         'templates',
@@ -167,7 +171,8 @@ class ChildThemeConfiguratorCSS {
         $this->parnt            = '';
         $this->ignoreparnt      = 0;
         $this->qpriority        = 10;
-        $this->version          = '2.2.9';
+        $this->mpriority        = 10;
+        $this->version          = '2.5.0';
         
         // do not set enqueue, not being set is used to flag old versions
 
@@ -183,6 +188,7 @@ class ChildThemeConfiguratorCSS {
     function ctc() {
         return ChildThemeConfigurator::ctc();
     }
+    
     function mem_chk() {
         $currmemory = $this->memory;
 		if ( function_exists( 'memory_get_peak_usage' ) ) {
@@ -337,6 +343,8 @@ class ChildThemeConfiguratorCSS {
                 return empty( $this->parnt_imp ) ? array() : $this->parnt_imp;
             case 'forcedep': // v2.1.3
                 return empty( $this->forcedep ) ? array() : array_keys( $this->forcedep );
+            case 'swappath': // v2.3.1
+                return empty( $this->swappath ) ? array() : (array) $this->swappath;
             case 'parnt_deps':
                 return empty( $this->parnt_deps ) ? array() : $this->quotify_dependencies( 'parnt_deps' );
             case 'child_deps':
@@ -347,6 +355,8 @@ class ChildThemeConfiguratorCSS {
                 return empty( $this->ignoreparnt ) ? 0 : 1;
             case 'qpriority':
                 return empty( $this->qpriority ) ? 10 : $this->qpriority;
+            case 'mpriority':
+                return empty( $this->mpriority ) ? 10 : $this->mpriority;
             case 'parntloaded':
                 return empty( $this->parntloaded ) ? FALSE : $this->parntloaded;
             case 'childloaded':
@@ -435,6 +445,7 @@ class ChildThemeConfiguratorCSS {
             $arr[] = "'" . str_replace("'", "\'", $el ) . "'";
         return $arr;
     }
+    
     // creates header comments for stylesheet
     function get_css_header() {
         return array(
@@ -449,6 +460,7 @@ class ChildThemeConfiguratorCSS {
             'Updated'       => current_time( 'mysql' ),
         );
     }
+
     function get_css_header_comment( $handling = 'primary' ) {
         if ( 'separate' == $handling ):
             $contents = "/*" . LF
@@ -539,7 +551,7 @@ class ChildThemeConfiguratorCSS {
                 $this->packer->reset( $this->packer->decode( $this->val_ndx[ $qsid ] ) ); 
                 return $this->packer->unpack();
             } catch ( Exception $e ){
-                $this->ctc()->errors[] = 'Unpack failed -- ' . $e->getMessage();
+                $this->ctc()->debug( 'Unpack failed -- ' . $e->getMessage(), __FUNCTION__, __CLASS__ );
                 return FALSE;
             }
         endif;
@@ -550,7 +562,7 @@ class ChildThemeConfiguratorCSS {
         try {
             $this->val_ndx[ $qsid ] = $this->packer->encode( $this->packer->pack( $valarr ) );
         } catch ( Exception $e ){
-            $this->ctc()->errors[] = 'Pack failed -- ' . $e->getMessage();
+            $this->ctc()->debug( 'Pack failed -- ' . $e->getMessage(), __FUNCTION__, __CLASS__ );
         }
     }
     
@@ -777,6 +789,7 @@ class ChildThemeConfiguratorCSS {
         $this->load_config( 'dict_seq' );
         $this->load_config( 'dict_qs' );
         $this->cache_updates = TRUE;
+        // process RAW CSS input
         if ( isset( $_POST[ 'ctc_new_selectors' ] ) ):
             $this->styles = $this->parse_css_input( LF . $_POST[ 'ctc_new_selectors' ] );
             $this->parse_css( 'child', 
@@ -785,22 +798,12 @@ class ChildThemeConfiguratorCSS {
                 '', 
                 TRUE
             );
+        // process WEB FONTS & CSS inputs
         elseif ( isset( $_POST[ 'ctc_child_imports' ] ) ):
             $this->imports[ 'child' ] = array();
             $this->styles = $this->parse_css_input( $_POST[ 'ctc_child_imports' ] );
             $this->parse_css( 'child' );
-            
-        elseif ( isset( $_POST[ 'ctc_analysis' ] ) ):
-            
-            if ( $this->ctc()->cache_updates ):
-                $this->ctc()->updates[] = array(
-                    'obj'  => 'analysis',
-                    'data' => array(),
-                );
-            endif;
-            
-            $this->ctc()->evaluate_signals( $this->get_prop( 'ignoreparnt' ) );
-            
+        // process CONFIGURE inputs
         elseif ( isset( $_POST[ 'ctc_configtype' ] ) ):
             ob_start();
             do_action( 'chld_thm_cfg_get_stylesheets' );
@@ -819,10 +822,15 @@ class ChildThemeConfiguratorCSS {
             );
             ob_end_clean();
             return;
+        // process SAVE inputs
         else:
+            // New query added v2.3.0
+            $newquery = isset( $_POST[ 'ctc_rewrite_query' ] ) ? 
+                $this->sanitize( $this->parse_css_input( $_POST[ 'ctc_rewrite_query' ] ) ) : NULL;
             $newselector = isset( $_POST[ 'ctc_rewrite_selector' ] ) ? 
                 $this->sanitize( $this->parse_css_input( $_POST[ 'ctc_rewrite_selector' ] ) ) : NULL;
             $newqsid = NULL;
+        
             // set the custom sequence value
             foreach ( preg_grep( '#^ctc_ovrd_child_seq_#', array_keys( $_POST ) ) as $post_key ):
                 if ( preg_match( '#^ctc_ovrd_child_seq_(\d+)$#', $post_key, $matches ) ):
@@ -836,66 +844,48 @@ class ChildThemeConfiguratorCSS {
                     endif;
                 endif;
             endforeach;
+        
+            // iterate each property input
             $parts = array();
             foreach ( preg_grep( '#^ctc_(ovrd|\d+)_child#', array_keys( $_POST ) ) as $post_key ):
+        
+                // parse input key into individual components if it matches specific format, skip otherwise
                 if ( preg_match( '#^ctc_(ovrd|\d+)_child_([\w\-]+?)_(\d+?)_(\d+?)(_(.+))?$#', $post_key, $matches ) ):
-                    $valid      = $matches[ 1 ];
-                    $rule       = $matches[ 2 ];
+                    $valid      = $matches[ 1 ]; // this is used for inputs from property value tab
+                    $rule       = $matches[ 2 ]; // property name 
                     if ( NULL == $rule || FALSE === $this->lookup_dict_value( 'rule', $rule ) )
                         continue;
-                    $qsid       = $matches[ 3 ];
-                    $rulevalid  = $matches[ 4 ];
+                    $qsid       = $matches[ 3 ]; // query/selector id 
+                    $rulevalid  = $matches[ 4 ]; // id to identify multiple values of same property
+                    // normalize input value
                     $value      = $this->normalize_color( $this->sanitize( $this->parse_css_input( $_POST[ $post_key ] ) ) );
-                    $important  = $this->is_important( $value );
+                    // set important flag
+                    $important  = $this->is_important( $value ); // strip and set if !important passed in input
+                    // set important if checkbox input is set 
                     if ( !empty( $_POST[ 'ctc_' . $valid . '_child_' . $rule . '_i_' . $qsid . '_' . $rulevalid ] ) ) $important = 1;
+        
+                    // get current values from query/selector id if it exists, skip this property otherwise
                     $selarr = $this->denorm_query_sel( $qsid );
                     if ( empty( $selarr ) ) continue;
+        
+                    // if there is a "rule-part" (e.g., border or gradient properties ), store in parts array and process separately.
                     if ( !empty( $matches[ 6 ] ) ):
                         $parts[ $qsid ][ $rule ][ 'values' ][ $rulevalid ][ $matches[ 6 ] ] = $value;
                         $parts[ $qsid ][ $rule ][ 'values' ][ $rulevalid ][ 'important' ]   = $important;
-                        $parts[ $qsid ][ $rule ][ 'query' ]     = $selarr[ 'query' ];
-                        $parts[ $qsid ][ $rule ][ 'selector' ]  = $selarr[ 'selector' ];
-                        //$this->ctc()->debug( 'value: ' . $value . ' parts: ' . print_r( $parts, TRUE ), __FUNCTION__, __CLASS__ );
+                        $parts[ $qsid ][ $rule ][ 'query' ]                                 = $selarr[ 'query' ];
+                        $parts[ $qsid ][ $rule ][ 'selector' ]                              = $selarr[ 'selector' ];
+                    // otherwise process this property
                     else:
-                        if ( $newselector && $newselector != $selarr[ 'selector' ] ):
-                            // If this is a renamed selector, add new selector to array 
-                            $newqsid = $this->update_arrays( 
-                                'c',
-                                $selarr[ 'query' ],
-                                $newselector,
-                                $rule,
-                                trim( $value ),
-                                $important,
-                                $rulevalid
-                            );
-                            // clear the original selector's new value:
-                            $this->update_arrays(
-                                'c',
-                                $selarr[ 'query' ],
-                                $selarr[ 'selector' ],
-                                $rule,
-                                '',
-                                0,
-                                $rulevalid
-                            );
-                            $seq = $this->get_dict_value( 'seq', $qsid );
-                            if ( $seq != $newqsid ):
-                                $this->set_dict_value( 'seq', $newqsid, $seq );
-                            else:
-                                unset( $this->dict_seq[ $newqsid ] );
-                            endif;
-                        else:
-                            // otherwise, just update with the new values:
-                            $this->update_arrays( 
-                                'c', 
-                                $selarr[ 'query' ], 
-                                $selarr[ 'selector' ], 
-                                $rule, 
-                                trim( $value ), 
-                                $important, 
-                                $rulevalid
-                            );
-                        endif;
+                        $newqsid = $this->update_property(
+                            $newquery,
+                            $newselector,
+                            $selarr[ 'query' ], 
+                            $selarr[ 'selector' ], 
+                            $rule, 
+                            $value, 
+                            $important, 
+                            $rulevalid
+                        );
                     endif;
                 endif;
             endforeach;
@@ -913,7 +903,13 @@ class ChildThemeConfiguratorCSS {
                             $value = $rule_part[ 'background_url' ];
                         elseif ( 'background-image' == $rule ):
                             if ( empty( $rule_part[ 'background_url' ] ) ):
-                                if ( empty( $rule_part[ 'background_color2' ] ) ):
+                                // custom multi-stop or radial gradients can be passed verbatim in the origin field
+                                // but will not be parsed for vender-prefix support.
+                                if ( !empty( $rule_part[ 'background_origin' ] )
+                                    && preg_match( '{gradient}', $rule_part[ 'background_origin' ] ) ):
+                                    $value = $rule_part[ 'background_origin' ];
+                                    
+                                elseif ( empty( $rule_part[ 'background_color2' ] ) ):
                                     $value = '';
                                 else:
                                     if ( empty( $rule_part[ 'background_origin' ] ) )
@@ -943,48 +939,26 @@ class ChildThemeConfiguratorCSS {
                             $value = '';
                         endif;
                         
-                        //$this->ctc()->debug( 'modified value: ' . $value, __FUNCTION__, __CLASS__ );
-                        if ( $newselector && $newselector != $rule_arr[ 'selector' ] ):
-                            // If this is a renamed selector, add new selector to array 
-                            $newqsid = $this->update_arrays( 
-                                'c',
-                                $rule_arr[ 'query' ],
-                                $newselector,
-                                $rule,
-                                trim( $value ),
-                                $rule_part[ 'important' ],
-                                $rulevalid
-                            );  
-                            // clear the original selector's new value:
-                            $this->update_arrays( 
-                                'c',
-                                $rule_arr[ 'query' ],
-                                $rule_arr[ 'selector' ],
-                                $rule,
-                                '',
-                                0,
-                                $rulevalid
-                            );
-                        else:
-                            // otherwise, just update with the new values:
-                            $this->update_arrays( 
-                                'c', 
-                                $rule_arr[ 'query' ],
-                                $rule_arr[ 'selector' ], 
-                                $rule,
-                                trim( $value ),
-                                $rule_part[ 'important' ],
-                                $rulevalid
-                            );
-                        endif;
+                        $newqsid = $this->update_property(
+                            $newquery,
+                            $newselector,
+                            $rule_arr[ 'query' ],
+                            $rule_arr[ 'selector' ], 
+                            $rule,
+                            $value,
+                            $rule_part[ 'important' ],
+                            $rulevalid
+                        );
+
                     endforeach;
                 endforeach;
             endforeach;
-            if ( $newqsid )
-                $qsid = $newqsid;
         
             // remove if all values have been cleared - moved from update_arrays v2.2.5
             $this->prune_if_empty( $qsid );
+        
+            if ( $newqsid != $qsid )
+                $qsid = $newqsid;
         
             // return updated qsid to browser to update form
             if ( $this->ctc()->cache_updates )
@@ -998,8 +972,52 @@ class ChildThemeConfiguratorCSS {
         endif;
 
         // update enqueue function if imports have not been converted or new imports passed
-        if ( isset( $_POST[ 'ctc_analysis' ] ) || isset( $_POST[ 'ctc_child_imports' ] ) || !$this->get_prop( 'converted' ) )
+        if ( isset( $_POST[ 'ctc_child_imports' ] ) || !$this->get_prop( 'converted' ) )
             add_action( 'chld_thm_cfg_addl_files',   array( $this->ctc(), 'enqueue_parent_css' ), 15, 2 );
+    }
+    
+    /**
+     * standarized property update function
+     * added v2.3.0
+     */
+    function update_property(
+        $newquery,
+        $newselector,
+        $query,
+        $selector, 
+        $rule,
+        $value,
+        $important,
+        $rulevalid
+    ){
+        // If this is a renamed selector, add new selector to data
+        // otherwise update existing selector
+        $newqsid = $this->update_arrays( 
+            'c',
+            $newquery ? $newquery : $query,
+            $newselector ? $newselector : $selector,
+            $rule,
+            trim( $value ),
+            $important,
+            $rulevalid
+        );
+        // if query or selector have been renamed, 
+        // clear the original selector's value:
+        if ( $newquery || $newselector ):
+            $qsid = $this->update_arrays(
+                'c',
+                $query,
+                $selector,
+                $rule,
+                '',
+                0,
+                $rulevalid
+            );
+            // add new sequence entry
+            $seq = $this->get_dict_value( 'seq', $qsid );
+            $this->set_dict_value( 'seq', $newqsid, $seq );
+        endif;
+        return $newqsid;
     }
     
     /**
@@ -1094,6 +1112,7 @@ class ChildThemeConfiguratorCSS {
      * parse_css
      * Accepts raw CSS as text and parses into individual properties.
      * FIXME - this function has grown too monolithic - refactor and componentize
+     * FIXME - migrate to event parser? handle comments?
      */
     function parse_css( $template, $basequery = NULL, $parse_imports = TRUE, $relpath = '', $reset = FALSE ) {
         //$this->load_config( 'sel_ndx' );
@@ -1341,17 +1360,26 @@ class ChildThemeConfiguratorCSS {
             // write new stylesheet:
             // try direct write first, then wp_filesystem write
             // stylesheet must already exist and be writable by web server
-            if ( $this->ctc()->is_ajax && is_writable( $stylesheet_verified ) ):
-                if ( FALSE === @file_put_contents( $stylesheet_verified, $output ) ): 
-                    $this->ctc()->debug( 'Ajax write failed.', __FUNCTION__, __CLASS__ );
+            if ( $this->ctc()->is_ajax ):
+                if ( is_writable( $stylesheet_verified ) ):
+                    $this->ctc()->debug( 'Attempting Ajax write...', __FUNCTION__, __CLASS__ );
+                    if ( FALSE === @file_put_contents( $stylesheet_verified, $output ) ): 
+                        $this->ctc()->debug( 'Ajax write failed.', __FUNCTION__, __CLASS__ );
+                        return FALSE;
+                    endif;
+                else:
+                    $this->ctc()->debug( 'File not writable.', __FUNCTION__, __CLASS__ );
                     return FALSE;
                 endif;
             elseif ( FALSE === $wp_filesystem->put_contents( $this->ctc()->fspath( $stylesheet_verified ), $output, $mode ) ):
                 $this->ctc()->debug( 'Filesystem write failed.', __FUNCTION__, __CLASS__ );
                 return FALSE;
             endif;
+            $this->ctc()->debug( 'No write failure reported.', __FUNCTION__, __CLASS__ );
             return TRUE;
-        endif;   
+        endif;
+        $this->ctc()->debug( 'File NOT ok.', __FUNCTION__, __CLASS__ );
+
         return FALSE;
     }
     
@@ -1470,8 +1498,10 @@ class ChildThemeConfiguratorCSS {
             if ( $gradient = $this->decode_gradient( $value ) ):
                 // standard gradient
                 foreach( array( 'moz', 'webkit', 'o', 'ms' ) as $prefix ):
-                    $rule_output[ 'background-image: -' . $prefix . '-' . 'linear-gradient(' . $gradient[ 'origin' ] . ', ' 
-                        . $gradient[ 'color1' ] . ', ' . $gradient[ 'color2' ] . ')' . $importantstr ] = $this->sortstr( $rule, $rulevalid++ );
+                    // build key before dereferencing array - v.2.3.0.3
+                    $propkey = 'background-image: -' . $prefix . '-' . 'linear-gradient(' . $gradient[ 'origin' ] . ', ' 
+                        . $gradient[ 'color1' ] . ', ' . $gradient[ 'color2' ] . ')' . $importantstr;
+                    $rule_output[ $propkey ] = $this->sortstr( $rule, $rulevalid++ );
                 endforeach;
                 // W3C standard gradient
                 // rotate origin 90 degrees
@@ -1487,8 +1517,10 @@ class ChildThemeConfiguratorCSS {
                     endforeach;
                     $org = 'to ' . implode( ' ', $dirs );
                 endif;
-                $rule_output[ 'background-image: linear-gradient(' . $org . ', ' 
-                    . $gradient[ 'color1' ] . ', ' . $gradient[ 'color2' ] . ')' . $importantstr ] = $this->sortstr( $rule, $rulevalid );
+                // build key before dereferencing array - v.2.3.0.3
+                $propkey = 'background-image: linear-gradient(' . $org . ', ' 
+                    . $gradient[ 'color1' ] . ', ' . $gradient[ 'color2' ] . ')' . $importantstr;
+                $rule_output[ $propkey ] = $this->sortstr( $rule, $rulevalid );
                 
                 // legacy webkit gradient - we'll add if there is demand
                 // '-webkit-gradient(linear,' .$origin . ', ' . $color1 . ', '. $color2 . ')';
@@ -1904,17 +1936,17 @@ class ChildThemeConfiguratorCSS {
             switch ( $dict ):
                 case 'dict_seq':
                 case 'dict_token':
-                    continue;
+                    break;
                 case 'sel_ndx':
                     $this->{ $dict } = array();
-                    continue;
+                    break;
                 case 'val_ndx':
                     foreach ( $this->val_ndx as $qsid => $rulearr ):
                         foreach ( $rulearr as $ruleid => $valarr )
                             $this->convert_ruleval_array( $this->val_ndx[ $qsid ][ $ruleid ] );
                         $this->pack_val_ndx( $qsid, $this->val_ndx[ $qsid ] );
                     endforeach;
-                    continue;
+                    break;
                 case 'dict_qs':
                     $qsarr = array();
                     foreach ( $this->dict_qs as $qsid => $arr ):
@@ -1922,7 +1954,7 @@ class ChildThemeConfiguratorCSS {
                         $qsarr[ $qsid ] = $qs;
                     endforeach;
                     $this->dict_qs = $qsarr;
-                    continue;
+                    break;
                 default:
                     $this->{ $dict } = array_flip( $this->{ $dict } );
                     foreach ( $this->{ $dict } as $key => $val ):
@@ -2129,7 +2161,7 @@ class ChildThemeConfiguratorCSS {
         try {
             return $this->packer->encode( $this->packer->pack( $array ) );
         } catch ( Exception $e ) {
-            $this->ctc()->errors[] = 'Pack failed -- ' . $e->getMessage();
+            $this->ctc()->debug( 'Pack failed -- ' . $e->getMessage(), __FUNCTION__, __CLASS__ );
         }
     }
     
@@ -2144,7 +2176,8 @@ class ChildThemeConfiguratorCSS {
             $this->packer->reset( $this->packer->decode( $packed ) );
             $array = $this->packer->unpack();
         } catch ( Exception $e ) {
-            $this->ctc()->errors[] = 'Unpack failed -- ' . $e->getMessage();
+            $this->ctc()->debug( 'Unpack failed -- ' . $e->getMessage(), __FUNCTION__, __CLASS__ );
+            return FALSE;
         }
         $unpacked = array();
         // iterate array and replace tokens

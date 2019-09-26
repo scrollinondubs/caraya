@@ -16,7 +16,8 @@
 	<?php include ID_PATH.'templates/_socialButtons.php'; ?>
 		<div style="clear:both;"></div>
 		<?php do_action('id_before_content_description', $project_id, $post_id); ?>
-		<div class="long-description"><?php echo nl2br(html_entity_decode($project_long_desc)); ?></div>
+		<div class="long-description"><?php echo $project_long_desc; ?></div>
+		<?php do_action('id_after_content_description', $project_id, $post_id); ?>
 		<div class="clear"></div>
 	<?php
 	$product_faq = apply_filters('idcf_faqs', get_post_meta($post_id, "ign_faqs", true));

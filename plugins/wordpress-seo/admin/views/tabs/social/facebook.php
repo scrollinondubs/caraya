@@ -1,10 +1,10 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\Views
- */
-
-/**
- * @var Yoast_Form $yform
+ *
+ * @uses Yoast_Form $yform Form object.
  */
 
 if ( ! defined( 'WPSEO_VERSION' ) ) {
@@ -25,6 +25,9 @@ $yform->light_switch( 'opengraph', __( 'Add Open Graph meta data', 'wordpress-se
 	</p>
 
 <?php
+
+$yform->textinput( 'fbadminapp', __( 'Facebook App ID', 'wordpress-seo' ) );
+
 if ( 'posts' === get_option( 'show_on_front' ) ) {
 	$social_facebook_frontpage_help = new WPSEO_Admin_Help_Panel(
 		'social-facebook-frontpage',
@@ -56,7 +59,7 @@ if ( 'posts' === get_option( 'show_on_front' ) ) {
 			)
 		);
 
-		echo '<input type="hidden" id="meta_description" value="', $homepage_meta_description, '" />';
+		echo '<input type="hidden" id="meta_description" value="', esc_attr( $homepage_meta_description ), '" />';
 		echo '<div class="label desc copy-home-meta-description">' .
 				'<button type="button" id="copy-home-meta-description" class="button">', $copy_home_description_button_label, '</button>' .
 				$copy_home_meta_desc_help->get_button_html() .
@@ -75,8 +78,5 @@ $yform->media_input( 'og_default_image', __( 'Image URL', 'wordpress-seo' ) );
 	</p>
 
 <?php
-
-$social_facebook = new Yoast_Social_Facebook();
-$social_facebook->show_form();
 
 do_action( 'wpseo_admin_opengraph_section' );

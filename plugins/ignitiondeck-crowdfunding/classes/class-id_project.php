@@ -8,8 +8,8 @@ class ID_Project {
 		add_action('save_post_ignition_product', array($this, 'flush_project_raised'));
 		add_action('idf_cache_object', array($this, 'store_project_cache'));
 		add_action('id_update_product_defaults', array($this, 'flush_product_defaults'));
-		add_action('id_modify_order', array($this, 'flush_project_raised'));
-		add_action('id_modify_order', array($this, 'flush_project_orders'));
+		add_action('id_modify_order', array($this, 'flush_project_raised'), 10, 3);
+		add_action('id_modify_order', array($this, 'flush_project_orders'), 10, 3);
 	}
 
 	function the_project() {
@@ -117,38 +117,36 @@ class ID_Project {
 		return $order_count;
 	}
 
-	function flush_project_orders($order_id) {
-		$order = New ID_Order($order_id);
-		if (!empty($order)) {
+	function flush_project_orders($order_id, $action = null, $the_order = null) {
+		if (empty($the_order)) {
+			$order = New ID_Order($order_id);
 			$the_order = $order->get_order();
-			if (!empty($the_order->product_id)) {
-				idf_flush_object('id_project-get_project_orders-'.$the_order->product_id);
-			}
+		}
+		if (!empty($the_order->product_id)) {
+			idf_flush_object('id_project-get_project_orders-'.$the_order->product_id);
 		}
 	}
 
-	function get_project_raised() {
+	function get_project_raised($noformat = false) {
 		$raised = idf_get_object('id_project-get_project_raised-'.$this->id);
 		if (!is_numeric($raised)) {
-			$raised = 0;
 			global $wpdb;
 			$sql = 'Select SUM(prod_price) AS raise from '.$wpdb->prefix.'ign_pay_info where product_id = "'.$this->id.'"';
 			$res = $wpdb->get_row($sql);
-			if (!empty($res->raise)) {
-				$raised = str_replace(',', '', $res->raise);
-			}
+			$raised = (!empty($res->raise) ? $res->raise : '0');
+			$raised = apply_filters('id_funds_raised', $raised, $this->get_project_postid());
 			idf_cache_object('id_project-get_project_raised-'.$this->id, $raised);
 		}
-		return (!empty($raised) ? $raised : '0');
+		return ($noformat ? $raised : apply_filters('id_display_currency', apply_filters('id_number_format', $raised), $this->id));
 	}
 
-	function flush_project_raised($order_id) {
-		$order = New ID_Order($order_id);
-		if (!empty($order)) {
+	function flush_project_raised($order_id, $action = null, $the_order = null) {
+		if (empty($the_order)) {
+			$order = New ID_Order($order_id);
 			$the_order = $order->get_order();
-			if (!empty($the_order->product_id)) {
-				idf_flush_object('id_project-get_project_raised-'.$the_order->product_id);
-			}
+		}
+		if (!empty($the_order->product_id)) {
+			idf_flush_object('id_project-get_project_raised-'.$the_order->product_id);
 		}
 	}
 
@@ -159,7 +157,7 @@ class ID_Project {
 			return 0;
 		}
 		//$project_orders = self::get_project_orders();
-		$project_raised = self::get_project_raised();
+		$project_raised = self::get_project_raised(true);
 		if (empty($project_raised)) {
 			return 0;
 		}
@@ -199,8 +197,9 @@ class ID_Project {
 		date_default_timezone_set($tz);
 
 		$end_date .= ' 23:59:59';
-
-		$days_left = ( strtotime($end_date) - time() )/60/60/24;
+		$end_date = DateTime::createFromFormat(idf_date_format().' H:i:s', $end_date);
+		$days_left = ( date_timestamp_get($end_date) - time() )/60/60/24;
+		//echo $days_left;
 		if ($days_left < 1) {
 			if ($days_left > 0) {
 				// convert to hours
@@ -483,14 +482,14 @@ class ID_Project {
 			foreach ($projects as $a_project) {
 				$project = new ID_Project($a_project->id);
 				$post_id = $project->get_project_postid();
-				$raised = floatval($project->get_project_raised());
+				$raised = floatval($project->get_project_raised(true));
 				update_post_meta($post_id, 'ign_fund_raised', $raised);
 			}
 		}
 		else {
 			$project = new ID_Project($project_id);
 			$post_id = $project->get_project_postid();
-			$raised = floatval($project->get_project_raised());
+			$raised = floatval($project->get_project_raised(true));
 			update_post_meta($post_id, 'ign_fund_raised', $raised);
 		}
 	}
@@ -569,7 +568,7 @@ class ID_Project {
 					update_post_meta($post_id, 'ign_project_closed', true);
 					do_action('idcf_project_closed', $post_id, $a_project->id);
 				} else {
-					update_post_meta($post_id, 'ign_project_closed', false);
+					delete_post_meta($post_id, 'ign_project_closed', false);
 				}
 			}
 		}
@@ -582,7 +581,37 @@ class ID_Project {
 				update_post_meta($post_id, 'ign_project_closed', true);
 				do_action('idcf_project_closed', $post_id, $project_id);
 			} else {
-				update_post_meta($post_id, 'ign_project_closed', false);
+				delete_post_meta($post_id, 'ign_project_closed');
+			}
+		}
+	}
+
+	public static function set_failed_meta($project_id = null) {
+		if (empty($project_id)) {
+			$projects = self::get_all_projects();
+			foreach ($projects as $a_project) {
+				$project = new ID_Project($a_project->id);
+				$post_id = $project->get_project_postid();
+				$successful = get_post_meta($post_id, 'ign_project_success', true);
+				$closed = get_post_meta($post_id, 'ign_project_closed', true);
+				if ($closed && empty($successful)) {
+					update_post_meta($post_id, 'ign_project_failed', 1);
+					do_action('idcf_project_failed', $post_id, $a_project->id);
+				} else {
+					delete_post_meta($post_id, 'idcf_project_failed', false);
+				}
+			}
+		}
+		else {
+			$project = new ID_Project($project_id);
+			$post_id = $project->get_project_postid();
+			$successful = get_post_meta($post_id, 'ign_project_success', true);
+			$closed = get_post_meta($post_id, 'ign_project_closed', true);
+			if ($closed && empty($successful)) {
+				update_post_meta($post_id, 'ign_project_failed', 1);
+				do_action('idcf_project_failed', $post_id, $a_project->id);
+			} else {
+				delete_post_meta($post_id, 'idcf_project_failed', false);
 			}
 		}
 	}
@@ -613,11 +642,14 @@ class ID_Project {
 
 	public static function count_user_projects($user_id) {
 		$count = idf_get_object('id_project-count_user_projects-'.$user_id);
-		if (empty($count)) {
-			global $wpdb;
-			$sql = $wpdb->prepare('SELECT COUNT(*) AS count FROM '.$wpdb->prefix.'posts WHERE post_author = %d AND post_type = "ignition_product"', $user_id);
-			$res = $wpdb->get_row($sql);
-			$count = empty($res) ? '0' : $res->count;
+		if (!is_numeric($count)) {
+			$args = array(
+				'author' => $user_id,
+				'post_type' => 'ignition_product',
+				'post_status' => array('draft','pending','publish')
+			);
+			$posts = get_posts($args);
+			$count = count($posts);
 			idf_cache_object('idf_project-count_user_projects-'.$user_id, $count);
 		}
 		return $count;
@@ -660,6 +692,12 @@ class ID_Project {
 			return 0;
 		}
 	}
+
+	function get_project_meta() {
+		$post_id = $this->get_project_postid();
+		return get_post_meta($post_id);
+	}
 }
+
 $project = new ID_Project();
 ?>

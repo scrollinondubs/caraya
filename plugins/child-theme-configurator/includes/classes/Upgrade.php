@@ -185,7 +185,7 @@ jQuery( document ).ready(function($){
             // add update to cache
             wp_update_plugins();
             // run upgrader
-            $title                  = __( 'Update Plugin' );
+            $title                  = __( 'Update Plugin', 'child-theme-configurator' );
             $plugin                 = self::$old;
             //$nonce                  = 'ctc_pro_upgrade'; //'upgrade-plugin_' . $plugin;
             $nonce                  = 'upgrade-plugin_' . self::$old;

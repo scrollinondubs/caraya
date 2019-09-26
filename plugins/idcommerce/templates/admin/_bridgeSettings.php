@@ -34,8 +34,9 @@
 					<h3 class="hndle"><span><?php _e('Product/Level Connections', 'memberdeck'); ?></span></h3>
 					<div class="inside">
 						<form method="POST" action="" id="idmember-settings" name="idmember-settings">
-							<div class="form-input">
+							<div class="form-input fourth sixth">
 								<label for="edit-level"><?php _e('Pair Products to Crowdfunding Levels', 'memberdeck'); ?></label><br/>
+								<input name="edit-level-filter" type="text" value="" placeholder="<?php _e('Refine Results', 'memberdeck'); ?>"/>
 								<select id="edit-level" name="edit-level">
 									<option><?php _e('Choose Product', 'memberdeck'); ?></option>
 								</select>

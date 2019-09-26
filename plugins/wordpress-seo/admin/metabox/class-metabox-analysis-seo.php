@@ -1,10 +1,12 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\Metabox
  */
 
 /**
- * Represents the SEO analysis
+ * Represents the SEO analysis.
  */
 class WPSEO_Metabox_Analysis_SEO implements WPSEO_Metabox_Analysis {
 

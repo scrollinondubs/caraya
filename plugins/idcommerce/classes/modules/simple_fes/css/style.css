@@ -1,0 +1,11 @@
+ul.content_tabs li#updates_tab, .sort-tabs li a[href="#updates"] {
+	display: none;
+}
+
+ul.content_tabs li#faq_tab, .sort-tabs li a[href="#faq"] {
+	display: none;
+}
+
+.ignitiondeck form[name="idcf_level_select"] select.level_select {
+	background: none;
+}

@@ -17,7 +17,7 @@
               </div>
          </div>
          <div title="Project Name" class="project-name"><?php echo get_the_title($post_id); ?></div>
-         <div class="project-funded"><?php echo $project_raised; ?> <?php _e('Raised', 'ignitiondeck'); ?></div>
+         <div class="project-funded"><?php echo $project_raised; ?> <?php _e('Raised', 'memberdeck'); ?></div>
       </div>
     </div>
 </li>

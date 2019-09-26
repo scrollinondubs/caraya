@@ -60,7 +60,7 @@ function id_projectLongDesc($attrs) {
 		$project_id = $attrs['product'];
 		$project = new ID_Project($project_id);
 		$post_id = $project->get_project_postid();
-		$long_desc = get_post_meta($post_id, 'ign_project_long_description', true);
+		$long_desc = wp_kses_post(get_post_meta($post_id, 'ign_project_long_description', true));
 		return '<div class="product-details" style="clear: both;">'.html_entity_decode($long_desc).'</div>';
 	}
 	else {
@@ -75,7 +75,7 @@ function id_projectPercentBar($attrs) {
 		$project = new Deck($project_id);
 		$post_id = $project->get_project_postid();	
 		//$percent = $project->percent();
-		$percent = apply_filters('id_percentage_raised', $project->percent(), apply_filters('id_funds_raised', $project->get_project_raised(), $post_id, true), $post_id, apply_filters('id_project_goal', $project->the_goal(), $post_id, true));
+		$percent = apply_filters('id_percentage_raised', $project->percent(), $project->get_project_raised(true), $post_id, apply_filters('id_project_goal', $project->the_goal(), $post_id, true));
 		$progress_bar = '<div class="ignitiondeck"><div class="progress-wrapper" style="clear: both;">
 							<div class="progress-percentage">
 							'.$percent.'%
@@ -122,7 +122,7 @@ function id_projectPledgedPrice($attrs){
 		$project = new ID_Project($project_id);
 		//$cCode = $project->currency_code();
 		//$raised = number_format($project->get_project_raised(), 2, '.', ',');
-		$raised = apply_filters('id_funds_raised', $project->get_project_raised(), $project->get_project_postid());
+		$raised = $project->get_project_raised();
 		return '<span class="product_pledged" style="clear: both;">'.$raised.'</span>';
 	}
 	else {
@@ -313,7 +313,7 @@ function id_projectPageContent($attrs) {
 		$settings = getSettings();
 		$social_settings = maybe_unserialize(get_option('idsocial_settings'));
 		
-		$project_long_desc = html_entity_decode(get_post_meta( $post_id, "ign_project_long_description", true ));
+		$project_long_desc = wpautop(wp_kses_post(get_post_meta( $post_id, "ign_project_long_description", true )));
 		$float = 1;
 		include 'templates/_projectContent.php';
 		$content = '<div class="ignitiondeck"><div class="product-left-content">'.
@@ -342,7 +342,7 @@ function id_projectPageContentFull($attrs) {
 		$post_id = $project->get_project_postid();
 		$settings = getSettings();
 		$social_settings = maybe_unserialize(get_option('idsocial_settings'));
-		$project_long_desc = html_entity_decode(get_post_meta( $post_id, "ign_project_long_description", true ));
+		$project_long_desc = wpautop(wp_kses_post(get_post_meta( $post_id, "ign_project_long_description", true )));
 		$float = 1;
 		include 'templates/_projectContent.php';
 		$content = ob_get_contents();
@@ -376,7 +376,7 @@ function id_projectPageComplete($attrs) {
 		$post_id = $deck->get_project_postid();
 		$settings = getSettings();
 		$social_settings = maybe_unserialize(get_option('idsocial_settings'));
-		$project_long_desc = html_entity_decode(get_post_meta( $post_id, "ign_project_long_description", true ));
+		$project_long_desc = wpautop(wp_kses_post(get_post_meta( $post_id, "ign_project_long_description", true )));
 		$float = 1;
 		$custom = apply_filters('idcf_custom_deck', $custom, $the_deck->post_id);
 		$attrs = apply_filters('idcf_deck_attrs', (isset($attrs) ? $attrs : null), $the_deck->post_id);
@@ -427,6 +427,9 @@ function id_projectGrid($attrs) {
 
 	if (isset($max)) {
 		$args['posts_per_page'] = $max;
+	}
+	else {
+		$args['posts_per_page'] = -1;
 	}
 
 	// --> Custom args - START

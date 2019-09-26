@@ -1,10 +1,12 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\ConfigurationUI
  */
 
 /**
- * Class WPSEO_Config_Field_Profile_URL_Pinterest
+ * Class WPSEO_Config_Field_Profile_URL_Pinterest.
  */
 class WPSEO_Config_Field_Profile_URL_Pinterest extends WPSEO_Config_Field {
 
@@ -16,10 +18,12 @@ class WPSEO_Config_Field_Profile_URL_Pinterest extends WPSEO_Config_Field {
 
 		$this->set_property( 'label', __( 'Pinterest URL', 'wordpress-seo' ) );
 		$this->set_property( 'pattern', '^https:\/\/www\.pinterest\.com\/([^/]+)\/$' );
+
+		$this->set_requires( 'publishingEntityType', 'company' );
 	}
 
 	/**
-	 * Set adapter
+	 * Set adapter.
 	 *
 	 * @param WPSEO_Configuration_Options_Adapter $adapter Adapter to register lookup on.
 	 */
