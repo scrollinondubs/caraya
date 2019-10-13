@@ -8,6 +8,7 @@ function schedule_hourly_id_cron() {
 	$percent = ID_Project::set_percent_meta();
 	$days = ID_Project::set_days_meta();
 	$closed = ID_Project::set_closed_meta();
+	$failed = ID_Project::set_failed_meta();
 }
 
 add_action('schedule_hourly_id_cron', 'schedule_hourly_id_cron');

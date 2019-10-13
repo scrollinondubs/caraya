@@ -1,16 +1,33 @@
 <?php
 
 function idf_idcf_validate_license($key) {
-	$ch = curl_init('https://www.ignitiondeck.com/id/?action=md_validate_license&key='.$key);
+	$id_account = get_option('id_account');
+	$api_url = 'https://www.ignitiondeck.com/id/';
+	$query = array(
+		'action' => 'md_validate_license',
+		'key' => $key,
+		'id_account' => $id_account
+	);
+	$querystring = http_build_query($query);
+	$url = $api_url.'?'.$querystring;
+
+	$ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+    curl_setopt($ch, CURLOPT_REFERER, home_url());
     $response = curl_exec($ch);
     $response_array = array('valid' => false, 'download' => null);
     if (!$response) {
+    	// curl failed https, lets try http
     	curl_close($ch);
-    	$ch = curl_init('http://www.ignitiondeck.com/id/?action=md_validate_license&key='.$key);
+    	$api_url = 'http://www.ignitiondeck.com/id/';
+    	$url = $api_url.'?'.$querystring;
+    	$ch = curl_init($url);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    	curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+    	curl_setopt($ch, CURLOPT_REFERER, home_url());
     	$response = curl_exec($ch);
     	if (!$response) {
     		// final curl fail
@@ -92,17 +109,14 @@ function idcf_license_update($license_key) {
 	update_option('is_id_basic', $is_basic);
 	set_transient('is_id_pro', $is_pro);
 	set_transient('is_id_basic', $is_basic);
-	if ($is_pro || $is_basic) {
-		update_option('was_id_licensed', 1);
-	}
-	if ($is_pro) {
-		update_option('was_id_pro', 1);
-	}
 }
 
 function idf_schedule_twicedaily_idcf_cron() {
-	$key = get_option('id_license_key');
-	idcf_license_update($key);
+	$license_option = get_option('idf_license_entry_options');
+	if (empty($license_option) || $license_option == 'keys') {
+		$key = get_option('id_license_key');
+		idcf_license_update($key);
+	}
 }
 
 add_action('schedule_twicedaily_idf_cron', 'idf_schedule_twicedaily_idcf_cron');

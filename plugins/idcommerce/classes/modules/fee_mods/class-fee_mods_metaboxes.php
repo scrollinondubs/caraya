@@ -17,7 +17,7 @@ class IDC_Fee_Mods_Metaboxes {
 	function render_metabox($post) {
 		wp_nonce_field('idc_fee_mods', 'idc_fee_mods_metabox');
 		$application_fee = get_post_meta($post->ID, 'application_fee', true);
-		include DIRNAME(__FILE__).'/templates/admin/_feeModsMetaboxContent.php';
+		include DIRNAME(__FILE__).'/templates/admin/_metaboxContent.php';
 	}
 
 	function save_metabox($post_id) {

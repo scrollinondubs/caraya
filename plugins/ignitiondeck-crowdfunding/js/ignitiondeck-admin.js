@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
 		var prod_num = jQuery(this).val();
 		jQuery.ajax({
 			type: "POST",
-			url: 'admin-ajax.php',
+			url: id_ajaxurl,
 			data: {action: 'get_product_number', product_id: prod_num},
 			success: function(html) {						
 				//alert(jQuery.trim(html));
@@ -48,92 +48,10 @@ jQuery(document).ready(function() {
 		jQuery('input[name="ign_end_type"]').eq(1).attr('checked', 'checked');
 	}
 
-	/* ------ */
-	jQuery('#payment_gateway').change(function() {
-		var option2 = jQuery('#payment_gateway').val();
-
-		if (option2 == 'standard_paypal') {
-			jQuery('#standard-settings-container').slideDown('fast');
-			jQuery('#adaptive-settings-container').slideUp('fast');
-			jQuery("#charge-screen").hide();
-		}
-
-		else if (option2 == 'adaptive_paypal') {
-			jQuery('#standard-settings-container').slideUp('fast');
-			jQuery('#adaptive-settings-container').slideDown('fast');
-			jQuery("#charge-screen").show();
-		}
-
-		else {
-			jQuery('#standard-settings-container').slideUp('fast');
-			jQuery('#adaptive-settings-container').slideUp('fast');
-		}
-	});
-	var option1 = jQuery('#payment_gateway').val();
-	var url = id_ajaxurl;
-	if (jQuery('#charge-screen #project-list').length > 0) {
-		jQuery.ajax( {
-			async: false,
-			url: url,
-			type: 'POST',
-			data: {action: 'idpp_products_handler'},
-			success: function(response) {
-				//console.log(response);
-				json = JSON.parse(response);
-				jQuery.each(json, function() {
-					jQuery("#project-list").append("<option value=\"" + this.id + "\" data-projid=\"" + this.id + "\">" + this.product_name.replace(/\\/g, '') + "</option>");
-				});
-			}
-		});
-	}
-	var project = jQuery("#project-list").find(':selected').attr('data-projid');
-	jQuery("#project-list").change(function() {
-		project = jQuery("#project-list").find(':selected').attr('data-projid');
-		//console.log(project);
-	});
-	//console.log(project);
-	jQuery("#btnProcessPP").click(function(e) {
-		e.preventDefault();
-		jQuery("#btnProcessPP").attr("disabled", "disabled");
-		jQuery.ajax( {
-	    	url: url,
-	    	type: 'POST',
-	    	data: {action: 'idpp_process_handler', Project: project},
-	    	success: function(response) {
-	    		//console.log(response);
-	    		json = JSON.parse(response);
-	    		//console.log(json);
-	    		jQuery("#charge-confirm").html('<div id="charge-notice" class="updated fade below-h2" id="message"><p>' + json.counts.success + ' Successful Transactions Processed, ' + json.counts.failures + ' Failed Transactions.</p><a id="close-notice" href="#">Close</a></div>');
-	    		jQuery("#close-notice").click(function(event) {
-	    			if (jQuery("#charge-notice").is(":visible")) {
-	    				jQuery("#charge-notice").hide();
-	    			}
-	    		});
-	    		jQuery("#btnProcessPP").removeAttr("disabled");
-	    	}
-	    });
-	    return false;
-	});
-
-	if (option1 == 'standard_paypal') {
-		jQuery('#standard-settings-container').slideDown('fast');
-		jQuery('#adaptive-settings-container').slideUp('fast');
-	}
-
-	else if (option1 == 'adaptive_paypal') {
-		jQuery('#standard-settings-container').slideUp('fast');
-		jQuery('#adaptive-settings-container').slideDown('fast');
-		jQuery("#charge-screen").show();
-	}
-
-	else {
-		jQuery('#standard-settings-container').slideUp('fast');
-		jQuery('#adaptive-settings-container').slideUp('fast');
-	}
 	/* Deck Builder */
 	if (jQuery('select[name="deck_select"]').length > 0) {
 		jQuery.ajax({
-			url: url,
+			url: id_ajaxurl,
 			type: 'POST',
 			data: {action: 'get_deck_list'},
 			success: function(res) {
@@ -148,7 +66,7 @@ jQuery(document).ready(function() {
 						var selected = jQuery(this).val();
 						if (selected > 0) {
 							jQuery.ajax({
-								url: url,
+								url: id_ajaxurl,
 								type: 'POST',
 								data: {action: 'get_deck_attrs', Deck: selected},
 								success: function(res) {
@@ -180,15 +98,6 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	jQuery("#manual-switch").click(function(e) {
-		e.preventDefault();
-		//jQuery("#level-select").toggle();
-		jQuery("#manual-select").toggle();
-		// Remove the value in manual-input if manual-select is hidden
-		if (jQuery("#manual-select").css('display') == "none") {
-			jQuery("#manual-input").val('');
-		}
-	});
 	if (jQuery('select[name="product_id"]').length > 0) {
 		jQuery('select[name="product_id"]').change(function() {
 			get_levels();
@@ -256,7 +165,7 @@ jQuery(document).ready(function() {
 	}
 	jQuery('input[name="btn_generate_code"]').click(function(e) {
 		product_number = document.getElementById('product_number').value;
-		document.getElementById('embed_code').innerHTML = '<iframe frameBorder="0" scrolling="no" src="'+id_homeurl+'/?ig_embed_widget=1&product_no='+product_number+'" width="214" height="366"></iframe>';
+		document.getElementById('embed_code').innerHTML = '<iframe height="366" width="214" frameborder="0" scrolling="no" src="'+id_homeurl+'/?ig_embed_widget=1&product_no='+product_number+'" width="214" height="366"></iframe>';
 	});
 	jQuery(".hide-notice").click(function(e) {
 		e.preventDefault();
@@ -272,12 +181,6 @@ jQuery(document).ready(function() {
 			}
 		});
 	});
-	jQuery('#emailSettingsForm input[type="radio"]').click(function() {
-		jQuery('#emailSettingsForm input[type="radio"]').removeAttr('checked');
-		jQuery(this).attr('checked', 'checked');
-	});
-
-	/* This is for IDC Add-Ons, Also Known as MDID */
 
 	if (jQuery('#project-charge-screen').length > 0) {
 		jQuery.ajax({
@@ -406,24 +309,6 @@ function storepurchaseurladdress() {
 	}
 }
 
-function storetyurladdress()
-{
-   	if(document.getElementById('select_ty_pageurls').value == 'external_url')
-   	{
-	   	document.getElementById('ty_url_cont').style.display = 'block';
-	   	document.getElementById('ty_posts').style.display = 'none';
-   	}
-   	else if(document.getElementById('select_ty_pageurls').value == 'page_or_post')
-   	{
-	   	document.getElementById('ty_posts').style.display = 'block';
-	   	document.getElementById('ty_url_cont').style.display = 'none';
-   	}
-   	else if(document.getElementById('select_ty_pageurls').value == 'current_page')
-	{
-		document.getElementById('ty_posts').style.display = 'none';
-	   	document.getElementById('ty_url_cont').style.display = 'none';
-	}
-}
 function toggleDiv(divId) {
 	jQuery("#"+divId).slideToggle();
 }

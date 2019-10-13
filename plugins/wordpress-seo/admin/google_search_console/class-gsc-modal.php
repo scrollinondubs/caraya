@@ -1,6 +1,8 @@
 <?php
 /**
- * @package WPSEO\Admin|Google_Search_Console
+ * WPSEO plugin file.
+ *
+ * @package WPSEO\Admin\Google_Search_Console
  */
 
 /**
@@ -8,13 +10,25 @@
  */
 class WPSEO_GSC_Modal {
 
-	/** @var string */
+	/**
+	 * Path to the modal view.
+	 *
+	 * @var string
+	 */
 	protected $view;
 
-	/** @var int  */
+	/**
+	 * The modal height.
+	 *
+	 * @var int
+	 */
 	protected $height;
 
-	/** @var array */
+	/**
+	 * Variables to be passed to the view.
+	 *
+	 * @var array
+	 */
 	protected $view_vars;
 
 	/**

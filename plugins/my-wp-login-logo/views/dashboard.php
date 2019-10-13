@@ -12,36 +12,57 @@
 	
 	global $current_user;
     get_currentuserinfo();
+
+	$invalid_number = false;
+	$updated = false;
 	
 	if($_POST['update_MyWP_login_logo'] == 'update') {
 
-		update_option('wp_custom_login_logo_url', $_POST['wp_custom_login_logo_url']);
-		update_option('wp_custom_login_logo_height', $_POST['wp_custom_login_logo_height']);
-		update_option('wp_custom_login_logo_width', $_POST['wp_custom_login_logo_width']);
-		update_option('wp_custom_login_title', $_POST['wp_custom_login_title']);
-		update_option('wp_custom_login_logo_fadein',$_POST['wp_custom_login_logo_fadein']);
-		update_option('wp_custom_login_logo_fadetime',$_POST['wp_custom_login_logo_fadetime']);
-		update_option('wp_custom_login_logo_message',$_POST['wp_custom_login_logo_message']);
-		
-?>
-		<div class="updated"><p><strong><?php _e('Login Page Logo Updated.' ); ?></strong></p></div>
-<?php
+		check_admin_referer('update_MyWP_login_logo');
+
+		$wp_custom_login_logo_url 		= sanitize_text_field($_POST['wp_custom_login_logo_url']);
+		$wp_custom_login_logo_height 	= sanitize_text_field($_POST['wp_custom_login_logo_height']);
+		$wp_custom_login_logo_width 	= sanitize_text_field($_POST['wp_custom_login_logo_width']);
+		$wp_custom_login_title			= sanitize_text_field($_POST['wp_custom_login_title']);
+		$wp_custom_login_logo_fadein	= sanitize_text_field($_POST['wp_custom_login_logo_fadein']);
+		$wp_custom_login_logo_fadetime	= sanitize_text_field($_POST['wp_custom_login_logo_fadetime']);
+		$wp_custom_login_logo_message	= sanitize_text_field($_POST['wp_custom_login_logo_message']);
+
+		if(!intval($wp_custom_login_logo_height) || !intval($wp_custom_login_logo_width)) {
+			$invalid_number = true;
+		} else {
+			update_option('wp_custom_login_logo_url', $wp_custom_login_logo_url);
+			update_option('wp_custom_login_logo_height', $wp_custom_login_logo_height);
+			update_option('wp_custom_login_logo_width', $wp_custom_login_logo_width);
+			update_option('wp_custom_login_title', $wp_custom_login_title);
+			update_option('wp_custom_login_logo_fadein', $wp_custom_login_logo_fadein);
+			update_option('wp_custom_login_logo_fadetime', $wp_custom_login_logo_fadetime);
+			update_option('wp_custom_login_logo_message', $wp_custom_login_logo_message);
+			$updated = true;
+		}	
 	}
-		$custom_logo_url = get_option('wp_custom_login_logo_url', DC_MyWP_LoginLogo_URL.'images/mylogo.png');
-		$custom_logo_height = get_option('wp_custom_login_logo_height','70');
-		$custom_logo_width = get_option('wp_custom_login_logo_width','320');
-		$custom_login_title = get_option('wp_custom_login_title',get_bloginfo('description'));
-		$custom_login_url = get_option('wp_custom_login_url',home_url());
-		$custom_logo_fadein = get_option('wp_custom_login_logo_fadein','true');
-		$custom_logo_fadetime = get_option('wp_custom_login_logo_fadetime','2500');
-		$custom_logo_message = get_option('wp_custom_login_logo_message','');
+
+		$custom_logo_url = esc_url(get_option('wp_custom_login_logo_url', DC_MyWP_LoginLogo_URL.'images/mylogo.png'));
+		$custom_logo_height = esc_textarea(get_option('wp_custom_login_logo_height','70'));
+		$custom_logo_width = esc_textarea(get_option('wp_custom_login_logo_width','320'));
+		$custom_login_title = esc_textarea(get_option('wp_custom_login_title',get_bloginfo('description')));
+		$custom_login_url = esc_textarea(get_option('wp_custom_login_url',home_url()));
+		$custom_logo_fadein = esc_textarea(get_option('wp_custom_login_logo_fadein','true'));
+		$custom_logo_fadetime = esc_textarea(get_option('wp_custom_login_logo_fadetime','2500'));
+		$custom_logo_message = esc_textarea(get_option('wp_custom_login_logo_message',''));
 ?>
 <div class="wrap columns-2 dd-wrap">
 	<h2><img src="<?php echo DC_MyWP_LoginLogo_URL.'images/plugin_header_logo.png'; ?>" alt="My Wordpress Login Logo" /></h2>
-	<p>by <strong>Afsal Rahim</strong> from <strong><a title="DigitCodes.com" href="http://digitcodes.com">digitcodes.com</a></strong></p>
-			
+	<?php
+	if($updated) {
+		echo "<div class=\"updated\"><p><strong>Login Page Updated.</strong></p></div>";
+	}
+	if($invalid_number) {
+		echo "<div class=\"error\"><p><strong> Error: Provide a valid height and width </strong></p></div>";
+	}	
+	?>	
 	<div class="metabox-holder has-right-sidebar" id="poststuff">
-			
+		
 		<div class="inner-sidebar" id="side-info-column">
 		<?php include_once( DC_MyWP_LoginLogo_PATH . '/views/subscribe.php' ); ?>
 		<?php include_once( DC_MyWP_LoginLogo_PATH . '/views/plugin-info.php' ); ?>	
@@ -61,6 +82,7 @@
 				<h3>Customize Login Page </h3>
 				<div class="inside">
 				<form name="DC_MyWP_login_logo_form" method="post" action="">
+				<?php wp_nonce_field('update_MyWP_login_logo'); ?>
 				<input type="hidden" name="update_MyWP_login_logo" value="update">
 				<h2>Customize Logo</h2> 
 				<p><b>Logo Image URL : </b><input class="regular-text code" type="text" name="wp_custom_login_logo_url" value="<?php echo $custom_logo_url; ?>" size="70"><br/>

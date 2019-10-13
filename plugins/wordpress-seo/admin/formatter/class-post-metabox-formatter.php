@@ -1,20 +1,26 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\Formatter
  */
 
 /**
- * This class provides data for the post metabox by return its values for localization
+ * This class provides data for the post metabox by return its values for localization.
  */
 class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface {
 
 	/**
+	 * Holds the WordPress Post.
+	 *
 	 * @var WP_Post
 	 */
 	private $post;
 
 	/**
-	 * @var string The permalink to follow.
+	 * The permalink to follow.
+	 *
+	 * @var string
 	 */
 	private $permalink;
 
@@ -58,7 +64,7 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	}
 
 	/**
-	 * Returns the url to search for keyword for the post
+	 * Returns the url to search for keyword for the post.
 	 *
 	 * @return string
 	 */
@@ -67,7 +73,7 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	}
 
 	/**
-	 * Returns the url to edit the taxonomy
+	 * Returns the url to edit the taxonomy.
 	 *
 	 * @return string
 	 */
@@ -76,7 +82,7 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	}
 
 	/**
-	 * Returns a base URL for use in the JS, takes permalink structure into account
+	 * Returns a base URL for use in the JS, takes permalink structure into account.
 	 *
 	 * @return string
 	 */
@@ -151,10 +157,16 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	/**
 	 * Retrieves the title template.
 	 *
-	 * @return string
+	 * @return string The title template.
 	 */
 	private function get_title_template() {
-		return $this->get_template( 'title' );
+		$title = $this->get_template( 'title' );
+
+		if ( $title === '' ) {
+			return '%%title%% %%sep%% %%sitename%%';
+		}
+
+		return $title;
 	}
 
 	/**
@@ -184,7 +196,7 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	}
 
 	/**
-	 * Determines the date to be displayed in the snippet preview
+	 * Determines the date to be displayed in the snippet preview.
 	 *
 	 * @return string
 	 */

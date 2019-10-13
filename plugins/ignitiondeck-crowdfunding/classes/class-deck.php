@@ -21,10 +21,10 @@ class Deck extends ID_Project {
 		$level_data = parent::get_level_data($post_id, $no_levels);
 		$project_desc = html_entity_decode(get_post_meta( $post_id, "ign_project_description", true ));
 		$end_type = get_post_meta($post_id, 'ign_end_type', true);
-		$p_current_sale = apply_filters('id_funds_raised', parent::get_project_raised(), $post_id);
+		$p_current_sale = parent::get_project_raised();
 		$p_count = new stdClass;
 		$p_count->p_number = apply_filters('id_number_pledges', parent::get_project_orders(), $post_id);
-		$rating_per = apply_filters('id_percentage_raised', parent::percent(), apply_filters('id_funds_raised', parent::get_project_raised(), $post_id, true), $post_id, apply_filters('id_project_goal', parent::the_goal(), $post_id, true));
+		$rating_per = apply_filters('id_percentage_raised', parent::percent(), parent::get_project_raised(true), $post_id, apply_filters('id_project_goal', parent::the_goal(), $post_id, true));
 		$successful = parent::successful();
 		$days_left = apply_filters('id_project_days_left', parent::days_left(), $post_id);
 		$end_month = parent::end_month();
@@ -105,7 +105,7 @@ class Deck extends ID_Project {
 		$the_deck->meta_limit_1 = $meta_limit_1;
 		$the_deck->level_count_1 = $level_count_1;
 		$the_deck->affiliate_link = $affiliate_link;
-		return $the_deck;
+		return apply_filters('id_deck', $the_deck);
 	}
 
 	function mini_deck() {
@@ -120,10 +120,10 @@ class Deck extends ID_Project {
 		$no_levels = get_post_meta( $post_id, $name="ign_product_level_count", true );
 		$project_desc = html_entity_decode(get_post_meta( $post_id, "ign_project_description", true ));
 		$end_type = get_post_meta($post_id, 'ign_end_type', true);
-		$p_current_sale = apply_filters('id_funds_raised', parent::get_project_raised(), $post_id);
+		$p_current_sale = parent::get_project_raised();
 		$p_count = new stdClass;
 		$p_count->p_number = apply_filters('id_number_pledges', parent::get_project_orders(), $post_id);
-		$rating_per = apply_filters('id_percentage_raised', parent::percent(), apply_filters('id_funds_raised', parent::get_project_raised(), $post_id, true), $post_id, apply_filters('id_project_goal', parent::the_goal(), $post_id, true));
+		$rating_per = apply_filters('id_percentage_raised', parent::percent(), parent::get_project_raised(true), $post_id, apply_filters('id_project_goal', parent::the_goal(), $post_id, true));
 		$successful = parent::successful();
 		$days_left = apply_filters('id_project_days_left', parent::days_left(), $post_id);
 		$end_month = parent::end_month();
@@ -163,7 +163,7 @@ class Deck extends ID_Project {
 		$the_deck->settings = $settings;
 		$the_deck->cCode = $cCode;
 		$the_deck->affiliate_link = $affiliate_link;
-		return $the_deck;
+		return apply_filters('id_mini_deck', $the_deck);
 	}
 
 	function hDeck() {
@@ -176,7 +176,7 @@ class Deck extends ID_Project {
 		$post_id = parent::get_project_postid();
 		$end_type = get_post_meta($post_id, 'ign_end_type', true);
 		$item_fund_goal = apply_filters('id_project_goal', parent::the_goal(), $post_id);
-		$p_current_sale = apply_filters('id_funds_raised', parent::get_project_raised(), $post_id);
+		$p_current_sale = parent::get_project_raised();
 		//
 		$item_fund_end = parent::end_date();
 		$end_day = parent::end_day();
@@ -184,7 +184,7 @@ class Deck extends ID_Project {
 		$end_year = parent::end_year();
 		$days_left = parent::days_left();
 		//
-		$rating_per = apply_filters('id_percentage_raised', parent::percent(), apply_filters('id_funds_raised', parent::get_project_raised(), $post_id, true), $post_id, apply_filters('id_project_goal', parent::the_goal(), $post_id, true));
+		$rating_per = apply_filters('id_percentage_raised', parent::percent(), parent::get_project_raised(true), $post_id, apply_filters('id_project_goal', parent::the_goal(), $post_id, true));
 		//$p_count = new stdClass;
 		//$p_count->p_number = parent::get_project_orders();
 		$p_number = apply_filters('id_number_pledges', parent::get_project_orders(), $post_id);
@@ -207,7 +207,7 @@ class Deck extends ID_Project {
 		$hDeck->percentage = $rating_per;
 		$hDeck->pledges = $p_number;
 		$hDeck->currency_code = $cCode;
-		return $hDeck;
+		return apply_filters('id_hdeck', $hDeck);
 	}
 
 	function the_levels() {

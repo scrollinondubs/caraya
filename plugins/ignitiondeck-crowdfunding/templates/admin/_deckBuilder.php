@@ -148,7 +148,7 @@
 								
 								<li>
 									<div>
-									<?php if(count($data) > 0) {?>
+									<?php if(isset($data) && count($data) > 0) {?>
 										<input class="button-primary" type="submit" name="btnIgnSettings" id="btnAddOrder" value="<?php _e('Update', 'ignitiondeck'); ?>" />
 									<?php } else { ?>
 										<input class="button-primary" type="submit" name="btnIgnSettings" id="btnAddOrder" value="<?php _e('Add', 'ignitiondeck'); ?>" />

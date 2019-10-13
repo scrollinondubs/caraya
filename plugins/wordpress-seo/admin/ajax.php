@@ -1,5 +1,7 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin
  */
 
@@ -10,16 +12,13 @@ if ( ! defined( 'WPSEO_VERSION' ) ) {
 }
 
 /**
- * @todo this whole thing should probably be a proper class.
- */
-
-/**
- * Convenience function to JSON encode and echo results and then die
+ * Convenience function to JSON encode and echo results and then die.
  *
  * @param array $results Results array for encoding.
  */
 function wpseo_ajax_json_echo_die( $results ) {
-	echo wp_json_encode( $results );
+	// phpcs:ignore WordPress.Security.EscapeOutput -- Reason: WPSEO_Utils::format_json_encode is safe.
+	echo WPSEO_Utils::format_json_encode( $results );
 	die();
 }
 
@@ -85,25 +84,6 @@ function wpseo_dismiss_tagline_notice() {
 add_action( 'wp_ajax_wpseo_dismiss_tagline_notice', 'wpseo_dismiss_tagline_notice' );
 
 /**
- * Used in the editor to replace vars for the snippet preview
- */
-function wpseo_ajax_replace_vars() {
-	global $post;
-	check_ajax_referer( 'wpseo-replace-vars' );
-
-	$post = get_post( intval( filter_input( INPUT_POST, 'post_id' ) ) );
-	global $wp_query;
-	$wp_query->queried_object    = $post;
-	$wp_query->queried_object_id = $post->ID;
-
-	$omit = array( 'excerpt', 'excerpt_only', 'title' );
-	echo wpseo_replace_vars( stripslashes( filter_input( INPUT_POST, 'string' ) ), $post, $omit );
-	die;
-}
-
-add_action( 'wp_ajax_wpseo_replace_vars', 'wpseo_ajax_replace_vars' );
-
-/**
  * Save an individual SEO title from the Bulk Editor.
  */
 function wpseo_save_title() {
@@ -122,7 +102,7 @@ function wpseo_save_description() {
 add_action( 'wp_ajax_wpseo_save_metadesc', 'wpseo_save_description' );
 
 /**
- * Save titles & descriptions
+ * Save titles & descriptions.
  *
  * @param string $what Type of item to save (title, description).
  */
@@ -178,7 +158,7 @@ function wpseo_upsert_meta( $post_id, $new_meta_value, $orig_meta_value, $meta_k
 		$upsert_results['status']  = 'failure';
 		$upsert_results['results'] = sprintf(
 			/* translators: %s expands to post type. */
-			__( 'Post has an invalid Post Type: %s.', 'wordpress-seo' ),
+			__( 'Post has an invalid Content Type: %s.', 'wordpress-seo' ),
 			$the_post->post_type
 		);
 
@@ -244,30 +224,31 @@ function wpseo_save_all_descriptions() {
 add_action( 'wp_ajax_wpseo_save_all_descriptions', 'wpseo_save_all_descriptions' );
 
 /**
- * Utility function to save values
+ * Utility function to save values.
  *
  * @param string $what Type of item so save.
  */
 function wpseo_save_all( $what ) {
 	check_ajax_referer( 'wpseo-bulk-editor' );
 
-	// @todo the WPSEO Utils class can't filter arrays in POST yet.
-	$new_values      = $_POST['items'];
-	$original_values = $_POST['existing_items'];
-
 	$results = array();
-
-	if ( is_array( $new_values ) && $new_values !== array() ) {
-		foreach ( $new_values as $post_id => $new_value ) {
-			$original_value = $original_values[ $post_id ];
-			$results[]      = wpseo_upsert_new( $what, $post_id, $new_value, $original_value );
-		}
+	if ( ! isset( $_POST['items'], $_POST['existingItems'] ) ) {
+		wpseo_ajax_json_echo_die( $results );
 	}
+
+	$new_values      = array_map( array( 'WPSEO_Utils', 'sanitize_text_field' ), wp_unslash( (array) $_POST['items'] ) );
+	$original_values = array_map( array( 'WPSEO_Utils', 'sanitize_text_field' ), wp_unslash( (array) $_POST['existingItems'] ) );
+
+	foreach ( $new_values as $post_id => $new_value ) {
+		$original_value = $original_values[ $post_id ];
+		$results[]      = wpseo_upsert_new( $what, $post_id, $new_value, $original_value );
+	}
+
 	wpseo_ajax_json_echo_die( $results );
 }
 
 /**
- * Insert a new value
+ * Insert a new value.
  *
  * @param string $what     Item type (such as title).
  * @param int    $post_id  Post ID.
@@ -283,23 +264,6 @@ function wpseo_upsert_new( $what, $post_id, $new, $original ) {
 }
 
 /**
- * Handles the posting of a new FB admin.
- */
-function wpseo_add_fb_admin() {
-	check_ajax_referer( 'wpseo_fb_admin_nonce' );
-
-	if ( ! current_user_can( 'manage_options' ) ) {
-		die( '-1' );
-	}
-
-	$facebook_social = new Yoast_Social_Facebook();
-
-	wp_die( $facebook_social->add_admin( filter_input( INPUT_POST, 'admin_name' ), filter_input( INPUT_POST, 'admin_id' ) ) );
-}
-
-add_action( 'wp_ajax_wpseo_add_fb_admin', 'wpseo_add_fb_admin' );
-
-/**
  * Retrieves the keyword for the keyword doubles.
  */
 function ajax_get_keyword_usage() {
@@ -311,7 +275,8 @@ function ajax_get_keyword_usage() {
 	}
 
 	wp_die(
-		wp_json_encode( WPSEO_Meta::keyword_usage( $keyword, $post_id ) )
+		// phpcs:ignore WordPress.Security.EscapeOutput -- Reason: WPSEO_Utils::format_json_encode is safe.
+		WPSEO_Utils::format_json_encode( WPSEO_Meta::keyword_usage( $keyword, $post_id ) )
 	);
 }
 
@@ -341,11 +306,27 @@ function ajax_get_term_keyword_usage() {
 	$usage = $usage[ $keyword ];
 
 	wp_die(
-		wp_json_encode( $usage )
+		// phpcs:ignore WordPress.Security.EscapeOutput -- Reason: WPSEO_Utils::format_json_encode is safe.
+		WPSEO_Utils::format_json_encode( $usage )
 	);
 }
 
 add_action( 'wp_ajax_get_term_keyword_usage', 'ajax_get_term_keyword_usage' );
+
+/**
+ * Registers hooks for all AJAX integrations.
+ *
+ * @return void
+ */
+function wpseo_register_ajax_integrations() {
+	$integrations = array( new Yoast_Network_Admin() );
+
+	foreach ( $integrations as $integration ) {
+		$integration->register_ajax_hooks();
+	}
+}
+
+wpseo_register_ajax_integrations();
 
 // Crawl Issue Manager AJAX hooks.
 new WPSEO_GSC_Ajax();
@@ -362,11 +343,10 @@ new WPSEO_Taxonomy_Columns();
 // Setting the notice for the recalculate the posts.
 new Yoast_Dismissable_Notice_Ajax( 'recalculate', Yoast_Dismissable_Notice_Ajax::FOR_SITE );
 
-/********************** DEPRECATED METHODS **********************/
-
+/* ********************* DEPRECATED FUNCTIONS ********************* */
 
 /**
- * Removes stopword from the sample permalink that is generated in an AJAX request
+ * Removes stopword from the sample permalink that is generated in an AJAX request.
  *
  * @deprecated 6.3
  * @codeCoverageIgnore
@@ -387,4 +367,40 @@ function wpseo_kill_blocking_files() {
 	_deprecated_function( __FUNCTION__, 'WPSEO 7.0', 'This method is deprecated.' );
 
 	wpseo_ajax_json_echo_die( '' );
+}
+
+/**
+ * Handles the posting of a new FB admin.
+ *
+ * @deprecated 7.1
+ * @codeCoverageIgnore
+ */
+function wpseo_add_fb_admin() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		die( '-1' );
+	}
+	_deprecated_function( __FUNCTION__, 'WPSEO 7.0', 'This method is deprecated.' );
+	wpseo_ajax_json_echo_die( '' );
+}
+
+/**
+ * Used in the editor to replace vars for the snippet preview.
+ *
+ * @deprecated 11.9
+ * @codeCoverageIgnore
+ */
+function wpseo_ajax_replace_vars() {
+	_deprecated_function( __METHOD__, 'WPSEO 11.9' );
+
+	global $post;
+	check_ajax_referer( 'wpseo-replace-vars' );
+
+	$post = get_post( intval( filter_input( INPUT_POST, 'post_id' ) ) );
+	global $wp_query;
+	$wp_query->queried_object    = $post;
+	$wp_query->queried_object_id = $post->ID;
+
+	$omit = array( 'excerpt', 'excerpt_only', 'title' );
+	echo wpseo_replace_vars( stripslashes( filter_input( INPUT_POST, 'string' ) ), $post, $omit );
+	die;
 }

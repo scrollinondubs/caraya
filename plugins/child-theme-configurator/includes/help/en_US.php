@@ -107,6 +107,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 <!-- END tab --> 
 <!-- BEGIN tab -->
 <h3 id="ctc_faq">FAQs</h3>
+<h5 id="existing_parent">How do I move changes I have already made to my theme into a Child Theme?</h5>
+<p><a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/how-to-use/#child_from_modified_parent" class="scroll-to">Follow these steps</a>.</p>
+<h5 id="constants_defined">When I run the analyzer I get "Constants Already Defined" notice in PHP Debug Output</h5>
+<p>This is a misconfiguration created by the Bluehost auto-installer. <a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/child-theme-faqs/#constants" class="scroll-to">How to fix.</a></p>
 <h5 id="broken_theme">HELP! I changed a file and now I am unable to access my website or login to wp-admin to fix it!</h5>
 <p>To back out of a broken theme you have to manually rename the offending theme directory name (via FTP, SSH or your web host control panel file manager) so that WordPress can't find it. WordPress will then throw an error and revert back to the default theme (currently twenty-fourteen).</p>
 
@@ -136,8 +140,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
     <li><strong>Options: </strong> Every theme handles options in its own way. Most often, they will create a set of options and store them in the WordPress database. Some options are specific to the active theme (or child theme), and some are specific to the parent theme only (meaning the child theme CANNOT override them). You will have to find out from the theme author which are which.</li>
 </ul>
 </p> 
-<h5 id="existing_parent">How do I move changes I have already made to my theme into a Child Theme?</h5>
-<p><a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/how-to-use/#child_from_modified_parent" class="scroll-to">Follow these steps</a>. </p>
 <h5 id="web_fonts">How do I add Web Fonts?</h5>
 <p>The easiest method is to paste the @import code provided by <a href="http://www.google.com/fonts" title="Google Fonts">Google</a>, <a href="http://www.fontsquirrel.com/" title="Font Squirrel">Font Squirrel</a> or any other Web Font site into the Web Fonts tab. The fonts will then be available to use as a value of the <strong>font-family</strong> property. Be sure you understand the license for any embedded fonts. </p>
 <p>You can also create a secondary stylesheet that contains @font-face rules and import it using the Web Fonts tab. </p>
@@ -207,7 +209,8 @@ The plugin only loads the bulk of the code in the admin when you are using the t
 <!-- END tab -->
 <!-- BEGIN sidebar -->
 <h4>Our plugins will not nag you for donations...</h4>
-<span style="font-size:smaller">...but we LOVE referrals.</span><br/><a href="http://wordpress.org/support/view/plugin-reviews/child-theme-configurator?rate=5#postform">Give Us 5 Stars</a>
+<p style="font-size:smaller">...but we LOVE referrals.</p><a href="http://wordpress.org/support/view/plugin-reviews/child-theme-configurator?rate=5#postform">Give Us 5 Stars</a>
+<p style="font-size:smaller">If you would like to support the production of useful tutorials and continued improvement of our software, please consider <a target="blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8QE5YJ8WE96AJ">making a donation</a>.</p>
 <h4>Introducing CTC Pro</h4>
 <a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/child-theme-configurator-pro/" title="Learn more about CTC Pro"><img src="<?php echo CHLD_THM_CFG_URL . 'css/pro-banner.jpg'; ?>" width="150" height="48" /></a>
 <p style="font-size:smaller">Designed by WordPress developers who use it every day, CTC Pro adds plugin stylesheets and other features to make design work quicker and easier. This is a free upgrade for users that purchased the Plugins Extension. <a href="<?php echo CHLD_THM_CFG_DOCS_URL; ?>/child-theme-configurator-pro/" title="Child Theme Configurator Pro">Learn more</a></p>

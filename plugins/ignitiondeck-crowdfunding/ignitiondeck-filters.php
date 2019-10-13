@@ -84,18 +84,22 @@ Project Filters
  */
 function idcf_auto_insert($content) {
 	global $post;
-	global $theme_base;
-	$theme_info = wp_get_theme();
-	$theme_author = strtolower($theme_info->get('Author'));
-	$is_ignitiondeck_theme = ($theme_author == 'ignitiondeck' || $theme_author == 'virtuousgiant' ? 1 : 0);
-	if ($post->post_type == 'ignition_product' && !$is_ignitiondeck_theme) {
+	if (is_admin()) {
+		return $content;
+	}
+	if (empty($post->post_type)) {
+		return $content;
+	}
+	if (is_id_pro()) {
+		return $content;
+	}
+	$is_id_theme = idf_is_id_theme();
+	if ($post->post_type == 'ignition_product' && !$is_id_theme) {
 		$auto_insert = get_option('idcf_auto_insert');
 		if ($auto_insert) {
-			if (!is_id_pro()) {
-				$post_id = $post->ID;
-				$project_id = get_post_meta($post_id, 'ign_project_id', true);
-				$content = do_shortcode('[project_page_complete product="'.$project_id.'"]');
-			}
+			$post_id = $post->ID;
+			$project_id = get_post_meta($post_id, 'ign_project_id', true);
+			$content = do_shortcode('[project_page_complete product="'.$project_id.'"]');
 		}
 	}
 	return $content;
@@ -108,13 +112,8 @@ add_filter('the_content', 'idcf_auto_insert');
  * @param integer $amount The amount to be formatted
  * @param integer $post_id The post id of the project
  */
-function id_funds_raised($amount, $post_id, $noformat = false) {
-	if ($noformat) {
-		return $amount;
-	}
-	else {
-		return apply_filters('id_display_currency', apply_filters('id_number_format', $amount, $post_id), $post_id);
-	}
+function id_funds_raised($amount) {
+	return apply_filters('id_number_format', $amount, '0', '.', '');
 }
 add_filter('id_funds_raised', 'id_funds_raised', 10, 3);
 
@@ -140,7 +139,7 @@ function id_project_goal($goal, $post_id, $noformat = false) {
 		return $goal;
 	}
 	else {
-		return apply_filters('id_display_currency', apply_filters('id_number_format', $goal, $post_id), $post_id);
+		return apply_filters('id_display_currency', apply_filters('id_number_format', $goal), $post_id);
 	}
 }
 add_filter('id_project_goal', 'id_project_goal', 10, 3);
@@ -184,13 +183,13 @@ function id_price_format($amount) {
 }
 add_filter('id_price_format', 'id_price_format', 10, 2);
 
-function id_number_format($number) {
+function id_number_format($number, $dec = 0, $dec_point = '.', $sep = ',') {
 	if ($number > 0) {
-		$number = number_format($number);
+		$number = number_format($number, $dec, $dec_point, $sep);
 	}
 	return $number;
 }
-add_filter('id_number_format', 'id_number_format');
+add_filter('id_number_format', 'id_number_format', 10, 4);
 
 /**
  * Filter for Percentage pledged for a project
@@ -255,7 +254,7 @@ function id_display_currency_filter($amount, $post_id) {
 			$amount = $currency_code.' '.$amount;
 			break;
 		default:
-			$currency_code.$amount;
+			$amount = $currency_code.$amount;
 			break;
 	}
 	return $amount;
@@ -277,14 +276,14 @@ function id_funds_raised_parent($amount, $post_id) {
 		foreach ($project_children as $child_project) {
 			$child_project_id = get_post_meta($child_project, 'ign_project_id', true);
 			$project = new ID_Project($child_project_id);
-			$raised = $project->get_project_raised();
+			$raised = $project->get_project_raised(true);
 			$amount = $amount + $raised;
-			$sub_children = get_post_meta($child_project, 'ign_project_children', true);
+			//$sub_children = get_post_meta($child_project, 'ign_project_children', true);
 			if (!empty($sub_children)) {
 				foreach ($sub_children as $subchild_id) {
 					$subchild_project_id = get_post_meta($subchild_id, 'ign_project_id', true);
 					$subproject = new ID_Project($subchild_project_id);
-					$raised = $subproject->get_project_raised();
+					$raised = $subproject->get_project_raised(true);
 					$amount = $amount + $raised;
 				}
 			}
@@ -331,7 +330,7 @@ add_filter('id_number_pledges', 'id_number_pledges_parent', 2, 2);
 function id_percentage_raised_parent($percentage, $pledged, $post_id, $goal) {
 	// Calculating the new percentage with children
 	if ($goal > 0) {
-		$percentage = (float) $pledged / $goal * 100;
+		$percentage = floatval($pledged / $goal * 100);
 	}
 	return $percentage;
 }

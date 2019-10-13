@@ -114,6 +114,7 @@ function md_creator_projects() {
 			'post_status' => array('draft', 'pending', 'publish')
 		);
 		$user_projects = apply_filters('id_creator_projects', get_posts(apply_filters('id_creator_args', $creator_args)));
+
 		if (!empty($user_projects)) {
 			
 			$tab = __('My Projects', 'memberdeck');
@@ -154,28 +155,35 @@ function md_ide_opt_in_required(){
 }
 
 // A new function that returns true if the current user is allowed to create projects
-function md_ide_creator_permissions(){
+function md_ide_creator_permissions($user_id = null){
 	$enable = false;
-	if ( is_user_logged_in() ) {
-		$general = get_option('md_receipt_settings');
-		if (!empty($general)) {
-			$general = maybe_unserialize($general);
 
-			$admin_enable = (isset($general['creator_permissions']) ? $general['creator_permissions'] : 1);
-			if (current_user_can('manage_options') || $admin_enable == 3) {
-				$enable = true;
-			} 
-			elseif ($admin_enable == 2) {
-				//Only owners of the right levels can create projects, so we check to see if there's a level match
-				$levelsowned = ID_Member::get_user_levels();
-				$levelspermitted = idmember_get_cperms(1);
-				if (!empty($levelsowned)) {
-					foreach ($levelsowned as $cur){
-						if (in_array($cur, $levelspermitted)){
-							$enable = true;
-							break;
-						}
-					}
+	if (empty($user_id)) {
+		$user = wp_get_current_user();
+		if (empty($user)) {
+			return false;
+		}
+		$user_id = $user->ID;
+	}
+	
+	$general = maybe_unserialize(get_option('md_receipt_settings'));
+	if (empty($general)) {
+		return false;
+	}
+
+	$admin_enable = (isset($general['creator_permissions']) ? $general['creator_permissions'] : 1);
+	if (user_can($user_id, 'manage_options') || $admin_enable == 3) {
+		$enable = true;
+	} 
+	elseif ($admin_enable == 2) {
+		//Only owners of the right levels can create projects, so we check to see if there's a level match
+		$levelsowned = ID_Member::get_user_levels($user_id);
+		$levelspermitted = idmember_get_cperms(1);
+		if (!empty($levelsowned)) {
+			foreach ($levelsowned as $cur){
+				if (in_array($cur, $levelspermitted)){
+					$enable = true;
+					break;
 				}
 			}
 		}
@@ -205,6 +213,7 @@ function md_ide_creator_projects($content) {
 	$user_id = $current_user->ID;
 	echo '<div class="memberdeck">';
 	include_once IDC_PATH.'templates/_mdProfileTabs.php';
+	echo apply_filters('idc_create_project_button', '<button class="create_project button-medium" onclick="location.href=\''.md_get_durl().$prefix.'create_project=1\'">'.__('Create Project', 'memberdeck').'</button>');
 	echo '<ul class="md-box-wrapper full-width cf"><li class="md-box full"><div class="md-profile author-'.$user_id.'" data-author="'.$user_id.'">';
 	echo '<ul>';
 	$creator_args = array(
@@ -214,6 +223,7 @@ function md_ide_creator_projects($content) {
 		'post_status' => array('draft', 'pending', 'publish')
 	);
 	$user_projects = apply_filters('id_creator_projects', get_posts(apply_filters('id_creator_args', $creator_args)));
+
 	if (!empty($user_projects)) {
 		foreach ($user_projects as $post) {
 			$post_id = $post->ID;
@@ -227,7 +237,7 @@ function md_ide_creator_projects($content) {
 					if (empty($thumb)) {
 						$thumb = idcf_project_placeholder_image('thumb');
 					}
-					$project_raised = apply_filters('id_funds_raised', $project->get_project_raised(), $post_id);
+					$project_raised = $project->get_project_raised();
 					$permalink = get_permalink($post_id);
 					if (strtoupper($status) !== 'PUBLISH') {
 						$permalink = $permalink.'&preview=true';
@@ -237,7 +247,8 @@ function md_ide_creator_projects($content) {
 			}
 		}
 	}
-	echo '</ul><button class="create_project button-medium" onclick="location.href=\''.md_get_durl().$prefix.'create_project=1\'">'.__('Create Project', 'memberdeck').'</button></div></li></ul>';
+	echo '</ul>';
+	echo '</div></li></ul>';
 	echo '</div>';
 	$content = ob_get_contents();
 	ob_end_clean();
@@ -250,7 +261,7 @@ function md_ide_subscription_options($array) {
 	$settings = get_option('memberdeck_gateways');
 	if (!empty($settings)) {
 		if (is_array($settings)) {
-			if ($settings['epp'] || $settings['esc'] || $settings['eauthnet'] || ($settings['eppadap'] && $settings['epp_fes'])) {
+			if ($settings['epp'] || $settings['es'] || $settings['eauthnet'] || ($settings['eppadap'] && $settings['epp_fes'])) {
 				$fund_type = get_option('idc_cf_fund_type');
 				if (!empty($fund_type) && ($fund_type == 'all' || $fund_type == 'c_sub')) {
 					if (is_multisite()) {
@@ -669,7 +680,7 @@ function mdid_fes_associations($user_id, $project_id, $post_id, $proj_args, $lev
 			$args['recurring_type'] = $new_recurring_type;
 			$args['level_type'] = $new_level_type;
 			// defaults
-			$args['plan'] = $level_data->plan;
+			$args['plan'] = apply_filters('mdid_fes_associations_plan_id', $level_data->plan);
 			$args['license_count'] = 0;
 			$args['limit_term'] = 0;
 			$args['term_length'] = '';
@@ -682,6 +693,7 @@ function mdid_fes_associations($user_id, $project_id, $post_id, $proj_args, $lev
 				$args['credit_value'] = $new_credit_value;
 			}
 			$args['product_type'] = 'purchase';
+			$args = apply_filters('mdid_fes_associations_args', $args, $level_id);
 			$level->update_level($args);
 			do_action('md_ide_update_level', $args, $level_id, $post_id);
 		}
@@ -729,6 +741,7 @@ function mdid_fes_associations($user_id, $project_id, $post_id, $proj_args, $lev
 			$args['renewal_price'] = '';
 			$args['enable_multiples'] = 1;
 			$args['product_type'] = 'purchase';
+			$args = apply_filters('mdid_fes_associations_args', $args, null);
 			// create level
 			$new_level = $level->add_level($args);
 			$level_id = $new_level['level_id'];

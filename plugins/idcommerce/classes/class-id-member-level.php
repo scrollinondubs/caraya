@@ -9,6 +9,9 @@ class ID_Member_Level {
 	var $txn_type;
 	var $level_type;
 	var $recurring_type;
+	var $trial_period;
+	var $trial_length;
+	var $trial_type;
 	var $limit_term;
 	var $term_length;
 	var $plan;
@@ -45,6 +48,9 @@ class ID_Member_Level {
 			$this->recurring_type = $level['recurring_type'];
 			$this->plan = $level['plan'];
 		}
+		$this->trial_period = (isset($level['trial_period']) ? $level['trial_period'] : null);
+		$this->trial_length = (isset($level['trial_length']) ? $level['trial_length'] : null);
+		$this->trial_type = (isset($level['trial_type']) ? $level['trial_type'] : null);
 		$this->limit_term = (isset($level['limit_term']) ? $level['limit_term'] : '0');
 		$this->term_length = (isset($level['term_length']) ? $level['term_length'] : null);
 		$this->license_count = (isset($level['license_count']) ? $level['license_count'] : null);
@@ -54,7 +60,7 @@ class ID_Member_Level {
 		$this->create_page = (isset($level['create_page']) ? $level['create_page'] : false);
 		$this->combined_product = (isset($level['combined_product']) ? $level['combined_product'] : 0);
 		$this->custom_message = (isset($level['custom_message']) ? $level['custom_message'] : null);
-		$sql = $wpdb->prepare('INSERT INTO '.$wpdb->prefix.'memberdeck_levels (product_status, product_type, level_name, level_price, credit_value, txn_type, level_type, recurring_type, limit_term, term_length, plan, license_count, enable_renewals, renewal_price, enable_multiples, combined_product, custom_message) VALUES (%s, %s, %s, %s, %d, %s, %s, %s, %d, %d, %s, %d, %d, %s, %d, %d, %d)', $this->product_status, $this->product_type, $this->level_name, $this->level_price, $this->credit_value, $this->txn_type, $this->level_type, $this->recurring_type, $this->limit_term, $this->term_length, $this->plan, $this->license_count, $this->enable_renewals, $this->renewal_price, $this->enable_multiples, $this->combined_product, $this->custom_message);
+		$sql = $wpdb->prepare('INSERT INTO '.$wpdb->prefix.'memberdeck_levels (product_status, product_type, level_name, level_price, credit_value, txn_type, level_type, recurring_type, trial_period, trial_length, trial_type, limit_term, term_length, plan, license_count, enable_renewals, renewal_price, enable_multiples, combined_product, custom_message) VALUES (%s, %s, %s, %s, %d, %s, %s, %s, %d, %d, %s, %d, %d, %s, %d, %d, %s, %d, %d, %d)', $this->product_status, $this->product_type, $this->level_name, $this->level_price, $this->credit_value, $this->txn_type, $this->level_type, $this->recurring_type, $this->trial_period, $this->trial_length, $this->trial_type, $this->limit_term, $this->term_length, $this->plan, $this->license_count, $this->enable_renewals, $this->renewal_price, $this->enable_multiples, $this->combined_product, $this->custom_message);
 		$res = $wpdb->query($sql);
 		$this->level_id = $wpdb->insert_id;
 		if ($this->create_page) {
@@ -74,6 +80,9 @@ class ID_Member_Level {
 		$this->txn_type = (isset($level['txn_type']) ? $level['txn_type'] : 'capture');
 		$this->level_type = (isset($level['level_type']) ? $level['level_type'] : null);
 		$this->recurring_type = $level['recurring_type'];
+		$this->trial_period = (isset($level['trial_period']) ? $level['trial_period'] : null);
+		$this->trial_length = (isset($level['trial_length']) ? $level['trial_length'] : null);
+		$this->trial_type = (isset($level['trial_type']) ? $level['trial_type'] : null);
 		$this->limit_term = (isset($level['limit_term']) ? $level['limit_term'] : '0');
 		$this->term_length = (isset($level['term_length']) ? $level['term_length'] : null);
 		$this->plan = $level['plan'];
@@ -83,7 +92,7 @@ class ID_Member_Level {
 		$this->enable_multiples = (isset($level['enable_multiples']) ? $level['enable_multiples'] : '0');
 		$this->combined_product = (isset($level['combined_product']) ? $level['combined_product'] : 0);
 		$this->custom_message = (isset($level['custom_message']) ? $level['custom_message'] : '');
-		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_levels SET product_status = %s, product_type = %s, level_name=%s, level_price=%s, credit_value = %d, txn_type=%s, level_type=%s, recurring_type=%s, limit_term = %d, term_length = %d, plan=%s, license_count=%d, enable_renewals = %d, renewal_price = %s, enable_multiples = %d, combined_product = %d, custom_message = %d WHERE id=%d',$this->product_status, $this->product_type, $this->level_name, $this->level_price, $this->credit_value, $this->txn_type, $this->level_type, $this->recurring_type, $this->limit_term, $this->term_length, $this->plan, $this->license_count, $this->enable_renewals, $this->renewal_price, $this->enable_multiples, $this->combined_product, $this->custom_message, $this->level_id);
+		$sql = $wpdb->prepare('UPDATE '.$wpdb->prefix.'memberdeck_levels SET product_status = %s, product_type = %s, level_name=%s, level_price=%s, credit_value = %d, txn_type=%s, level_type=%s, recurring_type=%s, limit_term = %d, trial_period = %d, trial_length = %d, trial_type = %s, term_length = %d, plan=%s, license_count=%d, enable_renewals = %d, renewal_price = %s, enable_multiples = %d, combined_product = %d, custom_message = %d WHERE id=%d',$this->product_status, $this->product_type, $this->level_name, $this->level_price, $this->credit_value, $this->txn_type, $this->level_type, $this->recurring_type, $this->limit_term, $this->trial_period, $this->trial_length, $this->trial_type, $this->term_length, $this->plan, $this->license_count, $this->enable_renewals, $this->renewal_price, $this->enable_multiples, $this->combined_product, $this->custom_message, $this->level_id);
 		$res = $wpdb->query($sql);
 		do_action('idc_update_level', $this->level_id);
 	}
@@ -132,15 +141,18 @@ class ID_Member_Level {
 		$res = $wpdb->query($sql);
 	}
 
-	public static function get_levels() {
-		$res = idf_get_object('id_member_level-get_levels');
+	public static function get_levels($filter = null) {
+		$res = idf_get_object('id_member_level-get_levels'.(!empty($filter) ? '_'.$filter['where'].'_'.$filter['value'] : null));
 		if (empty($res)) {
 			global $wpdb;
 			$sql = 'SELECT * FROM '.$wpdb->prefix.'memberdeck_levels';
+			if (!empty($filter)) {
+				$sql .= ' WHERE '.$filter['where'].' = "'.$filter['value'].'"';
+			}
 			$res = $wpdb->get_results($sql);
-			do_action('idf_cache_object', 'id_member_level-get_levels', $res, 60 * 60 * 12);
+			do_action('idf_cache_object', 'id_member_level-get_levels'.(!empty($filter) ? '_'.$filter['where'].'_'.$filter['value'] : null), $res, 60 * 60 * 12);
 		}
-		return $res;
+		return apply_filters('idc_get_levels', $res);
 	}
 
 	public static function get_level($id) {

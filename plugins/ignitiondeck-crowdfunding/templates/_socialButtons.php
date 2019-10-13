@@ -20,7 +20,7 @@ if (isset($social_settings['social_checks']['prod_page_google'])) {
 }
 if (isset($social_settings['social_checks']['prod_page_pinterest'])) {
 	
-	echo '<div id="share-pinterest" class="social-share social-button"><a href="http://pinterest.com/pin/create/button/?url='.currentPageURL().'&media='.ID_Project::get_project_thumbnail($post_id).'" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a><script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script></div>';
+	echo '<div id="share-pinterest" class="social-share social-button"><a href="http://pinterest.com/pin/create/button/?url='.idf_current_url().'&media='.ID_Project::get_project_thumbnail($post_id).'" class="pin-it-button" count-layout="horizontal"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a><script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script></div>';
 }
 
 do_action('id_social_sharing_after');

@@ -60,8 +60,8 @@ class ID_Order {
 		$this->price = $price;
 		$this->status = $status;
 		$this->date = $date;
-		add_action('id_modify_order', array($this, 'flush_orders_by_project'));
-		add_action('id_modify_order', array($this, 'flush_project_level_order_count'));
+		add_action('id_modify_order', array($this, 'flush_orders_by_project'), 10, 3);
+		add_action('id_modify_order', array($this, 'flush_project_level_order_count'), 10, 3);
 	}
 
 	function get_order() {
@@ -125,8 +125,8 @@ class ID_Order {
 			$this->id = $wpdb->insert_id;
 			if (isset($this->id)) {
 				do_action('id_payment_success', $this->id);
-				do_action('id_modify_order', $this->id, 'insert');
-				do_action('id_insert_order', $this->id);
+				do_action('id_modify_order', $this->id, 'insert', $this);
+				do_action('id_insert_order', $this->id, $this);
 				return $this->id;
 			}
 		}
@@ -173,8 +173,8 @@ class ID_Order {
 							)';
 			$res = $wpdb->query($sql);
 			$this->id = $wpdb->insert_id;
-			do_action('id_modify_order', $wpdb->insert_id, 'insert_preorder');
-			do_action('id_insert_preorder', $wpdb->insert_id);
+			do_action('id_modify_order', $wpdb->insert_id, 'insert_preorder', $this);
+			do_action('id_insert_preorder', $wpdb->insert_id, $this);
 			return $this->id;
 		}
 		else {
@@ -201,8 +201,8 @@ class ID_Order {
 			$this->date,
 			$this->id);
 		$res = $wpdb->query($sql);
-		do_action('id_modify_order', $this->id, 'update');
-		do_action('id_update_order', $this->id);
+		do_action('id_modify_order', $this->id, 'update', $this);
+		do_action('id_update_order', $this->id, $this);
 	}
 
 	public static function get_orders_by_project($project_id, $misc = null) {
@@ -216,12 +216,12 @@ class ID_Order {
 		return $orders;
 	}
 
-	function flush_orders_by_project($order_id) {
-		$order = new self($order_id);
-		$the_order = $order->get_order();
-		if (!empty($the_order->product_id)) {
-			idf_flush_object('id_order-get_orders_by_project-'.$the_order->product_id);
+	function flush_orders_by_project($order_id, $action = null, $the_order = null) {
+		if (empty($the_order)) {
+			$order = new self($order_id);
+			$the_order = $order->get_order();
 		}
+		idf_flush_object('id_order-get_orders_by_project-'.$the_order->product_id);
 	}
 
 	public static function project_level_order_count($project_id, $level) {
@@ -238,12 +238,12 @@ class ID_Order {
 		return $count;
 	}
 
-	function flush_project_level_order_count($order_id) {
-		$order = new self($order_id);
-		$the_order = $order->get_order();
-		if (!empty($the_order)) {
-			idf_flush_object('id_order-'.$the_order->product_id.'-'.$the_order->product_level);
+	function flush_project_level_order_count($order_id, $action = null, $the_order = null) {
+		if (empty($the_order)) {
+			$order = new self($order_id);
+			$the_order = $order->get_order();
 		}
+		idf_flush_object('id_order-'.$the_order->product_id.'-'.$the_order->product_level);
 	}
 
 	public static function get_total_orders_by_project($project_id) {
@@ -275,10 +275,16 @@ class ID_Order {
 
 	public static function delete_order($id) {
 		global $wpdb;
+		$order = new ID_Order($id);
+		$the_order = $order->get_order();
+		if (empty($the_order)) {
+			return;
+		}
 		$sql = 'DELETE FROM '.$wpdb->prefix.'ign_pay_info WHERE id = '.$id;
+		do_action('id_before_delete_order', $id);
 		$res = $wpdb->query($sql);
-		do_action('id_modify_order', $id, 'delete');
-		do_action('id_delete_order', $id);
+		do_action('id_modify_order', $id, 'delete', $the_order);
+		do_action('id_delete_order', $id, $the_order);
 	}
 
 	public static function update_order_status($order_id, $status) {

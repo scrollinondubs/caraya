@@ -12,7 +12,7 @@ class ID_Form {
 	}
 
 	function build_form($vars = null) {
-		$output = '<ul>';
+		$output = '<div>';
 		foreach ($this->fields as $field) {
 			if (isset($field['label'])) {
 				$label = $field['label'];
@@ -77,12 +77,12 @@ class ID_Form {
 			if (isset($field['before'])) {
 				$output .= $field['before'];
 			}
-			$output .= '<li class="'.$name.''.(isset($wclass) ? ' '.$wclass : '').'">';
+			$output .= '<div class="form-row '.$name.''.(isset($wclass) ? ' '.$wclass : '').'">';
 			// #devnote we can move some of these into an iterative loop
 			switch($type) {
 				case 'text':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="text" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -91,7 +91,7 @@ class ID_Form {
 					break;
 				case 'email':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="email" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -100,7 +100,7 @@ class ID_Form {
 					break;
 				case 'number':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="number" id="'.$id.'" name="'.$name.'" class="'.$class.' number-field" value="'.((!empty($value)) ? $value : 0).'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -109,7 +109,7 @@ class ID_Form {
 					break;
 				case 'password':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="password" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -118,7 +118,7 @@ class ID_Form {
 					break;
 				case 'file':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="file" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -127,7 +127,7 @@ class ID_Form {
 					break;
 				case 'date':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="date" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -136,7 +136,7 @@ class ID_Form {
 					break;
 				case 'time':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="time" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -145,7 +145,7 @@ class ID_Form {
 					break;
 				case 'tel':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<input type="tel" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
@@ -157,7 +157,7 @@ class ID_Form {
 					break;
 				case 'select':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<select id="'.$id.'" name="'.$name.'" class="'.$class.'" >';
 					foreach ($options as $option) {
@@ -166,20 +166,21 @@ class ID_Form {
 					$output .='</select></p>';
 					break;
 				case 'checkbox':
-					$output .= '<input type="checkbox" id="'.$id.'" name="'.$name.'" class="'.$class.'"  value="'.$value.'" '.$misc.'/>';
+					$output .= '<p><input type="checkbox" id="'.$id.'" name="'.$name.'" class="'.$class.'"  value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
-						$output .= '<label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
+					$output .= '</p>';
 					break;
 				case 'radio':
 					$output .= '<input type="radio" id="'.$id.'" name="'.$name.'" class="'.$class.'" value="'.$value.'" '.$misc.'/>';
 					if (!empty($label)) {
-						$output .= ' <label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= ' <label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					break;
 				case 'textarea':
 					if (!empty($label)) {
-						$output .= '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
+						$output .= '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label>';
 					}
 					$output .= '<textarea id="'.$id.'" name="'.$name.'" class="'.$class.'" '.$misc.'>'.$value.'</textarea>';
 					if (!empty($label)) {
@@ -189,7 +190,7 @@ class ID_Form {
 				case 'wpeditor':
 					ob_start();
 					if (!empty($label)) {
-						echo '<p><label for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label></p>';
+						echo '<p><label class="'.$type.'" for="'.$id.'">'.apply_filters('fes_'.$name.'_label', $label).'</label></p>';
 					}
 					wp_editor(html_entity_decode($value), $id, array('editor_class' => $class, 'textarea_name' => $name, 'media_buttons' => 1, 'textarea_rows' => 6));
 					/*if (!empty($label)) {
@@ -205,7 +206,7 @@ class ID_Form {
 					}
 					break;
 			}
-			$output .= '</li>';
+			$output .= '</div>';
 			if (isset($field['after'])) {
 				$output .= $field['after'];
 			}
@@ -214,7 +215,7 @@ class ID_Form {
 			$output .= ob_get_contents();
 			ob_end_clean();
 		}
-		$output .= '</ul>';
+		$output .= '</div>';
 		return $output;
 	}
 }

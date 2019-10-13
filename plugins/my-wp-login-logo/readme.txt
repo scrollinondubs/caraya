@@ -1,10 +1,9 @@
 === Plugin Name ===
 Contributors: afsalrahim
-Donate link: http://labs.afsalrahim.tk/wordpress/plugins/donate/index.php?ref=mywordpressloginlogo
 Tags: wordpress login logo, custom logo, login page logo, logo changer, change login page logo
 Requires at least: 3.0.1
-Tested up to: 3.5
-Stable tag: 2.0
+Tested up to: 4.9.4
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +42,13 @@ Less than or equal to 320px width and 70px height is the recommended logo size f
 2. Wordpress Login Page
 
 == Changelog ==
+
+= 2.2 =
+* More security updates
+
+= 2.1 =
+* Fix security issues.
+
 = 2.0 =
 * Add Custom Message below Login Form feature added.
 * Customize Login Form using a Fade In effect.

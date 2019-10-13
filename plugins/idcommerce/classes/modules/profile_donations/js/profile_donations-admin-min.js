@@ -1,0 +1,1 @@
+jQuery(document).on("idfMediaSelected",function(e,o){console.log(o),jQuery(".profile-donations-website-image").children("img").attr("src",o.url).show()});

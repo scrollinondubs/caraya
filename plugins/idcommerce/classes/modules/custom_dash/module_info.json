@@ -4,5 +4,6 @@
   "doclink":"",
   "status":"test",
   "type":"module",
-  "requires": "idc"
+  "requires": "idc",
+  "tags": "interface"
 }

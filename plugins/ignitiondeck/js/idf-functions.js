@@ -1,9 +1,9 @@
 function idfParseFloat(num) {
-	return parseFloat(num.replace(/[^\d.-]/g, ''));
+	return parseFloat(num.replace(/[^\d.-]/g, '')).toFixed(2) || 0.00;
 }
 
 function idfPriceFormat(price) {
-	formattedPrice = price.toFixed(2);
+	var formattedPrice = price.toFixed(2) || 0.00;
 	return formattedPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

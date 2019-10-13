@@ -14,6 +14,7 @@ Class ID_Simple_Fes {
 	private static function set_filters() {
 		add_action('init', 'simple_fes_init');
 		add_action('wp_enqueue_scripts','simple_fes_scripts');
+		add_filter('gettext', 'simple_fes_text_filters', 10, 3);
 		add_filter('id_fes_form', array('ID_Simple_Fes_Form', 'simple_fes_form'), 10, 2);
 		add_filter('id_fes_form_wrapper_class', 'idc_simple_fes_form_wrapper_class');
 		//add_filter('ide_level_1_title', 'idc_simple_fes_level_1_title', 10, 2);

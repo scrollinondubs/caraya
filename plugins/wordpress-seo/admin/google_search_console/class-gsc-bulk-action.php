@@ -1,15 +1,17 @@
 <?php
 /**
- * @package WPSEO\Admin|Google_Search_Console
+ * WPSEO plugin file.
+ *
+ * @package WPSEO\Admin\Google_Search_Console
  */
 
 /**
- * Class WPSEO_GSC_Bulk_Action
+ * Class WPSEO_GSC_Bulk_Action.
  */
 class WPSEO_GSC_Bulk_Action {
 
 	/**
-	 * Setting the listener on the bulk action post
+	 * Setting the listener on the bulk action post.
 	 */
 	public function __construct() {
 		if ( wp_verify_nonce( filter_input( INPUT_POST, 'wpseo_gsc_nonce' ), 'wpseo_gsc_nonce' ) ) {
@@ -18,7 +20,7 @@ class WPSEO_GSC_Bulk_Action {
 	}
 
 	/**
-	 * Handles the bulk action when there is an action posted
+	 * Handles the bulk action when there is an action posted.
 	 */
 	private function handle_bulk_action() {
 		$bulk_action = $this->determine_bulk_action();
@@ -31,7 +33,7 @@ class WPSEO_GSC_Bulk_Action {
 	}
 
 	/**
-	 * Determine which bulk action is selected and return that value
+	 * Determine which bulk action is selected and return that value.
 	 *
 	 * @return string|bool
 	 */
@@ -52,7 +54,7 @@ class WPSEO_GSC_Bulk_Action {
 	}
 
 	/**
-	 * Get the posted issues and return them
+	 * Get the posted issues and return them.
 	 *
 	 * @return array
 	 */
@@ -67,7 +69,7 @@ class WPSEO_GSC_Bulk_Action {
 	}
 
 	/**
-	 * Runs the bulk action
+	 * Runs the bulk action.
 	 *
 	 * @param string $bulk_action Action type.
 	 * @param array  $issues      Set of issues to apply to.
@@ -82,7 +84,7 @@ class WPSEO_GSC_Bulk_Action {
 	}
 
 	/**
-	 * Marks the issue as fixed
+	 * Marks the issue as fixed.
 	 *
 	 * @param string $issue Issue URL.
 	 *

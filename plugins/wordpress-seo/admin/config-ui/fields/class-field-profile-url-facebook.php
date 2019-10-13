@@ -1,10 +1,12 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Admin\ConfigurationUI
  */
 
 /**
- * Class WPSEO_Config_Field_Profile_URL_Facebook
+ * Class WPSEO_Config_Field_Profile_URL_Facebook.
  */
 class WPSEO_Config_Field_Profile_URL_Facebook extends WPSEO_Config_Field {
 
@@ -16,10 +18,12 @@ class WPSEO_Config_Field_Profile_URL_Facebook extends WPSEO_Config_Field {
 
 		$this->set_property( 'label', __( 'Facebook Page URL', 'wordpress-seo' ) );
 		$this->set_property( 'pattern', '^https:\/\/www\.facebook\.com\/([^/]+)\/$' );
+
+		$this->set_requires( 'publishingEntityType', 'company' );
 	}
 
 	/**
-	 * Set adapter
+	 * Set adapter.
 	 *
 	 * @param WPSEO_Configuration_Options_Adapter $adapter Adapter to register lookup on.
 	 */

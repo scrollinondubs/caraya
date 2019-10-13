@@ -26,17 +26,33 @@ function idf_idc_license_type($valid) {
 }
 
 function idf_idc_validate_key($key) {
-	$ch = curl_init('https://www.ignitiondeck.com/id/?action=md_validate_license&key='.$key);
+	$id_account = get_option('id_account');
+	$api_url = 'https://www.ignitiondeck.com/id/';
+	$query = array(
+		'action' => 'md_validate_license',
+		'key' => $key,
+		'id_account' => $id_account
+	);
+	$querystring = http_build_query($query);
+	$url = $api_url.'?'.$querystring;
+
+	$ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+    curl_setopt($ch, CURLOPT_REFERER, home_url());
     $response = curl_exec($ch);
     $response_array = array('valid' => false, 'download' => null);
     if (!$response) {
     	// curl failed https, lets try http
     	curl_close($ch);
-    	$ch = curl_init('http://www.ignitiondeck.com/id/?action=md_validate_license&key='.$key);
-    	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    	$api_url = 'http://www.ignitiondeck.com/id/';
+    	$url = $api_url.'?'.$querystring;
+    	$ch = curl_init($url);
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    	curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+    	curl_setopt($ch, CURLOPT_REFERER, home_url());
     	$response = curl_exec($ch);
     	if (!$response) {
     		// final curl fail
@@ -81,9 +97,12 @@ function idc_license_update($idc_license_key) {
 add_action('schedule_twicedaily_idf_cron', 'idf_schedule_twicedaily_idc_cron');
 
 function idf_schedule_twicedaily_idc_cron() {
-	$general = get_option('md_receipt_settings');
-	$general = maybe_unserialize($general);
-	$idc_license_key = (isset($general['license_key']) ? $general['license_key'] : '');
-	idc_license_update($idc_license_key);
+	$license_option = get_option('idf_license_entry_options');
+	if (empty($license_option) || $license_option == 'keys') {
+		$general = get_option('md_receipt_settings');
+		$general = maybe_unserialize($general);
+		$idc_license_key = (isset($general['license_key']) ? $general['license_key'] : '');
+		idc_license_update($idc_license_key);
+	}
 }
 ?>

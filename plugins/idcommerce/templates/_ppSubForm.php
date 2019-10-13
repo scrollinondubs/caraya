@@ -7,6 +7,9 @@
 	<input type="hidden" name="item_number" value="">
 	<input type="hidden" name="no_note" value="1">
 	<input type="hidden" name="src" value="1">
+	<input type="hidden" name="a1" value="">
+	<input type="hidden" name="p1" value="">
+	<input type="hidden" name="t1" value="">
 	<input type="hidden" id="pp-price" name="a3" value="">
 	<input type="hidden" id="pp-times" name="p3" value="">
 	<input type="hidden" id="pp-recurring" name="t3" value="">

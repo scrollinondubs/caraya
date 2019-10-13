@@ -1,14 +1,21 @@
 <?php
 add_action('init', 'idf_set_roles');
+add_action('user_register', 'idf_set_roles');
 
-function idf_set_roles() {
+function idf_set_roles($user_id = null) {
 	global $crowdfunding;
 	if (is_multisite()) {
 		require (ABSPATH . WPINC . '/pluggable.php');
 	}
-	$current_user = wp_get_current_user();
-	$user_id = $current_user->ID;
+	if (empty($user_id)) {
+		$current_user = wp_get_current_user();
+		$user_id = $current_user->ID;
+	}
 	$user = get_user_by('id', $user_id);
+	if (empty($user)) {
+		return;
+	}
+
 	// setup general roles for product suite
 	if (current_user_can('administrator') && !current_user_can('create_edit_projects')) {
 		$admin = get_role('administrator');
@@ -19,7 +26,6 @@ function idf_set_roles() {
 			$admin->add_cap($cap);
 		}
 	}
-
 	$creator = false;
 	if ($crowdfunding) {
 		// we know that IDC is set to commerce platform and IDCF is installed
@@ -41,11 +47,7 @@ function idf_set_roles() {
 	}
 	if ($creator) {
 		if (!current_user_can('create_edit_projects')) {
-			if ($user_id > 0) {
-				if (!empty($user)) {
-					$user->add_cap('create_edit_projects');
-				}
-			}
+			$user->add_cap('create_edit_projects');
 		}
 	}
 }

@@ -12,7 +12,7 @@
     <div class="tooltip-text">
         <?php include_once ('_checkoutTooltip.php'); ?>
     </div>
-	<form action="" method="POST" id="payment-form" data-currency-code="<?php echo $pp_currency; ?>" data-product="<?php echo (isset($product_id) ? $product_id : ''); ?>" data-type="<?php echo (isset($type) ? $type : ''); ?>" <?php echo (isset($type) && $type == 'recurring' ? 'data-recurring="'.$recurring.'"' : ''); ?> data-free="<?php echo ($level_price == 0 ? 'free' : 'premium'); ?>" data-txn-type="<?php echo (isset($txn_type) ? $txn_type : 'capture'); ?>" data-renewable="<?php echo (isset($renewable) ? $renewable : 0); ?>" data-limit-term="<?php echo (isset($type) && $type == 'recurring' ? $limit_term : 0); ?>" data-term-limit="<?php echo(isset($limit_term) && $limit_term ? $term_length : ''); ?>" data-scpk="<?php echo (isset($sc_pubkey) ? apply_filters('idc_sc_pubkey', $sc_pubkey) : ''); ?>" data-claimedpp="<?php echo (isset($claimed_paypal) ? apply_filters('idc_claimed_paypal', $claimed_paypal) : ''); ?>" <?php echo ((isset($es) && $es == 1 && !is_idc_free()) || isset($_GET['login_failure']) ? 'style="display: none;"' : ''); ?> data-pay-by-credits="<?php echo ((isset($paybycrd) && $paybycrd == 1) ? '1' : '') ?>" data-guest-checkout="<?php echo ($guest_checkout); ?>">
+	<form action="" method="POST" id="payment-form" data-currency-code="<?php echo $pp_currency; ?>" data-product="<?php echo (isset($product_id) ? $product_id : ''); ?>" data-type="<?php echo (isset($type) ? $type : ''); ?>" <?php echo (isset($type) && $type == 'recurring' ? 'data-recurring="'.$recurring.'"' : ''); ?> data-free="<?php echo ($level_price == 0 ? 'free' : 'premium'); ?>" data-txn-type="<?php echo (isset($txn_type) ? $txn_type : 'capture'); ?>" data-renewable="<?php echo (isset($renewable) ? $renewable : 0); ?>" data-trial-period="<?php echo (isset($return->trial_period) ? $return->trial_period : ''); ?>" data-trial-length="<?php echo (isset($return->trial_length) ? $return->trial_length : ''); ?>" data-trial-type="<?php echo (isset($return->trial_type) ? $return->trial_type : ''); ?>" data-limit-term="<?php echo (isset($type) && $type == 'recurring' ? $limit_term : 0); ?>" data-term-limit="<?php echo(isset($limit_term) && $limit_term ? $term_length : ''); ?>" data-scpk="<?php echo (isset($sc_pubkey) ? apply_filters('idc_sc_pubkey', $sc_pubkey) : ''); ?>" data-claimedpp="<?php echo (isset($claimed_paypal) ? apply_filters('idc_claimed_paypal', $claimed_paypal) : ''); ?>" <?php echo ((isset($es) && $es == 1 && !is_idc_free()) || isset($_GET['login_failure']) ? 'style="display: none;"' : ''); ?> data-pay-by-credits="<?php echo ((isset($paybycrd) && $paybycrd == 1) ? '1' : '') ?>" data-guest-checkout="<?php echo ($guest_checkout); ?>">
 		<h3 class="checkout-header"><?php /* echo (isset($level_name) ? $level_name : ''); ?> <?php _e('Checkout', 'memberdeck'); */?> 
 			<?php _e('Select Payment Method', 'memberdeck'); ?></h3>
 		<?php if ($level_price !== '' && $level_price > 0) { ?>
@@ -75,35 +75,35 @@
 			<div id="logged-input" class="no">
 				<div class="form-row third left">
 					<label for="first-name"><?php _e('First Name', 'memberdeck'); ?> <span class="starred">*</span></label>
-					<input type="text" size="20" class="first-name required" name="first-name"/>
+					<input type="text" size="20" class="first-name required" name="first-name" autocomplete="given-name"/>
 				</div>
 				<div class="form-row twoforth">
 					<label for="last-name"><?php _e('Last Name', 'memberdeck'); ?> <span class="starred">*</span></label>
-					<input type="text" size="20" class="last-name required" name="last-name"/>
+					<input type="text" size="20" class="last-name required" name="last-name" autocomplete="family-name"/>
 				</div>
 				<div class="form-row">
 					<label for="email"><?php _e('Email Address', 'memberdeck'); ?> <span class="starred">*</span></label>
-					<input type="email" pattern="[^ @]*@[^ @]*" size="20" class="email required" name="email"/>
+					<input type="email" pattern="[^ @]*@[^ @]*" size="20" class="email required" name="email" autocomplete="email"/>
 				</div>
 				<?php if (!$guest_checkout) { ?>
 					<div class="form-row">
 						<label for="pw"><?php _e('Password', 'memberdeck'); ?> <span class="starred">*</span></label>
-						<input type="password" size="20" class="pw required" name="pw"/>
+						<input type="password" size="20" class="pw required" name="pw" autocomplete="current-password"/>
 					</div>
 					<div class="form-row">
 						<label for="cpw"><?php _e('Re-enter Password', 'memberdeck'); ?> <span class="starred">*</span></label>
-						<input type="password" size="20" class="cpw required" name="cpw"/>
+						<input type="password" size="20" class="cpw required" name="cpw" autocomplete="current-password"/>
 					</div>
 				<?php }	else { ?>
 					<a href="#" class="reveal-account"><?php _e('Create an account', 'memberdeck'); ?></a>
 					<div id="create_account" style="display: none">
 						<div class="form-row">
 							<label for="pw"><?php _e('Password', 'memberdeck'); ?> <span class="starred">*</span></label>
-							<input type="password" size="20" class="pw required" name="pw"/>
+							<input type="password" size="20" class="pw required" name="pw" autocomplete="new-password"/>
 						</div>
 						<div class="form-row">
 							<label for="cpw"><?php _e('Re-enter Password', 'memberdeck'); ?> <span class="starred">*</span></label>
-							<input type="password" size="20" class="cpw required" name="cpw"/>
+							<input type="password" size="20" class="cpw required" name="cpw" autocomplete="new-password"/>
 						</div>
 					</div>
 				<?php } ?>
@@ -113,15 +113,15 @@
 		<div id="logged-input" class="yes">
 			<div class="form-row third left" style="display: none;">
 				<label for="first-name"><?php _e('First Name', 'memberdeck'); ?> <span class="starred">*</span></label>
-				<input type="text" size="20" class="first-name required" name="first-name" value="<?php echo (isset($fname) ? $fname : ''); ?>"/>
+				<input type="text" size="20" class="first-name required" name="first-name" value="<?php echo (isset($fname) ? $fname : ''); ?>" autocomplete="given-name"/>
 			</div>
 			<div class="form-row twoforth" style="display: none;">
 				<label for="last-name"><?php _e('Last Name', 'memberdeck'); ?> <span class="starred">*</span></label>
-				<input type="text" size="20" class="last-name required" name="last-name" value="<?php echo (isset($lname) ? $lname : ''); ?>"/>
+				<input type="text" size="20" class="last-name required" name="last-name" value="<?php echo (isset($lname) ? $lname : ''); ?>" autocomplete="family-name"/>
 			</div>
 			<div class="form-row" style="display: none;">
 				<label for="email"><?php _e('Email Address', 'memberdeck'); ?> <span class="starred">*</span></label>
-				<input type="email" pattern="[^ @]*@[^ @]*" size="20" class="email required" name="email" value="<?php echo (isset($email) ? $email : ''); ?>"/>
+				<input type="email" pattern="[^ @]*@[^ @]*" size="20" class="email required" name="email" value="<?php echo (isset($email) ? $email : ''); ?>" autocomplete="email"/>
 			</div>
 		</div>
 		<?php } ?>
@@ -129,26 +129,26 @@
         <div id="extra_fields" class="form-row">
 			<?php echo do_action('md_purchase_extrafields'); ?>
 		</div>
-       <div id="stripe-input" data-idset="<?php echo (isset($instant_checkout) && $instant_checkout == true ? true : false); ?>" data-symbol="<?php echo (isset($stripe_symbol) ? $stripe_symbol : ''); ?>" data-customer-id="<?php echo ((isset($customer_id) && !empty($customer_id)) ? $customer_id : '') ?>" style="display:none;">
+       <div id="stripe-input" data-idset="<?php echo (isset($instant_checkout) && $instant_checkout ? 1 : 0); ?>" data-symbol="<?php echo (isset($stripe_symbol) ? $stripe_symbol : ''); ?>" data-customer-id="<?php echo ((isset($customer_id) && !empty($customer_id)) ? $customer_id : '') ?>" style="display:none;">
         	<div class="row">		
             	<h3 class="checkout-header"><?php _e('Credit Card Info', 'memberdeck'); ?></h3>
             </div>
 			<div class="form-row">
 				<label><?php _e('Card Number', 'memberdeck'); ?> <span class="starred">*</span> <span class="cards"><img src="https://ignitiondeck.com/id/wp-content/themes/id2/images/creditcards-full2.png" alt="<?php _e('Credit Cards Accepted', 'memberdeck'); ?>" /></span></label>
-				<input type="text" size="20" autocomplete="off" class="card-number required" /><span class="error-info" style="display:none;"><?php _e('Incorrect Number', 'memberdeck'); ?></span>
+				<input type="text" size="20" class="card-number required" autocomplete="cc-number" <?php echo apply_filters('idc_checkout_card_number_misc', null); ?>/><span class="error-info" style="display:none;"><?php _e('Incorrect Number', 'memberdeck'); ?></span>
 			</div>
 			<div class="form-row third left">
 				<label><?php _e('CVC', 'memberdeck'); ?> <span class="starred">*</span></label>
-				<input type="text" size="4" maxlength="4" autocomplete="off" class="card-cvc required"/><span class="error-info" style="display:none;"><?php _e('CVC number required', 'memberdeck'); ?></span>
+				<input type="text" size="4" maxlength="4" class="card-cvc required" autocomplete="cc-csc" <?php echo apply_filters('idc_checkout_card_cvc_misc', null); ?> /><span class="error-info" style="display:none;"><?php _e('CVC number required', 'memberdeck'); ?></span>
 			</div>
 			<div class="form-row third left date">
 				<label><?php _e('Expiration (MM/YYYY)', 'memberdeck'); ?> <span class="starred">*</span></label>
-				<input type="text" size="2" maxlength="2" class="card-expiry-month required"/><span> / </span><input type="text" size="4" maxlength="4" class="card-expiry-year required"/>
+				<input type="text" size="2" maxlength="2" class="card-expiry-month required" autocomplete="cc-exp-month" <?php echo apply_filters('idc_checkout_card_expiry_month_misc', null); ?>/><span class="card-exp-slash"> / </span></span><input type="text" size="4" maxlength="4" class="card-expiry-year required"  autocomplete="cc-exp-year" <?php echo apply_filters('idc_checkout_card_expiry_year_misc', null); ?>/>
 			</div>
-			<?php if ($es == 1) { ?>
+			<?php if ($es == 1 || apply_filters('idc_display_zip', false) == true) { ?>
 	          	<div class="form-row third">
 					<label><?php _e('Zip Code', 'memberdeck'); ?> <span class="starred">*</span></label>
-					<input type="text" size="20" autocomplete="off" class="zip-code required" /><span class="error-info" style="display:none;"><?php _e('Invalid Zip code', 'memberdeck'); ?></span>
+					<input type="text" size="20" class="zip-code required" <?php echo apply_filters('idc_checkout_zip_code_misc', null); ?> autocomplete="postal-code"/><span class="error-info" style="display:none;"><?php _e('Invalid Zip code', 'memberdeck'); ?></span>
 				</div>
             	<?php } ?>
 		</div>
@@ -193,7 +193,7 @@
 		$args = array('redirect' => $url, 'echo' => false);
 		echo wp_login_form($args);
 		?>
-		<p><a class="lostpassword" href="<?php echo site_url(); ?>/wp-login.php?action=lostpassword"><?php _e('Lost Password', 'memberdeck'); ?></a></p>
+		<p><a class="lostpassword" href="<?php echo wp_lostpassword_url(); ?>"><?php _e('Lost Password', 'memberdeck'); ?></a></p>
 	</div>
 
 	<?php if ($general['show_terms'] == 1) { ?>
@@ -222,9 +222,15 @@ if (window.Stripe) jQuery("#payment-form").show();
 <?php } ?>
 <div id="ppload"></div>
 <?php if (isset($ecb) && $ecb == 1 && !is_idc_free()) { ?>
-<div id="coinbaseload" data-button-loaded="no" style="display:none;">
-	<input type="hidden" name="id_coinbase_button_code" id="id_coinbase_button_code" value="" />
-</div>
+<!--<div id="coinbaseload" data-button-loaded="no" style="display:none;">
+	<iframe
+		id=""
+		src=""
+		style="width: 460px; height: 350px; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.25);"
+		allowtransparency="true"
+		frameborder="0"
+	></iframe>
+</div>-->
 <?php } ?>
 <?php if (isset($eppadap) && $eppadap == 1 && !is_idc_free()) {
 	// For lightbox

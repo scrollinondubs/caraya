@@ -18,7 +18,7 @@ function checkForLeaderboardLink()
             $referralUsedEmail = $referralHash;
             $referralHash =  hash('sha256', $referralHash);
         }
-
+        
         // check if hash exists in the member data table.
         if($memberData = getLeaderboardMemberData($referralHash)) {
             setLeaderboardReferralCookie($referralHash);

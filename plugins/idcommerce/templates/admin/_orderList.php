@@ -165,37 +165,37 @@
 									$level_display = __('N/A', 'memberdeck');
 								}
 							}
-							$meta = ID_Member_Order::get_order_meta($order->id, 'gateway_info', true);
+							$gateway_info = ID_Member_Order::get_order_meta($order->id, 'gateway_info', true);
 							if ($order->transaction_id == 'pre') {
 								$preorder_meta = ID_Member_Order::get_order_meta($order->id, 'preauth_error', true);
 							}
-							if (!empty($meta) && $meta['gateway'] == 'credit') {
+							if (!empty($gateway_info) && $gateway_info['gateway'] == 'credit') {
 								$price = (isset($level) ? $level->credit_value : '0');
 							} else {
 								$price = $order->price;
 							}
 							
-							$time_zone = new DateTimeZone($default_timezone);
-							$datetime = new DateTime($order->order_date);	//$datetime->format('Y-m-d H:i:s')
-							$datetime->setTimezone($time_zone);
-							
-							echo '<tr id="user-'.$order->id.'" class="order-'.$order->id.' hentry '.$alt.'">';
+							$date = new DateTime($order->order_date, $tz);
+							#redundant because orders are stored in default tz
+							$date->setTimezone($tz);
+
+							echo '<tr data-id="'.$order->id.'" data-currency-code="'.(!empty($gateway_info['currency_code']) ? idc_currency_to_symbol($gateway_info['currency_code']) : '').'" id="user-'.$order->id.'" class="order-'.$order->id.' hentry '.$alt.'">';
 								echo '<th scope="row" class="check-column">&nbsp;</th>';
-								echo '<td class="order_id column-cb">'.'100'.$order->id.'
+								echo '<td id="order_id-'.$order->id.'" class="order_item order_id column-cb" data-column="id" data-type="int">'.'100'.$order->id.'
 										<div class="row-actions">
 											<span class="view" style="display: none;"><a href="?page=idc-view-order&action=idc_view_order&order_id='.$order->id.'">'.__('View', 'memberdeck').'</a> |</span>
 											<span class="edit" style="display: none;"><a href="?page=idc-edit-order&action=idc_edit_order&order_id='.$order->id.'">'.__('Edit', 'memberdeck').'</a> |</span>
 											<span class="trash"><a id="idc-delete-order" href="?page=idc-orders&action=idc_delete_order&order_id='.$order->id.'">'.__('Delete', 'memberdeck').'</a></span>
 										</div>
 									</td>';
-								echo '<td class="order_date">'.$datetime->format('Y-m-d H:i:s').'</td>';
-								echo '<td class="customer">'.(!empty($order->user_id) ? $order->user_id : '').'</td>';
-								echo '<td class="customer"><a href="'.md_get_admin_order_list_url().'&user_id='.$order->user_id.'">'.$email.'</a></td>';
-								echo '<td class="product">'.apply_filters('idc_level_name', $level_display).'</td>';
-								echo '<td class="product">'.apply_filters('idc_order_price', $price, $order->id).'</td>';
+								echo '<td id="order_date-'.$order->id.'" class="order_item order_edit order_date" data-column="order_date" data-type="date"><a title="'.__('Click to edit', 'memberdeck').'" href="#">'.$date->format('Y-m-d H:i:s').'</a></td>';
+								echo '<td id="user_id-'.$order->id.'" class="order_item order_edit customer" data-type="int">'.(!empty($order->user_id) ? $order->user_id : '').'</td>';
+								echo '<td id="user_email-'.$order->id.'" class="order_item customer" data-type="text"><a href="'.md_get_admin_order_list_url().'&user_id='.$order->user_id.'">'.$email.'</a></td>';
+								echo '<td id="product-'.$order->id.'" class="order_item product" data-type="text">'.apply_filters('idc_level_name', $level_display).'</td>';
+								echo '<td id="price-'.$order->id.'" class="order_item order_edit price" data-column="price" data-type="float"><a title="'.__('Click to edit', 'memberdeck').'" href="#">'.apply_filters('idc_order_price', $price, $order->id, $gateway_info).'</a></td>';
 								// if a preorder fails, we link the transaction ID to a detail popup
-								echo '<td class="txn_id">'.($order->transaction_id == 'pre' && !empty($preorder_meta) ? '<a class="pre-order-status-link openLBGlobal" href=".idc-preorder-status-box" data-order-id="'.$order->id.'" data-preorder-status-date="'.(isset($preorder_meta) ? date(idf_date_format(), $preorder_meta['date']) : '').'" data-preorder-status-message="'.(isset($preorder_meta) ? ($preorder_meta['error']) : '').'">' : '').$order->transaction_id.($order->transaction_id == 'pre' ? '</a>' : '').'</td>';
-								echo '<td class="order_status">'.$order->status.'</td>';
+								echo '<td id="txn_id-'.$order->id.'" class="order_item txn_id" data-type="text">'.($order->transaction_id == 'pre' && !empty($preorder_meta) ? '<a class="pre-order-status-link openLBGlobal" href=".idc-preorder-status-box" data-order-id="'.$order->id.'" data-preorder-status-date="'.(isset($preorder_meta) ? date(idf_date_format(), $preorder_meta['date']) : '').'" data-preorder-status-message="'.(isset($preorder_meta) ? ($preorder_meta['error']) : '').'">' : '').$order->transaction_id.($order->transaction_id == 'pre' ? '</a>' : '').'</td>';
+								echo '<td id="order_status-'.$order->id.'" class="order_item order_status">'.$order->status.'</td>';
 							echo '</tr>';
 							$i++;
 						}

@@ -53,8 +53,9 @@ function check_for_id_update($checked_data) {
 	// Start checking for an update
 	$raw_response = wp_remote_post($id_api_url, $request_string);
 
-	if (!is_wp_error($raw_response) && ($raw_response['response']['code'] == 200))
+	if (!is_wp_error($raw_response) && ($raw_response['response']['code'] == 200)) {
 		$response = unserialize($raw_response['body']);
+	}
 
 	if (is_object($response) && !empty($response)) // Feed the update data into WP updater
 		$checked_data->response[$plugin_file] = $response;
@@ -108,10 +109,6 @@ function idcf_license_type() {
 	$is_pro = is_id_pro();
 	if ($is_pro) {
 		return 'active';
-	}
-	$was_pro = was_id_pro();
-	if ($was_pro) {
-		return 'expired';
 	}
 	return 'free';
 }

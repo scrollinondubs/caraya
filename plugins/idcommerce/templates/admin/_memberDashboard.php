@@ -20,7 +20,7 @@
                               ?>
                           </div>
                           <div class="md-registered">
-                              <?php echo (isset($registered) ? __('Registered', 'memberdeck').': '.date("m-d-Y", strtotime($registered)) : '') . "<br>"; ?>
+                              <?php echo (isset($registered) ? __('Registered', 'memberdeck').': '.date(idf_date_format(), strtotime($registered)) : '') . "<br>"; ?>
                           </div>
                    </div>
                    <div class="profile-info-wrapper">
@@ -38,9 +38,11 @@
                 </div>
 			</div>
 			<div class="md-dash-sidebar">
+				<?php do_action('idc_dash_above_sidebar'); ?>
 				<ul>
 			      <?php ( function_exists('dynamic_sidebar') ? dynamic_sidebar('dashboard-sidebar')  : ''); ?>
 			   </ul>
+			   <?php do_action('idc_dash_below_sidebar'); ?>
 			</div>
 		</li>
 		<li class="md-box <?php echo $a_width; ?>">
