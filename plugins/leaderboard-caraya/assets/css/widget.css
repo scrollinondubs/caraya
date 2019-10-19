@@ -11,8 +11,8 @@
 
 
 #pie-container {
-    margin-top: 60px;
-    margin-bottom: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .caraya-container {
@@ -33,6 +33,13 @@
     width: 45%;
 }
 
+.leaderboard-container h2 {
+
+    text-align: center;
+    width: 100%;
+
+}
+
 @media (max-width: 600px) {
     .flex-wrapper {
         display: block;
@@ -40,6 +47,12 @@
 
     .flex-container {
         width: 100%;
+    }
+
+    .leaderboard-container h2 {
+
+        margin-top: 40px;
+
     }
 }
 
@@ -49,13 +62,6 @@
 
 .color-red {
     color: #ed5624;
-}
-
-.leaderboard-container h2 {
-
-    text-align: center;
-    width: 100%;
-
 }
 
 .leaderboard-header {

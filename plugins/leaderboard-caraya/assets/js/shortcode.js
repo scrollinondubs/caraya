@@ -393,7 +393,8 @@ function (_React$Component) {
         options: {
           responsive: true,
           legend: {
-            position: 'right'
+            display: true,
+            position: 'bottom'
           },
           title: {
             display: false,
@@ -405,7 +406,9 @@ function (_React$Component) {
           }
         }
       };
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__["Pie"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "pie-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__["Pie"], {
         data: config.data,
         options: config.options
       }));

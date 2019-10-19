@@ -43,7 +43,8 @@ class PieChart extends React.Component {
             options: {
                 responsive: true,
                 legend: {
-                    position: 'right',
+                    display: true,
+                    position: 'bottom',
                 },
                 title: {
                     display: false,
@@ -57,7 +58,7 @@ class PieChart extends React.Component {
         };
    
     return (
-      <div>
+      <div id='pie-container'>
        <Pie
           data={config.data}
           options={config.options} />
