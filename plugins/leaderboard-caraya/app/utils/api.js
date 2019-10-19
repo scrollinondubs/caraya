@@ -5,7 +5,11 @@ import axios from 'axios';
  *
  * @returns {AxiosPromise<any>}
  */
-export const getLeaders = (url) => axios.get(url);
+export const getLeaders = (url) => axios.get(
+    url,
+    {
+        crossDomain: true
+    });
 
 export const getLeadersJson = () => {
 

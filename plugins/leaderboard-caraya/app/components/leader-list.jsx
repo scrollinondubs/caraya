@@ -7,9 +7,9 @@ const LeaderList = props => {
   // console.log(leaders);
   if (!leaders) return null;
   if (!leaders.leaderboard.length) return (<p>Unable to load the leader board</p>);
-  const target = leaders.fundraisingTarget;
-  const totalRaised = leaders.totalRaised;
-  const daysRemaining = leaders.daysRemaining;
+  const target = '$'+leaders.fundraisingTarget;
+  const totalRaised = '$' +leaders.totalRaised;
+  const daysRemaining = leaders.endDate;
   const teamLeaders = leaders.leaderboard.sort((a, b) =>  b.donationAmount - a.donationAmount).slice(0,5);
   return (
     <section className="caraya-container">
@@ -22,16 +22,16 @@ const LeaderList = props => {
                     <h2>Current funds raised: <span className='color-red'>{totalRaised}</span></h2>
                 </div>
                 <div className='col'>
-                    <h2>Days Remaing: <span className='color-red'>{daysRemaining}</span></h2>
+                    <h2>End Date: <span className='color-red'>{daysRemaining}</span></h2>
                 </div>
-                <PieChart leaderData={leaders.leaderboard}/>
+            <PieChart leaderData={teamLeaders}/>
             </div>
             <div className='flex-container leaderboard-container'>
                 <h2>LEADERBOARD</h2>
       {
         teamLeaders.map((tl, index ) => {
           const colorClass = 'colorClass'+index;
-          const topDonor = tl.individualDonors.sort((a, b) => b.donationAmount > a.donationAmount)[0].name;
+          const topDonor = tl.individualDonors.length === 0 ? 'N/A' : tl.individualDonors.sort((a, b) => b.donationAmount > a.donationAmount)[0].name;
           const props = {
             teamName: tl.teamName,
             amountDonated: tl.donationAmount,

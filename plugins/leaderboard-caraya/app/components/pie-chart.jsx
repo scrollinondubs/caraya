@@ -24,8 +24,11 @@ class PieChart extends React.Component {
    * Renders the PieChart component.
    */
   render() {
-    // console.log(this.props);
-    const data = this.props.leaderData.map(x => x.donationAmount);
+   
+    const data = this.props.leaderData.map((x) => {
+      return x.donationAmount === 0 ? 1 : x.donationAmount;
+    });
+
     const names = this.props.leaderData.map(x => x.teamName);
     const config = {
             type: 'pie',
@@ -40,7 +43,7 @@ class PieChart extends React.Component {
             options: {
                 responsive: true,
                 legend: {
-                    position: 'bottom',
+                    position: 'right',
                 },
                 title: {
                     display: false,

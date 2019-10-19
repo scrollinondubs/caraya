@@ -27,12 +27,13 @@ export class Leaderboard extends React.Component {
    * Fetches posts types, selected posts then makes first call for posts
    */
   componentDidMount() {
+    // alert(this.props.dataUrl);
     this.setState({
       loading: true,
       initialLoading: true,
     });
 
-    /*api.getLeaders(this.props.dataUrl)
+    api.getLeaders('http://s30908.p20.sites.pressdns.com/wp-json/caraya/leaderboard')
       .then(({ data = {} } = {}) => {
         this.setState({
           leaders: data,
@@ -41,11 +42,11 @@ export class Leaderboard extends React.Component {
          //fnished
          console.log("loaded" + this.state);
         });
-      });*/
-    this.setState({
+      });
+    /*this.setState({
       leaders: api.getLeadersJson(),
       loading:false
-    })
+    })*/
   }
 
   /**

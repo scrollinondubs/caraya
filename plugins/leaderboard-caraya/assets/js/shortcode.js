@@ -142,9 +142,9 @@ var LeaderList = function LeaderList(props) {
 
   if (!leaders) return null;
   if (!leaders.leaderboard.length) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Unable to load the leader board");
-  var target = leaders.fundraisingTarget;
-  var totalRaised = leaders.totalRaised;
-  var daysRemaining = leaders.daysRemaining;
+  var target = '$' + leaders.fundraisingTarget;
+  var totalRaised = '$' + leaders.totalRaised;
+  var daysRemaining = leaders.endDate;
   var teamLeaders = leaders.leaderboard.sort(function (a, b) {
     return b.donationAmount - a.donationAmount;
   }).slice(0, 5);
@@ -164,15 +164,15 @@ var LeaderList = function LeaderList(props) {
     className: "color-red"
   }, totalRaised))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Days Remaing: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "End Date: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "color-red"
   }, daysRemaining))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_pie_chart__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    leaderData: leaders.leaderboard
+    leaderData: teamLeaders
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "flex-container leaderboard-container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "LEADERBOARD"), teamLeaders.map(function (tl, index) {
     var colorClass = 'colorClass' + index;
-    var topDonor = tl.individualDonors.sort(function (a, b) {
+    var topDonor = tl.individualDonors.length === 0 ? 'N/A' : tl.individualDonors.sort(function (a, b) {
       return b.donationAmount > a.donationAmount;
     })[0].name;
     var props = {
@@ -262,25 +262,30 @@ function (_React$Component) {
   _createClass(Leaderboard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
+      // alert(this.props.dataUrl);
       this.setState({
         loading: true,
         initialLoading: true
       });
-      /*api.getLeaders(this.props.dataUrl)
-        .then(({ data = {} } = {}) => {
-          this.setState({
-            leaders: data,
-            loading: false
-          }, () => {
-           //fnished
-           console.log("loaded" + this.state);
-          });
-        });*/
+      _utils_api__WEBPACK_IMPORTED_MODULE_1__["getLeaders"]('http://s30908.p20.sites.pressdns.com/wp-json/caraya/leaderboard').then(function () {
+        var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+            _ref$data = _ref.data,
+            data = _ref$data === void 0 ? {} : _ref$data;
 
-      this.setState({
-        leaders: _utils_api__WEBPACK_IMPORTED_MODULE_1__["getLeadersJson"](),
-        loading: false
+        _this2.setState({
+          leaders: data,
+          loading: false
+        }, function () {
+          //fnished
+          console.log("loaded" + _this2.state);
+        });
       });
+      /*this.setState({
+        leaders: api.getLeadersJson(),
+        loading:false
+      })*/
     }
     /**
      * Renders the LeaderBoard component.
@@ -369,9 +374,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // console.log(this.props);
       var data = this.props.leaderData.map(function (x) {
-        return x.donationAmount;
+        return x.donationAmount === 0 ? 1 : x.donationAmount;
       });
       var names = this.props.leaderData.map(function (x) {
         return x.teamName;
@@ -389,7 +393,7 @@ function (_React$Component) {
         options: {
           responsive: true,
           legend: {
-            position: 'bottom'
+            position: 'right'
           },
           title: {
             display: false,
@@ -583,7 +587,9 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 var getLeaders = function getLeaders(url) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url);
+  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url, {
+    crossDomain: true
+  });
 };
 var getLeadersJson = function getLeadersJson() {
   return {
